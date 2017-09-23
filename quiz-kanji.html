@@ -48,7 +48,7 @@
 			var QUESTIONS = [];
 			for (let mid in SHIPDATA) {
 				if (mid < 1000 && SHIPDATA[mid].prev == 0 && SHIPDATA[mid].nameJP && !(/\d/.test(SHIPDATA[mid].nameJP))
-					&& SHIPDATA[mid].nameJP != SHIPDATA[mid].name) {
+					&& SHIPDATA[mid].nameJP.replace(' ','') != SHIPDATA[mid].name.replace(' ','')) {
 					QUESTIONS.push(mid);
 				}
 			}
@@ -80,7 +80,7 @@
 			}
 			
 			function clearQuestion() {
-				QUIZ.done.push(parseInt(QUIZ.currentId));
+				QUIZ.done.push(QUIZ.currentId);
 				QUIZ.score++;
 				$('#spanScore').text(QUIZ.score);
 				nextQuestion();
@@ -88,7 +88,7 @@
 			
 			function checkAnswer() {
 				let answer = $('#txtAnswer').val();
-				if (answer.toLowerCase() == SHIPDATA[QUIZ.currentId].name.toLowerCase()) clearQuestion();
+				if (answer.toLowerCase().replace(' ','') == SHIPDATA[QUIZ.currentId].name.toLowerCase().replace(' ','')) clearQuestion();
 			}
 		
 			$('#spanQuestion').hide();
