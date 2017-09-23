@@ -32,7 +32,7 @@
 		
 		<div class="inner"><span id="spanQuestion">test</span></div>
 		
-		<div class="inner"><input id="txtAnswer" /></div>
+		<div class="inner" id="divAnswer"><input id="txtAnswer" /><input type="button" id="btnSkip" value="Skip"/></div>
 	</div>
 	
 	<script>
@@ -67,7 +67,7 @@
 			
 			function endQuiz() {
 				$('#spanQuestion').hide();
-				$('#txtAnswer').hide();
+				$('#divAnswer').hide();
 			}
 			
 			function nextQuestion() {
@@ -92,14 +92,18 @@
 			}
 		
 			$('#spanQuestion').hide();
-			$('#txtAnswer').hide();
+			$('#divAnswer').hide();
 			
 			$('#btnStart').click(function() {
 				$('#spanQuestion').show();
-				$('#txtAnswer').show();
+				$('#divAnswer').show();
 				$('#txtAnswer').focus();
 				$('#btnStart').hide();
 				startTimer();
+				nextQuestion();
+			});
+			
+			$('#btnSkip').click(function() {
 				nextQuestion();
 			});
 			
