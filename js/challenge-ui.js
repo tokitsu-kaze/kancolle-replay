@@ -861,12 +861,14 @@ function chTablePushUp(fleet) {
 
 function chTableSetEquip(itemid,fleet,shipslot,itemslot) {
 	if (itemid == -1) {
+		$('#fleeteqi'+fleet+itemslot+shipslot).hide();
 		$('#fleeteqi'+fleet+itemslot+shipslot).attr('src',null);
 		$('#fleeteqn'+fleet+itemslot+shipslot).text('');
 		$('#fleeteqs'+fleet+itemslot+shipslot).text('');
 		$('#fleeteqimpr'+fleet+itemslot+shipslot).text('');
 		$('#fleeteq'+fleet+itemslot+shipslot).css('background-image','');
 	} else {
+		$('#fleeteqi'+fleet+itemslot+shipslot).show();
 		var item = CHDATA.gears['x'+itemid];
 		var itemd = EQDATA[item.masterId];
 		$('#fleeteqi'+fleet+itemslot+shipslot).attr('src','assets/items/'+EQTDATA[itemd.type].image+'.png');
