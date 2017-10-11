@@ -1245,8 +1245,8 @@ function chRepairOne(fleetnum,shipnum) {
 function chResupplyAll() {
 	var fleets = [1];
 	if (CHDATA.fleets.combined) fleets.push(2);
-	if (CHDATA.fleets.supportN) fleets.push(3);
-	if (CHDATA.fleets.supportB) fleets.push(4);
+	fleets.push(3);
+	fleets.push(4);
 	for (var i=0; i<fleets.length; i++) {
 		for (var j=0; j<CHDATA.fleets[fleets[i]].length; j++) chResupplyOne(fleets[i],j+1);
 	}
@@ -1279,8 +1279,8 @@ function chPreviewRepair(fleetnum,shipnum) {
 	} else {
 		ships = CHDATA.fleets[1].slice();
 		if (CHDATA.fleets.combined) ships.push.apply(ships,CHDATA.fleets[2]);
-		if (CHDATA.fleets.supportN) ships.push.apply(ships,CHDATA.fleets[3]);
-		if (CHDATA.fleets.supportB) ships.push.apply(ships,CHDATA.fleets[4]);
+		ships.push.apply(ships,CHDATA.fleets[3]);
+		ships.push.apply(ships,CHDATA.fleets[4]);
 	}
 	for (var i=0; i<ships.length; i++) {
 		var ship = CHDATA.ships[ships[i]];
@@ -1303,8 +1303,8 @@ function chPreviewResupply(fleetnum,shipnum) {
 	} else {
 		ships = CHDATA.fleets[1].slice();
 		if (CHDATA.fleets.combined) ships.push.apply(ships,CHDATA.fleets[2]);
-		if (CHDATA.fleets.supportN) ships.push.apply(ships,CHDATA.fleets[3]);
-		if (CHDATA.fleets.supportB) ships.push.apply(ships,CHDATA.fleets[4]);
+		ships.push.apply(ships,CHDATA.fleets[3]);
+		ships.push.apply(ships,CHDATA.fleets[4]);
 	}
 	for (var i=0; i<ships.length; i++) {
 		var ship = CHDATA.ships[ships[i]];

@@ -1737,7 +1737,7 @@ var MAPDATA = {
 							if (isShipInList(ships.ids,86) && (isShipInList(ships.ids,85) || isShipInList(ships.ids,13))) return 'B';
 							if (isShipInList(ships.ids,45) && (isShipInList(ships.ids,34) || isShipInList(ships.ids,405))) return 'B';
 							var f1 = isShipInList(ships.ids,9);
-							if (f && isShipInList(ships.ids,32)) return 'B';
+							if (f1 && isShipInList(ships.ids,32)) return 'B';
 							var f2 = isShipInList(ships.ids,59);
 							if (f2 && isShipInList(ships.ids,69) && isShipInList(ships.ids,60)) return 'B';
 							if (f1 && f2) return 'B';
