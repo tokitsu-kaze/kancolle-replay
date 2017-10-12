@@ -25,6 +25,13 @@ function InitUI() {
 	if (!found) $('.combinespacec').hide();
 	else $('.combinespacec').show();
 	
+	if (CHDATA.fleets.supportN) {
+		$('#btnsupportN').css('opacity',1);
+	}
+	if (CHDATA.fleets.supportB) {
+		$('#btnsupportB').css('opacity',1);
+	}
+	
 	$('#mainspace').show();
 }
 
@@ -964,8 +971,14 @@ function prepBattle(letter) {
 	FLEETS2[0] = new Fleet(1);
 	FLEETS2[0].loadShips(enemies);
 	FLEETS2[0].formation = ALLFORMATIONS[compd.f];
-	//TEST DEBUFF, REMOVE LATER
-	if (mapdata.boss && MAPDATA[WORLD].maps[MAPNUM].debuffAmount) FLEETS2[0].ships[0].debuff = MAPDATA[WORLD].maps[MAPNUM].debuffAmount;
+	
+	if (mapdata.debuffAmount) {
+		var debuffCheck = MAPDATA[WORLD].maps[MAPNUM].debuffCheck;
+		if (debuffCheck && debuffCheck(CHDATA.event.maps[MAPNUM].debuff)) {
+			FLEETS2[0].ships[0].debuff = mapdata.debuffAmount;
+			console.log('debuff applied');
+		}
+	}
 	
 	if (CHDATA.fleets.combined) {
 		if (FORMSELECTED > 10) {
@@ -1113,6 +1126,13 @@ function endMap() {
 			var reward = MAPDATA[WORLD].maps[MAPNUM].reward;
 			if (reward) { chAddReward(reward); chShowReward(reward); }
 		}
+		
+		if (MAPDATA[WORLD].maps[MAPNUM].debuffCheck && !CHDATA.event.maps[MAPNUM].debuffed) {
+			if (MAPDATA[WORLD].maps[MAPNUM].debuffCheck(CHDATA.event.maps[MAPNUM].debuff)) {
+				CHDATA.event.maps[MAPNUM].debuffed = true;
+				alert('DEBUFF');
+			}
+		}
 	}, 1500);
 }
 
@@ -1146,6 +1166,10 @@ function shuttersPostbattle(noshutters) {
 	chUpdateMorale();
 	chUpdateSupply();
 	pushShipStatusToUI();
+	if (MAPDATA[WORLD].maps[MAPNUM].nodes[curletter].debuffGive) {
+		if (!CHDATA.event.maps[MAPNUM].debuff) CHDATA.event.maps[MAPNUM].debuff = {};
+		MAPDATA[WORLD].maps[MAPNUM].nodes[curletter].debuffGive(FLEETS2[0].ships);
+	}
 	FLEETS1[0].reset(true);
 	if (CHDATA.fleets.combined) FLEETS1[1].reset(true);
 	CHDATA.temp.done = true;

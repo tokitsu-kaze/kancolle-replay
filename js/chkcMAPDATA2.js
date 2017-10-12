@@ -2287,8 +2287,9 @@ var MAPDATA = {
 					1: 255,
 				},
 				checkLock: [4],
-				debuffNodes: ['C','X','Y'],
-				debuffAmount: 100,
+				debuffCheck: function(debuff) {
+					return (debuff.C && debuff.X && debuff.Y);
+				},
 				nodes: {
 					'Start': {
 						type: 0,
@@ -2331,6 +2332,13 @@ var MAPDATA = {
 							3: ['Hard 1','Hard 2'],
 						},
 						end: true,
+						debuffGive: function(ships) {
+							let found = true;
+							for (var i=0; i<ships.length; i++) {
+								if ([1513,1536,1558].indexOf(ships[i].mid) != -1 && ships[i].HP > 0) found = false;
+							}
+							if (found) CHDATA.event.maps[7].debuff.C = true;
+						},
 					},
 					'D': {
 						type: 2,
@@ -2460,6 +2468,13 @@ var MAPDATA = {
 							3: ['Hard 1','Hard 2'],
 						},
 						route: 'D',
+						debuffGive: function(ships) {
+							let found = true;
+							for (var i=0; i<ships.length; i++) {
+								if ([1513,1536,1558].indexOf(ships[i].mid) != -1 && ships[i].HP > 0) found = false;
+							}
+							if (found) CHDATA.event.maps[7].debuff.X = true;
+						},
 					},
 					'Y': {
 						type: 1,
@@ -2471,6 +2486,13 @@ var MAPDATA = {
 						routeC: function(ships) {
 							if (ships.escort.CLT) return 'O';
 							return 'L';
+						},
+						debuffGive: function(ships) {
+							let found = true;
+							for (var i=0; i<ships.length; i++) {
+								if ([1513,1536,1558].indexOf(ships[i].mid) != -1 && ships[i].HP > 0) found = false;
+							}
+							if (found) CHDATA.event.maps[7].debuff.Y = true;
 						},
 					},
 					'Z': {
@@ -2485,6 +2507,7 @@ var MAPDATA = {
 							3: ['Hard F'],
 						},
 						end: true,
+						debuffAmount: 100,
 					},
 				},
 			},
