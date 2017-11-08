@@ -12,6 +12,7 @@ function InitUI() {
 	else chClickedCombine(0);
 	
 	chLoadSortieInfo(CHDATA.event.mapnum);
+	chUIUpdateResources();
 	
 	var found = false;
 	for (var i=1; i<=3; i++) {
@@ -781,7 +782,9 @@ function chPlayerStart() {
 	}
 	stage.addChildAt(mapship,mapshipindex);
 	mapship.position.set(node.x+MAPOFFX,node.y+MAPOFFY);
-	mapship.scale.set(1);
+	var letterboss = String.fromCharCode(64+MAPDATA[WORLD].maps[MAPNUM].bossnode);
+	var xboss = MAPDATA[WORLD].maps[MAPNUM].nodes[letterboss].x;
+	mapship.scale.set(((xboss < node.x)? -1 : 1),1);
 	chLoadMap(MAPNUM);
 	mapPhase(true);
 	if (!started) animate();
@@ -958,10 +961,26 @@ function prepBattle(letter) {
 	SM.stopBGM();
 	var enemies = [], comp;
 	var mapdata = MAPDATA[WORLD].maps[MAPNUM].nodes[letter];
-	var comps = mapdata.compDiff[3];
-	var diff = CHDATA.event.maps[MAPNUM].diff;
+	var diff = CHDATA.event.maps[MAPNUM].diff || 2;
 	var lastdance = (CHDATA.event.maps[MAPNUM].hp <= MAPDATA[WORLD].maps[MAPNUM].finalhp[diff] && CHDATA.event.maps[MAPNUM].hp > 0);
-	if (mapdata.compDiffF && lastdance) comps = mapdata.compDiffF[3];
+	var comps;
+	if (CHDATA.config.diffmode == 1) {
+		var compHQ = (mapdata.compHQF && lastdance)? mapdata.compHQF : mapdata.compHQ;
+		var hqs = []; for (var key in compHQ) hqs.push(parseInt(key));
+		hqs.sort(function(a,b) { return a-b; });
+		// console.log(hqs);
+		comps = compHQ[hqs[0]];
+		for (var i=hqs.length-1; i>0; i--) {
+			if (CHDATA.player.level >= hqs[i]) {
+				comps = compHQ[hqs[i]];
+				// console.log('chose: '+hqs[i]);
+				break;
+			}
+		}
+		// console.log(comps);
+	} else {
+		comps = (mapdata.compDiffF && lastdance)? mapdata.compDiffF[diff] : mapdata.compDiff[diff];
+	}
 	comp = comps[Math.floor(Math.random()*comps.length)];
 	var compd = ENEMYCOMPS[MAPDATA[WORLD].name]['E-'+MAPNUM][letter][comp];
 	for (var i=0; i<compd.c.length; i++) {
@@ -1133,6 +1152,8 @@ function endMap() {
 				alert('DEBUFF');
 			}
 		}
+		
+		chSave();
 	}, 1500);
 }
 
@@ -1296,9 +1317,9 @@ function showResults() {
 			max1 += Math.max(0,ship.HPprev);
 		}
 	}
-	for (let ship of FLEETS2[0].ships) {
-		now2 += Math.max(0,ship.HP);
-		max2 += Math.max(0,ship.HPprev);
+	for (var i=0; i<fleet2.length; i++) {
+		now2 += Math.max(0,fleet2[i].hp);
+		max2 += Math.max(0,fleet2[i].hpmax);
 	}
 	var hptarget1 = 1-(now2/max2), hptarget2 = 1-(now1/max1);
 	resultBar1.g.alpha = 0;
@@ -1610,6 +1631,10 @@ function chUIRemoveSunk() {
 		var ship = CHDATA.ships[sid];
 		if (ship.HP[0] <= 0) {
 			ship.disabled = true;
+			for (var j=0; j<ship.items.length; j++) {
+				if (ship.items[j] == -1) continue;
+				CHDATA.gears['x'+ship.items[j]].disabled = true;
+			}
 			chTableRemoveShip(1,i+1);
 			found = true;
 		}
@@ -1621,6 +1646,10 @@ function chUIRemoveSunk() {
 			var ship = CHDATA.ships[sid];
 			if (ship.HP[0] <= 0) {
 				ship.disabled = true;
+				for (var j=0; j<ship.items.length; j++) {
+					if (ship.items[j] == -1) continue;
+					CHDATA.gears['x'+ship.items[j]].disabled = true;
+				}
 				chTableRemoveShip(2,i+1);
 				found = true;
 			}
@@ -1735,4 +1764,11 @@ function chReturnSortie() {
 			if (ship.morale < 49) ship.morale = 49;
 		}
 	}
+}
+
+function chUIUpdateResources() {
+	$('#resfuel').text(CHDATA.event.resources.fuel);
+	$('#resammo').text(CHDATA.event.resources.ammo);
+	$('#ressteel').text(CHDATA.event.resources.steel);
+	$('#resbaux').text(CHDATA.event.resources.baux);
 }

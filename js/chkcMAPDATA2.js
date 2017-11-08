@@ -4,7 +4,7 @@ var MAPDATA = {
 		date: '2013-05-17',
 		maps: {
 			1: {
-				name: 'E1',
+				name: 'E-1',
 				bgmMap: 2001,
 				bgmDN: 1,
 				bgmNN: 1000,
@@ -102,7 +102,7 @@ var MAPDATA = {
 		},
 		maps: {
 			1: {
-				name: 'E1',
+				name: 'E-1',
 				nameT: 'Battle off Kannonzaki Point',
 				fleetTypes: [0],
 				bgmMap: 2001,
@@ -114,12 +114,10 @@ var MAPDATA = {
 				hpmode: 1,
 				bossHP: 3, //needed for replayer
 				maphp: {
-					3: { 1: 3 },
 					2: { 1: 3 },
 					1: { 1: 3 },
 				},
 				finalhp: {
-					3: 1,
 					2: 1,
 					1: 1,
 				},
@@ -139,7 +137,11 @@ var MAPDATA = {
 						x: 369,
 						y: 178,
 						compDiff: {
-							3: ['1','2'],
+							2: ['1','2'],
+							1: ['3','4','5'],
+						},
+						compHQ: {
+							15: ['1','2'],
 							1: ['3','4','5'],
 						},
 						routeC: function(ships) {
@@ -152,7 +154,11 @@ var MAPDATA = {
 						x: 422,
 						y: 250,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['2'],
+						},
+						compHQ: {
+							15: ['1'],
 							1: ['2'],
 						},
 						route: 'D',
@@ -162,7 +168,11 @@ var MAPDATA = {
 						x: 268,
 						y: 228,
 						compDiff: {
-							3: ['1','2'],
+							2: ['1','2'],
+							1: ['3','4','5'],
+						},
+						compHQ: {
+							15: ['1','2'],
 							1: ['3','4','5'],
 						},
 						route: 'D',
@@ -173,7 +183,11 @@ var MAPDATA = {
 						y: 340,
 						boss: true,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['2'],
+						},
+						compHQ: {
+							15: ['1'],
 							1: ['2'],
 						},
 						end: true,
@@ -181,7 +195,8 @@ var MAPDATA = {
 				},
 			},
 			2: {
-				name: 'E2',
+				name: 'E-2',
+				nameT: 'Battle of Iwo-jima Island',
 				fleetTypes: [0],
 				bgmMap: 2001,
 				bgmDN: 107,
@@ -192,12 +207,10 @@ var MAPDATA = {
 				hpmode: 1,
 				bossHP: 4,
 				maphp: {
-					3: { 1: 4 },
 					2: { 1: 4 },
 					1: { 1: 4 },
 				},
 				finalhp: {
-					3: 1,
 					2: 1,
 					1: 1,
 				},
@@ -217,7 +230,11 @@ var MAPDATA = {
 						x: 249,
 						y: 156,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['2'],
+						},
+						compHQ: {
+							30: ['1'],
 							1: ['2'],
 						},
 						routeC: function(ships) {
@@ -230,7 +247,11 @@ var MAPDATA = {
 						x: 309,
 						y: 302,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['2'],
+						},
+						compHQ: {
+							30: ['1'],
 							1: ['2'],
 						},
 						routeR: {'C':.5,'F':.5},
@@ -240,7 +261,11 @@ var MAPDATA = {
 						x: 481,
 						y: 311,
 						compDiff: {
-							3: ['1','1b'],
+							2: ['1','1b'],
+							1: ['3'],
+						},
+						compHQ: {
+							30: ['1','1b'],
 							1: ['3'],
 						},
 						route: 'G',
@@ -250,7 +275,11 @@ var MAPDATA = {
 						x: 385,
 						y: 84,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['3'],
+						},
+						compHQ: {
+							30: ['1'],
 							1: ['3'],
 						},
 						route: 'E',
@@ -276,7 +305,11 @@ var MAPDATA = {
 						y: 254,
 						boss: true,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['3'],
+						},
+						compHQ: {
+							30: ['1'],
 							1: ['3'],
 						},
 						end: true,
@@ -284,7 +317,8 @@ var MAPDATA = {
 				},
 			},
 			3: {
-				name: 'E3',
+				name: 'E-3',
+				nameT: 'Fleet of Fog - Decisive Battle!',
 				fleetTypes: [0],
 				bgmMap: 2001,
 				bgmDN: 107,
@@ -295,12 +329,10 @@ var MAPDATA = {
 				hpmode: 1,
 				bossHP: 5,
 				maphp: {
-					3: { 1: 5 },
 					2: { 1: 5 },
 					1: { 1: 5 },
 				},
 				finalhp: {
-					3: 1,
 					2: 1,
 					1: 1,
 				},
@@ -319,7 +351,11 @@ var MAPDATA = {
 						x: 219,
 						y: 206,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['3'],
+						},
+						compHQ: {
+							45: ['1'],
 							1: ['3'],
 						},
 						routeC: function(ships) {
@@ -334,7 +370,11 @@ var MAPDATA = {
 						x: 440,
 						y: 207,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['3'],
+						},
+						compHQ: {
+							45: ['1'],
 							1: ['3'],
 						},
 						routeC: function(ships) {
@@ -346,7 +386,11 @@ var MAPDATA = {
 						x: 316,
 						y: 119,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['4'],
+						},
+						compHQ: {
+							45: ['1'],
 							1: ['4'],
 						},
 						route: 'B',
@@ -356,7 +400,11 @@ var MAPDATA = {
 						x: 292,
 						y: 274,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['3'],
+						},
+						compHQ: {
+							45: ['1'],
 							1: ['3'],
 						},
 						route: 'F',
@@ -374,7 +422,11 @@ var MAPDATA = {
 						x: 441,
 						y: 317,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['3'],
+						},
+						compHQ: {
+							45: ['1'],
 							1: ['3'],
 						},
 						routeR: {'G':.5,'H':.5},
@@ -384,7 +436,11 @@ var MAPDATA = {
 						x: 621,
 						y: 347,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['3'],
+						},
+						compHQ: {
+							45: ['1'],
 							1: ['3'],
 						},
 						end: true,
@@ -395,7 +451,11 @@ var MAPDATA = {
 						y: 208,
 						boss: true,
 						compDiff: {
-							3: ['1'],
+							2: ['1'],
+							1: ['3'],
+						},
+						compHQ: {
+							45: ['1'],
 							1: ['3'],
 						},
 						end: true,
@@ -415,7 +475,7 @@ var MAPDATA = {
 		maps: {
 			1: {
 				name: 'E-1',
-				nameT: 'Advance to the northern AL area!',
+				nameT: 'Advance to the Northern AL Area!',
 				fleetTypes: [0],
 				bgmMap: 2027,
 				bgmDN: 14,
@@ -594,7 +654,7 @@ var MAPDATA = {
 			},
 			2: {
 				name: 'E-2',
-				nameT: 'Diversionary tactics! Wreck the northern harbour!',
+				nameT: 'Diversionary Tactics! Wreck the Northern Harbour!',
 				fleetTypes: [0],
 				bgmMap: 2027,
 				bgmDN: 14,
@@ -638,6 +698,13 @@ var MAPDATA = {
 						y: 129,
 						compDiff: {
 							3: ['1','1b'],
+							2: ['2','2b','3'],
+							1: ['4','5'],
+						},
+						compHQ: {
+							70: ['1','1b'],
+							40: ['2','2b','3'],
+							1: ['4','5'],
 						},
 						routeC: function(ships) {
 							if (ships.aCV >= 3 || ships.aBB >= 3) return 'F';
@@ -649,7 +716,14 @@ var MAPDATA = {
 						x: 304,
 						y: 311,
 						compDiff: {
-							3: ['1'],
+							3: ['1','2'],
+							2: ['1','3'],
+							1: ['3'],
+						},
+						compHQ: {
+							60: ['1','2'],
+							40: ['1','3'],
+							1: ['3'],
 						},
 						routeC: function(ships) {
 							if (ships.aBB||ships.aCV) return 'D';
@@ -662,6 +736,13 @@ var MAPDATA = {
 						y: 209,
 						compDiff: {
 							3: ['1','1b','1c'],
+							2: ['2','3'],
+							1: ['4','4b'],
+						},
+						compHQ: {
+							60: ['1','1b','1c'],
+							40: ['2','3'],
+							1: ['4','4b'],
 						},
 						route: 'E',
 					},
@@ -671,6 +752,14 @@ var MAPDATA = {
 						y: 149,
 						compDiff: {
 							3: ['1','2'],
+							2: ['2','3'],
+							1: ['4','5'],
+						},
+						compHQ: {
+							60: ['1','2'],
+							40: ['2','3'],
+							30: ['3','5'],
+							1: ['4','5'],
 						},
 						routeL: { 100: 'K', 0: 'F' },
 					},
@@ -685,7 +774,14 @@ var MAPDATA = {
 						x: 501,
 						y: 291,
 						compDiff: {
-							3: ['1','2'],
+							3: ['2','2b'],
+							2: ['3','2b'],
+							1: ['3','1'],
+						},
+						compHQ: {
+							60: ['2','2b'],
+							40: ['3','2b'],
+							1: ['3','1'],
 						},
 						routeL: { 100: 'E', 50: 'I', 0: 'H' },
 					},
@@ -701,6 +797,11 @@ var MAPDATA = {
 						y: 242,
 						compDiff: {
 							3: ['1'],
+							2: ['1'],
+							1: ['1'],
+						},
+						compHQ: {
+							1: ['1'],
 						},
 						routeL: { 100: 'K', 0: 'J' },
 					},
@@ -718,9 +819,23 @@ var MAPDATA = {
 						y: 143,
 						compDiff: {
 							3: ['1'],
+							2: ['3'],
+							1: ['5'],
 						},
 						compDiffF: {
 							3: ['2'],
+							2: ['4'],
+							1: ['6'],
+						},
+						compHQ: {
+							100: ['1'],
+							55: ['3'],
+							1: ['5'],
+						},
+						compHQF: {
+							100: ['2'],
+							55: ['4'],
+							1: ['6'],
 						},
 						boss: true,
 						end: true,
@@ -775,6 +890,12 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3:['1','2'],
+							2:['1','2'],
+							1:['2'],
+						},
+						compHQ: {
+							60:['1','2'],
+							1:['2'],
 						},
 						route: 'E',
 					},
@@ -791,6 +912,13 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3:['1','2'],
+							2:['1','3'],
+							1:['3'],
+						},
+						compHQ: {
+							100:['1','2'],
+							60:['1','3'],
+							1:['3'],
 						},
 						route: 'F',
 					},
@@ -801,6 +929,12 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3:['1','2','3'],
+							2:['1','2'],
+							1:['1','2'],
+						},
+						compHQ: {
+							100:['1','2','3'],
+							1:['1','2'],
 						},
 						route: 'H',
 					},
@@ -823,6 +957,12 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3:['1','2'],
+							2:['1','3'],
+							1:['1','3'],
+						},
+						compHQ: {
+							100:['1','2'],
+							1:['1','3'],
 						},
 						routeL: {80:'J',0:'G'},
 					},
@@ -839,9 +979,23 @@ var MAPDATA = {
 						boss: true,
 						compDiff: {
 							3:['1','2'],
+							2:['4'],
+							1:['6','7'],
 						},
 						compDiffF: {
 							3:['3'],
+							2:['5'],
+							1:['8'],
+						},
+						compHQ: {
+							105:['1','2'],
+							70:['4'],
+							1:['6','7'],
+						},
+						compHQF: {
+							105:['3'],
+							70:['5'],
+							1:['8'],
 						},
 						end: true,
 					},
@@ -887,7 +1041,13 @@ var MAPDATA = {
 						y: 105,
 						aironly: true,
 						compDiff: {
-							3: ['1','2'],
+							3: ['1','2','3'],
+							2: ['1','3'],
+							1: ['1','3'],
+						},
+						compHQ: {
+							90: ['1','2','3'],
+							1: ['1','3'],
 						},
 						route: 'C',
 					},
@@ -898,6 +1058,12 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['1','2','3'],
+							2: ['1','2','4'],
+							1: ['1','2','4'],
+						},
+						compHQ: {
+							100: ['1','2','3'],
+							1: ['1','2','4'],
 						},
 						routeR: {'C':.5,'D':.5},
 					},
@@ -907,7 +1073,13 @@ var MAPDATA = {
 						y: 135,
 						subonly: true,
 						compDiff: {
-							3: ['1','2'],
+							3: ['1','1b','2'],
+							2: ['2','3'],
+							1: ['2','3'],
+						},
+						compHQ: {
+							90: ['1','1b','2'],
+							1: ['2','3'],
 						},
 						routeC: function(ships) {
 							if (ships.aCV <= 3 && ships.speed==10) return 'F';
@@ -921,6 +1093,12 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['1','2'],
+							2: ['2','3'],
+							1: ['2','3'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							1: ['2','3'],
 						},
 						routeL: {100:'H',0:'L'},
 					},
@@ -930,7 +1108,14 @@ var MAPDATA = {
 						y: 90,
 						aironly: true,
 						compDiff: {
-							3: ['1','2','4'],
+							3: ['1','4','5'],
+							2: ['1','2','3','4'],
+							1: ['1','2'],
+						},
+						compHQ: {
+							100: ['1','4','5'],
+							60: ['1','2','3','4'],
+							1: ['1','2'],
 						},
 						end: true,
 					},
@@ -952,6 +1137,12 @@ var MAPDATA = {
 						y: 328,
 						compDiff: {
 							3: ['1','2'],
+							2: ['2','3','3b'],
+							1: ['2','3','3b'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							1: ['2','3','3b'],
 						},
 						route: 'K',
 					},
@@ -968,6 +1159,12 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['1','2','4'],
+							2: ['1','3','5'],
+							1: ['1','3','5'],
+						},
+						compHQ: {
+							100: ['1','2','4'],
+							1: ['1','3','5'],
 						},
 						routeL: {100:'K',0:'H'},
 					},
@@ -978,9 +1175,23 @@ var MAPDATA = {
 						boss: true,
 						compDiff: {
 							3: ['1'],
+							2: ['3'],
+							1: ['5'],
 						},
 						compDiffF: {
 							3: ['2'],
+							2: ['4'],
+							1: ['6'],
+						},
+						compHQ: {
+							105: ['1'],
+							70: ['3'],
+							1: ['5'],
+						},
+						compHQF: {
+							105: ['2'],
+							70: ['4'],
+							1: ['6'],
 						},
 						end: true,
 					},
@@ -1022,6 +1233,11 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['1','1b'],
+							2: ['1','1b'],
+							1: ['1','1b'],
+						},
+						compHQ: {
+							1: ['1','1b'],
 						},
 						routeC: function(ships) {
 							if (ships.DD+ships.escort.DD >= 4) return 'C';
@@ -1035,6 +1251,12 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['1','2'],
+							2: ['2','3'],
+							1: ['2','3'],
+						},
+						compHQ: {
+							90: ['1','2'],
+							1: ['2','3'],
 						},
 						route: 'E',
 					},
@@ -1045,6 +1267,12 @@ var MAPDATA = {
 						aironly:true,
 						compDiff: {
 							3: ['1','2','3'],
+							2: ['2','3'],
+							1: ['2','4'],
+						},
+						compHQ: {
+							100: ['1','2','3'],
+							1: ['2','3','4'],
 						},
 						routeR: {'G':.5,'F':.5},
 					},
@@ -1055,6 +1283,12 @@ var MAPDATA = {
 						night: true,
 						compDiff: {
 							3: ['2','2b'],
+							2: ['1','2b'],
+							1: ['1'],
+						},
+						compHQ: {
+							100: ['2','2b'],
+							1: ['1','2b'],
 						},
 						routeR: {'G':.5,'H':.5},
 					},
@@ -1065,6 +1299,12 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['1','2'],
+							2: ['2','3'],
+							1: ['2','3'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							1: ['2','3'],
 						},
 						routeR: {'H':.5,'I':.5},
 					},
@@ -1080,7 +1320,12 @@ var MAPDATA = {
 						y: 155,
 						night: true,
 						compDiff: {
-							3: ['2'],
+							3: ['1','2'],
+							2: ['1','2'],
+							1: ['1','2'],
+						},
+						compHQ: {
+							1: ['1','2'],
 						},
 						routeL: {100:'L',0:'J'},
 					},
@@ -1091,6 +1336,13 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['1','2'],
+							2: ['2','3'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							90: ['1','2'],
+							70: ['2','3'],
+							1: ['3','4'],
 						},
 						route: 'L',
 					},
@@ -1101,6 +1353,12 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['1','2','3'],
+							2: ['2','3','4'],
+							1: ['2','3','4'],
+						},
+						compHQ: {
+							90: ['1','2','3'],
+							1: ['2','3','4'],
 						},
 						routeL: {100:'L',0:'K'},
 					},
@@ -1124,9 +1382,23 @@ var MAPDATA = {
 						end: true,
 						compDiff: {
 							3: ['1'],
+							2: ['3','4'],
+							1: ['6'],
 						},
 						compDiffF: {
 							3: ['2'],
+							2: ['5'],
+							1: ['7'],
+						},
+						compHQ: {
+							105: ['1'],
+							80: ['3','4'],
+							1: ['6'],
+						},
+						compHQF: {
+							105: ['2'],
+							80: ['5'],
+							1: ['7'],
 						},
 					},
 				},
@@ -1165,6 +1437,13 @@ var MAPDATA = {
 						y: 191,
 						compDiff: {
 							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							75: ['3','4'],
+							1: ['5','6'],
 						},
 						routeC: function(ships) {
 							if (ships.SS+ships.SSV >= 2) return 'B';
@@ -1185,6 +1464,12 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['1','2'],
+							2: ['3','4'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							88: ['1','2'],
+							1: ['3','4'],
 						},
 						routeC: function(ships) {
 							if (ships.CVL == 2) return 'E';
@@ -1198,6 +1483,13 @@ var MAPDATA = {
 						night: true,
 						compDiff: {
 							3: ['1'],
+							2: ['1','2'],
+							1: ['2'],
+						},
+						compHQ: {
+							100: ['1'],
+							75: ['1','2'],
+							1: ['2'],
 						},
 						routeR: {'F':.5,'G':.5},
 					},
@@ -1214,6 +1506,13 @@ var MAPDATA = {
 						night: true,
 						compDiff: {
 							3: ['1','2'],
+							2: ['2','3'],
+							1: ['3'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							75: ['2','3'],
+							1: ['3'],
 						},
 						routeL: {100: 'J', 90: 'H', 0: 'G' },
 					},
@@ -1229,6 +1528,13 @@ var MAPDATA = {
 						y: 104,
 						compDiff: {
 							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							75: ['3','4'],
+							1: ['5'],
 						},
 						routeL: {100:'J',0:'I'},
 					},
@@ -1245,9 +1551,21 @@ var MAPDATA = {
 						boss: true,
 						compDiff: {
 							3: ['1'],
+							2: ['3'],
+							1: ['3'],
 						},
 						compDiffF: {
 							3: ['2'],
+							2: ['4'],
+							1: ['4'],
+						},
+						compHQ: {
+							100: ['1'],
+							1: ['3'],
+						},
+						compHQF: {
+							100: ['2'],
+							1: ['4'],
 						},
 						end: true,
 					},
@@ -1266,7 +1584,7 @@ var MAPDATA = {
 		maps: {
 			1: {
 				name: 'E-1',
-				nameT: '',
+				nameT: 'Preparation for Second Operation SN!',
 				fleetTypes: [0],
 				bgmMap: 2031,
 				bgmDN: 46,
@@ -1386,7 +1704,7 @@ var MAPDATA = {
 			},
 			2: {
 				name: 'E-2',
-				nameT: '',
+				nameT: 'Combined Fleet, to the Solomon Sea!',
 				fleetTypes: [1,2],
 				bgmMap: 2031,
 				bgmDN: 46,
@@ -1477,7 +1795,7 @@ var MAPDATA = {
 						y: 170,
 						aironly: true,
 						compDiff: {
-							3: ['Hard'],
+							3: ['Hard 1','Hard 2'],
 							2: ['Medium 1','Medium 2'],
 							1: ['Easy 1','Easy 2'],
 						},
@@ -1499,7 +1817,7 @@ var MAPDATA = {
 						x: 533,
 						y: 230,
 						compDiff: {
-							3: ['Hard'],
+							3: ['Hard 1','Hard 2'],
 							2: ['Medium 1','Medium 2'],
 							1: ['Easy 1','Easy 2'],
 						},
@@ -1556,8 +1874,8 @@ var MAPDATA = {
 				},
 			},
 			3: {
-				name: 'E3',
-				nameT: '',
+				name: 'E-3',
+				nameT: 'Clash! Second Southern Pacific Ocean Battle',
 				fleetTypes: [1,2],
 				bgmMap: 2031,
 				bgmDN: 46,
@@ -1596,6 +1914,8 @@ var MAPDATA = {
 						y: 219,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'D',
 					},
@@ -1605,6 +1925,8 @@ var MAPDATA = {
 						y: 130,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.CV + ships.CVB >= 3) return 'D';
@@ -1621,6 +1943,8 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.aBB + ships.escort.aBB >= 4) return 'E';
@@ -1638,6 +1962,8 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'H',
 					},
@@ -1653,6 +1979,8 @@ var MAPDATA = {
 						y: 200,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						routeL: {100:'Z',0:'H'},
 					},
@@ -1662,6 +1990,8 @@ var MAPDATA = {
 						y: 120,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeL: {100:'Z',0:'J'},
 					},
@@ -1671,6 +2001,8 @@ var MAPDATA = {
 						y: 295,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'Z',
 					},
@@ -1686,6 +2018,8 @@ var MAPDATA = {
 						y: 329,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						end: true,
 					},
@@ -1696,17 +2030,21 @@ var MAPDATA = {
 						boss: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium F'],
+							1: ['Easy F'],
 						},
 						end: true,
 					},
 				},
 			},
 			4: {
-				name: 'E4',
-				nameT: '',
+				name: 'E-4',
+				nameT: 'Charge into the Strait! Destroy the Enemy Airfield!',
 				fleetTypes: [0],
 				bgmMap: 2031,
 				bgmDN: 46,
@@ -1751,6 +2089,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						route: 'C',
 					},
@@ -1761,6 +2101,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'D',
 					},
@@ -1769,7 +2111,9 @@ var MAPDATA = {
 						x: 208,
 						y: 264,
 						compDiff: {
-							3: ['Hard'],
+							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'E',
 					},
@@ -1786,9 +2130,13 @@ var MAPDATA = {
 						night: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium F'],
+							1: ['Easy F'],
 						},
 						route: 'G',
 					},
@@ -1798,9 +2146,13 @@ var MAPDATA = {
 						y: 124,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium 1'],
+							1: ['Easy F'],
 						},
 						routeC: function(ships) {
 							if (isShipInList(ships.ids,79) && ships.DD >= 2) return 'H';
@@ -1816,9 +2168,13 @@ var MAPDATA = {
 						night: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium F'],
+							1: ['Easy F'],
 						},
 						routeC: function(ships) {
 							if (ships.SS + ships.SSV) return 'K';
@@ -1832,9 +2188,13 @@ var MAPDATA = {
 						y: 209,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium 1'],
+							1: ['Easy F'],
 						},
 						routeL: {100:'Z',0:'L'},
 					},
@@ -1855,6 +2215,8 @@ var MAPDATA = {
 						y: 180,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						routeC: function(ships) {
 							if (ships.aBB + ships.CV + ships.CVB >= 5) return 'L';
@@ -1880,17 +2242,21 @@ var MAPDATA = {
 						boss: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium F'],
+							1: ['Easy F'],
 						},
 						end: true,
 					},
 				},
 			},
 			5: {
-				name: 'E5',
-				nameT: '',
+				name: 'E-5',
+				nameT: 'Hard Battle! Western Region Deployment Fleet',
 				fleetTypes: [0],
 				bgmMap: 2131,
 				bgmDN: 38,
@@ -1930,6 +2296,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'C',
 					},
@@ -1945,6 +2313,8 @@ var MAPDATA = {
 						y: 314,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'F',
 					},
@@ -1966,6 +2336,8 @@ var MAPDATA = {
 						y: 111,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (isShipInList(ships.ids,445)) return 'D';
@@ -1983,6 +2355,8 @@ var MAPDATA = {
 						y: 331,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'I',
 					},
@@ -1992,6 +2366,8 @@ var MAPDATA = {
 						y: 167,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						end: true,
 					},
@@ -2002,6 +2378,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'J',
 					},
@@ -2019,6 +2397,8 @@ var MAPDATA = {
 						y: 268,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							return 'K';
@@ -2030,6 +2410,8 @@ var MAPDATA = {
 						y: 268,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.aBB + ships.CV + ships.CVB >= 5) return 'M';
@@ -2056,17 +2438,21 @@ var MAPDATA = {
 						boss: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium F'],
+							1: ['Easy F'],
 						},
 						end: true,
 					},
 				},
 			},
 			6: {
-				name: 'E6',
-				nameT: '',
+				name: 'E-6',
+				nameT: 'Counterattack! Enter the FS Region',
 				fleetTypes: [1,2],
 				bgmMap: 2131,
 				bgmDN: 49,
@@ -2107,6 +2493,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.speed >= 10 && ships.escort.speed >= 10
@@ -2121,6 +2509,8 @@ var MAPDATA = {
 						y: 266,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'F',
 					},
@@ -2130,6 +2520,8 @@ var MAPDATA = {
 						y: 100,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.CLT + ships.escort.CLT) return 'O';
@@ -2143,6 +2535,8 @@ var MAPDATA = {
 						night: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						routeC: function(ships) {
 							if (ships.CLT + ships.escort.CLT >= 2) return 'F';
@@ -2156,6 +2550,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'G',
 					},
@@ -2165,6 +2561,8 @@ var MAPDATA = {
 						y: 266,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy'],
 						},
 						route: 'J',
 					},
@@ -2181,6 +2579,8 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'L',
 					},
@@ -2202,6 +2602,8 @@ var MAPDATA = {
 						y: 197,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.SS + ships.SSV + ships.escort.SS + ships.escort.SSV) return 'L';
@@ -2215,6 +2617,8 @@ var MAPDATA = {
 						y: 100,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.SS + ships.SSV + ships.escort.SS + ships.escort.SSV) return 'P';
@@ -2227,6 +2631,8 @@ var MAPDATA = {
 						y: 267,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.SS + ships.SSV + ships.escort.SS + ships.escort.SSV) return 'N';
@@ -2258,17 +2664,21 @@ var MAPDATA = {
 						boss: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium F'],
+							1: ['Easy F'],
 						},
 						end: true,
 					},
 				},
 			},
 			7: {
-				name: 'E7',
-				nameT: '',
+				name: 'E-7',
+				nameT: 'Operation FS',
 				fleetTypes: [1,2],
 				bgmMap: 2131,
 				bgmDN: 49,
@@ -2317,6 +2727,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.SS + ships.SSV + ships.escort.SS + ships.escort.SSV) return 'A';
@@ -2330,6 +2742,8 @@ var MAPDATA = {
 						y: 326,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						end: true,
 						debuffGive: function(ships) {
@@ -2357,6 +2771,8 @@ var MAPDATA = {
 						y: 114,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'G',
 					},
@@ -2367,6 +2783,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'G',
 					},
@@ -2389,6 +2807,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'K',
 					},
@@ -2398,6 +2818,8 @@ var MAPDATA = {
 						y: 196,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (CHDATA.fleets.combined == 2) return (Math.random() < .75)? 'L' : 'Y';
@@ -2415,6 +2837,8 @@ var MAPDATA = {
 						aironly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeL: {100:'M',0:'P'},
 					},
@@ -2424,6 +2848,8 @@ var MAPDATA = {
 						y: 240,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.escort.CLT) return 'O';
@@ -2436,6 +2862,8 @@ var MAPDATA = {
 						y: 171,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						routeC: function(ships) {
 							if (ships.escort.CLT) return 'N';
@@ -2466,6 +2894,8 @@ var MAPDATA = {
 						y: 282,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 						route: 'D',
 						debuffGive: function(ships) {
@@ -2482,6 +2912,8 @@ var MAPDATA = {
 						y: 314,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						routeC: function(ships) {
 							if (ships.escort.CLT) return 'O';
@@ -2502,9 +2934,13 @@ var MAPDATA = {
 						boss: true,
 						compDiff: {
 							3: ['Hard'],
+							2: ['Medium'],
+							1: ['Easy'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium F'],
+							1: ['Easy F'],
 						},
 						end: true,
 						debuffAmount: 100,

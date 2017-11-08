@@ -25,7 +25,7 @@ function chCreateFleetTable(root,num,name,noheader) {
 	$(root).append(divWrap);
 	if (!noheader) {
 		divWrap.append('<div class="ftinfo" style="width:125px">'+name+'</div>');
-		divWrap.append('<div class="ftinfo" style="width:80px"><img title="Effective LoS" src="assets/stats/los3.png"/><span id="fleetefflos'+num+'"></span></div>');
+		divWrap.append('<div class="ftinfo" style="width:80px;display:none"><img title="Effective LoS" src="assets/stats/los3.png"/><span id="fleetefflos'+num+'"></span></div>');
 		divWrap.append('<div class="ftinfo" style="width:80px"><img title="Air Power" src="assets/stats/ac.png"/><span id="fleetap'+num+'"></span></div>');
 		divWrap.append('<div class="ftinfo" style="width:80px"><img title="Fleet Speed" src="assets/stats/sp.png"/><span id="fleetspd'+num+'"></span></div>');
 		divWrap.append('<br style="clear:both"/>');
@@ -184,14 +184,20 @@ function chDialogShipClose() {
 
 function chDialogItemInit() {
 	$('#equipfilters').append('<img id="itemfilter1" class="itemfilter" src="assets/items/1.png" onclick="chDialogItemFilter(1)"/>');
+	$('#equipfilters').append('<img id="itemfilter13" class="itemfilter" src="assets/items/2.png" onclick="chDialogItemFilter(13)"/>');
+	$('#equipfilters').append('<img id="itemfilter14" class="itemfilter" src="assets/items/3.png" onclick="chDialogItemFilter(14)"/>');
 	$('#equipfilters').append('<img id="itemfilter2" class="itemfilter" src="assets/items/4.png" onclick="chDialogItemFilter(2)"/>');
 	$('#equipfilters').append('<img id="itemfilter3" class="itemfilter" src="assets/items/5.png" onclick="chDialogItemFilter(3)"/>');
 	$('#equipfilters').append('<img id="itemfilter4" class="itemfilter" src="assets/items/10.png" onclick="chDialogItemFilter(4)"/>');
 	$('#equipfilters').append('<img id="itemfilter5" class="itemfilter" src="assets/items/6.png" onclick="chDialogItemFilter(5)"/>');
-	$('#equipfilters').append('<img id="itemfilter6" class="itemfilter" src="assets/items/11.png" onclick="chDialogItemFilter(6)"/>');
-	$('#equipfilters').append('<img id="itemfilter7" class="itemfilter" src="assets/items/17.png" onclick="chDialogItemFilter(7)"/>');
-	$('#equipfilters').append('<img id="itemfilter8" class="itemfilter" src="assets/items/13.png" onclick="chDialogItemFilter(8)"/>');
-	$('#equipfilters').append('<img id="itemfilter9" class="itemfilter" src="assets/items/25.png" onclick="chDialogItemFilter(9)"/>');
+	$('#equipfilters').append('<img id="itemfilter6" class="itemfilter" src="assets/items/7.png" onclick="chDialogItemFilter(6)"/>');
+	$('#equipfilters').append('<img id="itemfilter7" class="itemfilter" src="assets/items/8.png" onclick="chDialogItemFilter(7)"/>');
+	$('#equipfilters').append('<img id="itemfilter8" class="itemfilter" src="assets/items/9.png" onclick="chDialogItemFilter(8)"/>');
+	$('#equipfilters').append('<img id="itemfilter9" class="itemfilter" src="assets/items/11.png" onclick="chDialogItemFilter(9)"/>');
+	$('#equipfilters').append('<img id="itemfilter10" class="itemfilter" src="assets/items/17.png" onclick="chDialogItemFilter(10)"/>');
+	$('#equipfilters').append('<img id="itemfilter11" class="itemfilter" src="assets/items/13.png" onclick="chDialogItemFilter(11)"/>');
+	$('#equipfilters').append('<img id="itemfilter15" class="itemfilter" src="assets/items/15.png" onclick="chDialogItemFilter(15)"/>');
+	$('#equipfilters').append('<img id="itemfilter12" class="itemfilter" src="assets/items/25.png" onclick="chDialogItemFilter(12)"/>');
 
 	var table = $('#equipselecttable');
 	var STATS = ['DIVEBOMB','FP','TP','AA','AR','ACC','EV','ASW','LOS'];
@@ -275,22 +281,36 @@ function chDialogItem(fleet,eqnum,slot) {
 	DIALOGSLOTSEL = slot;
 	DIALOGITEMSEL = eqnum;
 	$('#dialogselequip').dialog('open');
-	chDialogItemFilter(1);
+	var defcat;
+	switch(SHIPDATA[CHDATA.ships[shipid].masterId].type) {
+		case 'CVL': case 'CV': case 'CVB': case 'LHA': defcat = 5; break;
+		case 'CL': case 'CLT': case 'CT': case 'CA': case 'CAV': defcat = 13; break;
+		case 'FBB': case 'BB': case 'BBV': defcat = 14; break;
+		case 'SS': case 'SSV': defcat = 3; break;
+		default: defcat = 1; break;
+	}
+	chDialogItemFilter(defcat);
 }
 
 function chDialogItemFilter(category,frombutton) {
 	var mid = CHDATA.ships[CHDATA.fleets[DIALOGFLEETSEL][DIALOGSLOTSEL-1]].masterId;
 	var types;
 	switch (category) {
-		default: case 1: types=[MAINGUNS,MAINGUNM,MAINGUNL,MAINGUNXL,MAINGUNSAA]; break;
+		default: case 1: types=[MAINGUNS,MAINGUNSAA]; break;
+		case 13: types=[MAINGUNM]; break;
+		case 14: types=[MAINGUNL,MAINGUNXL]; break;
 		case 2: types=[SECGUN,SECGUNAA]; break;
 		case 3: types=[TORPEDO,TORPEDOSS,MIDGETSUB]; break;
 		case 4: types=[SEAPLANE,SEAPLANEBOMBER,SEAPLANEFIGHTER,FLYINGBOAT]; break;
-		case 5: types=[FIGHTER,DIVEBOMBER,TORPBOMBER,CARRIERSCOUT,AUTOGYRO,ASWPLANE,JETBOMBER]; break;
-		case 6: types=[RADARS,RADARL,RADARXL]; break;
-		case 7: types=[DEPTHCHARGE,SONARS,SONARL]; break;
-		case 8: types=[APSHELL,TYPE3SHELL]; break;
-		case 9: types=[AAGUN,BULGEM,BULGEL,LANDINGCRAFT,LANDINGTANK,SEARCHLIGHTS,SEARCHLIGHTL,STARSHELL,PICKET,WG42,SRF,FCF,DRUM,SCAMP,REPAIR]; break;
+		case 5: types=[FIGHTER]; break;
+		case 6: types=[DIVEBOMBER]; break;
+		case 7: types=[TORPBOMBER]; break;
+		case 8: types=[CARRIERSCOUT,AUTOGYRO,ASWPLANE,JETBOMBER]; break;
+		case 9: types=[RADARS,RADARL,RADARXL]; break;
+		case 10: types=[DEPTHCHARGE,SONARS,SONARL]; break;
+		case 11: types=[APSHELL,TYPE3SHELL]; break;
+		case 15: types=[AAGUN]; break;
+		case 12: types=[BULGEM,BULGEL,LANDINGCRAFT,LANDINGTANK,SEARCHLIGHTS,SEARCHLIGHTL,STARSHELL,PICKET,WG42,SRF,FCF,DRUM,SCAMP,REPAIR]; break;
 	}
 	chDialogShowItems(mid,types);
 	
@@ -315,7 +335,7 @@ function chSetEquip(itemid) {
 		}
 		chShipEquipItem(item.heldBy,-1,oldship.items.indexOf(itemid));
 		// console.log(fleetnum+' '+otherslot);
-		if (otherslot != -1) chTableSetShip(CHDATA.fleets[DIALOGFLEETSEL][otherslot], DIALOGFLEETSEL,otherslot+1);
+		if (otherslot != -1) chTableSetShip(CHDATA.fleets[fleetnum][otherslot], fleetnum, otherslot+1);
 	}
 	chShipEquipItem(shipid,itemid,DIALOGITEMSEL-1);
 	chTableSetShip(shipid, DIALOGFLEETSEL, DIALOGSLOTSEL);
@@ -375,7 +395,7 @@ function chProcessKC3File2() {
 	CHDATA.player = kcdata.player;
 	CHDATA.gears = kcdata.gears;
 	CHDATA.ships = {};
-	CHDATA.event = {lasttime:0,maps:{},world:EVENTNUM,mapnum:1,unlocked:1};
+	CHDATA.event = { createtime:Date.now(), lasttime:0, maps:{}, world:EVENTNUM, mapnum:1, unlocked:1, resources: { fuel: 0, ammo: 0, steel: 0, baux: 0 } };
 	CHDATA.fleets = {1:[null,null,null,null,null,null],2:[null,null,null,null,null,null],3:[null,null,null,null,null,null],4:[null,null,null,null,null,null],combined:0};
 	if (!CHDATA.config) CHDATA.config = {};
 	CHDATA.config.mechanics = {};
@@ -385,7 +405,13 @@ function chProcessKC3File2() {
 	}
 	CHDATA.config.shelldmgbase = (CHDATA.config.mechanics.shellingSoftCap)? 180 : 150;
 	
-	for (var mapnum in MAPDATA[EVENTNUM].maps) CHDATA.event.maps[mapnum] = {visited:[],hp:null};
+	for (var mapnum in MAPDATA[EVENTNUM].maps) {
+		CHDATA.event.maps[mapnum] = { visited:[], hp:null };
+		if (CHDATA.config.diffmode == 1) {
+			CHDATA.event.maps[mapnum].hp = getMapHP(EVENTNUM,mapnum,2);
+			CHDATA.event.maps[mapnum].diff = 2;
+		}
+	}
 	var stats = ['FP','TP','AA','AR','EV','ASW','LOS'];
 	for (var sid in kcdata.ships) {
 		var shipO = kcdata.ships[sid];
@@ -666,6 +692,7 @@ function chStart() {
 	$('#battlespace').css('animation','');
 	$('#battlespace').css('animation','fadein 0.25s linear');
 	chBlockFleetUI();
+	chClickedTab('#tabmain');
 	chPlayerStart();
 }
 
@@ -676,13 +703,15 @@ function chLoadMainFleet() {
 	FLEETS1[0] = new Fleet(0);
 	FLEETS1[0].loadShips(data[0]);
 	
-	var lock = MAPDATA[WORLD].maps[CHDATA.event.mapnum].giveLock;
-	if (lock) {
-		for (var i=0; i<CHDATA.fleets[1].length; i++) {
-			if (!CHDATA.fleets[1][i]) continue;
-			if (CHDATA.ships[CHDATA.fleets[1][i]].lock) continue;
-			CHDATA.ships[CHDATA.fleets[1][i]].lock = lock;
-			$('#fleetlock1'+(i+1)).attr('src','assets/maps/lock'+lock+'.png');
+	if (!CHDATA.config.disablelock) {
+		var lock = MAPDATA[WORLD].maps[CHDATA.event.mapnum].giveLock;
+		if (lock) {
+			for (var i=0; i<CHDATA.fleets[1].length; i++) {
+				if (!CHDATA.fleets[1][i]) continue;
+				if (CHDATA.ships[CHDATA.fleets[1][i]].lock) continue;
+				CHDATA.ships[CHDATA.fleets[1][i]].lock = lock;
+				$('#fleetlock1'+(i+1)).attr('src','assets/maps/lock'+lock+'.png');
+			}
 		}
 	}
 }
@@ -694,13 +723,15 @@ function chLoadEscortFleet() {
 	FLEETS1[1] = new Fleet(0,FLEETS1[0]);
 	FLEETS1[1].loadShips(data[0]);
 	
-	var lock = MAPDATA[WORLD].maps[CHDATA.event.mapnum].giveLock;
-	if (lock) {
-		for (var i=0; i<CHDATA.fleets[2].length; i++) {
-			if (!CHDATA.fleets[2][i]) continue;
-			if (CHDATA.ships[CHDATA.fleets[2][i]].lock) continue;
-			CHDATA.ships[CHDATA.fleets[2][i]].lock = lock;
-			$('#fleetlock2'+(i+1)).attr('src','assets/maps/lock'+lock+'.png');
+	if (!CHDATA.config.disablelock) {
+		var lock = MAPDATA[WORLD].maps[CHDATA.event.mapnum].giveLock;
+		if (lock) {
+			for (var i=0; i<CHDATA.fleets[2].length; i++) {
+				if (!CHDATA.fleets[2][i]) continue;
+				if (CHDATA.ships[CHDATA.fleets[2][i]].lock) continue;
+				CHDATA.ships[CHDATA.fleets[2][i]].lock = lock;
+				$('#fleetlock2'+(i+1)).attr('src','assets/maps/lock'+lock+'.png');
+			}
 		}
 	}
 }
@@ -968,7 +999,9 @@ function chLoadSortieInfo(mapnum) {
 	if (!MAPDATA[world]) return;
 	var mapdata = MAPDATA[world].maps[mapnum];
 	if (!mapdata) return;
-	$('#srtTitle').text(mapdata.name);
+	var title = mapdata.name;
+	if (mapdata.nameT) title += (mapnum <= CHDATA.event.unlocked)? ': '+mapdata.nameT : ': ???';
+	$('#srtTitle').text(title);
 	$('#srtMapImg').attr('src','assets/maps/'+world+'/'+mapnum+'m.png');
 	if (mapnum > CHDATA.event.unlocked) {
 		$('#srtMapImg').css('filter','blur(5px) grayscale(1)');
@@ -980,7 +1013,7 @@ function chLoadSortieInfo(mapnum) {
 	
 	var diff = CHDATA.event.maps[mapnum].diff;
 	var nowhp = CHDATA.event.maps[mapnum].hp, maxhp = getMapHP(world,mapnum,diff);
-	if (nowhp === null) {
+	if (nowhp === null || (CHDATA.config.diffmode == 1 && CHDATA.event.unlocked < mapnum)) {
 		$('#srtHPText').text('???/???');
 		$('#srtHPText').css('color','#FF6666');
 		$('#srtHPBar').css('width','146px');
@@ -994,49 +1027,60 @@ function chLoadSortieInfo(mapnum) {
 		$('#srtHPBar').css('width','0');
 	}
 	
-	switch(CHDATA.event.maps[mapnum].diff) {
-		case 3:
-			$('#srtDiffTitle').text('HARD');
-			$('#srtDiffTitle').css('color','#FF6666');
-			break;
-		case 2:
-			$('#srtDiffTitle').text('NORMAL');
-			$('#srtDiffTitle').css('color','#FFFF66');
-			break;
-		case 1:
-			$('#srtDiffTitle').text('EASY');
-			$('#srtDiffTitle').css('color','#66FF66');
-			break;
-		default:
-			$('#srtDiffTitle').text('');
-			$('#srtDiffTitle').css('color','');
-			break;
-	}
-	if (mapnum > CHDATA.event.unlocked) {
+	if (CHDATA.config.diffmode == 1) {
+		$('#srtDiffTitle').text('HQ ' + CHDATA.player.level);
+		$('#srtDiffTitle').css('color','#FFFF66');
+		$('#srtStart').prop('disabled',(CHDATA.event.unlocked < mapnum));
 		$('#srtDiffHard').hide();
 		$('#srtDiffMed').hide();
 		$('#srtDiffEasy').hide();
 		$('#srtDiffBack').hide();
 		$('#srtDiffChange').hide();
-		chAddSortieError(1);
-	} else if (!CHDATA.event.maps[mapnum].diff) {
-		if (mapnum > 1 && CHDATA.event.maps[mapnum-1].diff <= 1 || MAPDATA[world].allowDiffs.indexOf(3) == -1) $('#srtDiffHard').hide();
-		else $('#srtDiffHard').show();
-		if (MAPDATA[world].allowDiffs.indexOf(2) == -1) $('#srtDiffMed').hide();
-		else $('#srtDiffMed').show();
-		if (MAPDATA[world].allowDiffs.indexOf(1) == -1) $('#srtDiffEasy').hide();
-		else $('#srtDiffEasy').show();
-		$('#srtDiffBack').hide();
-		$('#srtDiffChange').hide();
-		chAddSortieError(1);
 	} else {
-		$('#srtDiffHard').hide();
-		$('#srtDiffMed').hide();
-		$('#srtDiffEasy').hide();
-		$('#srtDiffBack').hide();
-		if (nowhp) $('#srtDiffChange').show();
-		else $('#srtDiffChange').hide();
-		chRemoveSortieError(1);
+		switch(CHDATA.event.maps[mapnum].diff) {
+			case 3:
+				$('#srtDiffTitle').text('HARD');
+				$('#srtDiffTitle').css('color','#FF6666');
+				break;
+			case 2:
+				$('#srtDiffTitle').text('NORMAL');
+				$('#srtDiffTitle').css('color','#FFFF66');
+				break;
+			case 1:
+				$('#srtDiffTitle').text('EASY');
+				$('#srtDiffTitle').css('color','#66FF66');
+				break;
+			default:
+				$('#srtDiffTitle').text('');
+				$('#srtDiffTitle').css('color','');
+				break;
+		}
+		if (mapnum > CHDATA.event.unlocked) {
+			$('#srtDiffHard').hide();
+			$('#srtDiffMed').hide();
+			$('#srtDiffEasy').hide();
+			$('#srtDiffBack').hide();
+			$('#srtDiffChange').hide();
+			chAddSortieError(1);
+		} else if (!CHDATA.event.maps[mapnum].diff) {
+			if (mapnum > 1 && CHDATA.event.maps[mapnum-1].diff <= 1 || MAPDATA[world].allowDiffs.indexOf(3) == -1) $('#srtDiffHard').hide();
+			else $('#srtDiffHard').show();
+			if (MAPDATA[world].allowDiffs.indexOf(2) == -1) $('#srtDiffMed').hide();
+			else $('#srtDiffMed').show();
+			if (MAPDATA[world].allowDiffs.indexOf(1) == -1) $('#srtDiffEasy').hide();
+			else $('#srtDiffEasy').show();
+			$('#srtDiffBack').hide();
+			$('#srtDiffChange').hide();
+			chAddSortieError(1);
+		} else {
+			$('#srtDiffHard').hide();
+			$('#srtDiffMed').hide();
+			$('#srtDiffEasy').hide();
+			$('#srtDiffBack').hide();
+			if (nowhp) $('#srtDiffChange').show();
+			else $('#srtDiffChange').hide();
+			chRemoveSortieError(1);
+		}
 	}
 	
 	if (!mapdata.fleetTypes) {
@@ -1051,7 +1095,7 @@ function chLoadSortieInfo(mapnum) {
 		}
 	}
 	
-	if (!(mapdata.giveLock||mapdata.checkLock)) {
+	if (CHDATA.config.disablelock || !(mapdata.giveLock||mapdata.checkLock)) {
 		$('#srtLock').hide();
 	} else {
 		$('#srtLock').show();
@@ -1239,6 +1283,11 @@ function chRepairOne(fleetnum,shipnum) {
 	var sid = CHDATA.fleets[fleetnum][shipnum-1];
 	var ship = CHDATA.ships[sid];
 	if (!ship) return;
+	
+	var cost = chGetRepairCost(ship);
+	CHDATA.event.resources.fuel += cost.fuel;
+	CHDATA.event.resources.steel += cost.steel;
+	chUIUpdateResources();
 	chPushHP(fleetnum,shipnum,ship.HP[1]);
 }
 
@@ -1256,6 +1305,12 @@ function chResupplyOne(fleetnum,shipnum) {
 	var sid = CHDATA.fleets[fleetnum][shipnum-1];
 	var ship = CHDATA.ships[sid];
 	if (!ship) return;
+	
+	var cost = chGetSupplyCost(ship);
+	CHDATA.event.resources.fuel += cost.fuel;
+	CHDATA.event.resources.ammo += cost.ammo;
+	CHDATA.event.resources.baux += cost.baux;
+	chUIUpdateResources();
 	var shipd = SHIPDATA[ship.masterId];
 	chPushResupply(fleetnum,shipnum,10,10,shipd.SLOTS);
 }
@@ -1285,15 +1340,23 @@ function chPreviewRepair(fleetnum,shipnum) {
 	for (var i=0; i<ships.length; i++) {
 		var ship = CHDATA.ships[ships[i]];
 		if (!ship) continue;
-		var shipd = SHIPDATA[ship.masterId];
-		if (ship.HP[0] >= ship.HP[1]) continue;
-		fuel += Math.floor(.032*shipd.fuel*(ship.HP[1]-ship.HP[0]));
-		steel += Math.floor(.06*shipd.fuel*(ship.HP[1]-ship.HP[0]));
-		buckets += 1;
+		let cost = chGetRepairCost(ship);
+		fuel += cost.fuel;
+		steel += cost.steel;
+		if (cost.fuel && cost.steel) buckets += 1;
 	}
 	$('#hbRFuel').text(fuel);
 	$('#hbRSteel').text(steel);
 	$('#hbRBucket').text(buckets);
+}
+
+function chGetRepairCost(ship) {
+	var shipd = SHIPDATA[ship.masterId];
+	if (ship.HP[0] >= ship.HP[1]) return { fuel: 0, steel: 0 };
+	return {
+		fuel: Math.floor(.032*shipd.fuel*(ship.HP[1]-ship.HP[0])),
+		steel: Math.floor(.06*shipd.fuel*(ship.HP[1]-ship.HP[0])),
+	};
 }
 
 function chPreviewResupply(fleetnum,shipnum) {
@@ -1310,13 +1373,25 @@ function chPreviewResupply(fleetnum,shipnum) {
 		var ship = CHDATA.ships[ships[i]];
 		if (!ship) continue;
 		var shipd = SHIPDATA[ship.masterId];
-		fuel += Math.floor((10-ship.fuel)*shipd.fuel/10);
-		ammo += Math.floor((10-ship.ammo)*shipd.ammo/10);
-		for (var j=0; j<ship.planes.length; j++) baux += 5*(shipd.SLOTS[j]-ship.planes[j]);
+		var cost = chGetSupplyCost(ship);
+		fuel += cost.fuel;
+		ammo += cost.ammo;
+		baux += cost.baux;
 	}
 	$('#hbSFuel').text(fuel);
 	$('#hbSAmmo').text(ammo);
 	$('#hbSBaux').text(baux);
+}
+
+function chGetSupplyCost(ship) {
+	var shipd = SHIPDATA[ship.masterId];
+	var baux = 0;
+	for (var j=0; j<ship.planes.length; j++) baux += 5*(shipd.SLOTS[j]-ship.planes[j]);
+	return {
+		fuel: Math.floor((10-ship.fuel)*shipd.fuel/10),
+		ammo: Math.floor((10-ship.ammo)*shipd.ammo/10),
+		baux: baux,
+	};
 }
 
 function chClickMorale(fleetnum,shipnum) {

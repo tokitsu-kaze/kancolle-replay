@@ -50,15 +50,27 @@ function chMenuShowFiles() {
 	for (var key in localStorage) {
 		if (key.indexOf('ch_basic') != 0) continue;
 		var num = key.substr(8);
-		if ($('#chfile'+num).length) continue;
-		nums.push(parseInt(num));
-	}
-	nums.sort();
-	for (var k=0; k<nums.length; k++) {
-		var num = nums[k], key = 'ch_basic'+nums[k];
+		if ($('#chfile'+num).length) {
+			if (num == localStorage.ch_file) {
+				$('#chfile'+num).html('');
+			} else {
+				$('#chfile'+num+' div.menufiledelete').show();
+				continue;
+			}
+		}
 		var data = JSON.parse(localStorage[key]);
+		nums.push({ num: parseInt(num), data: data });
+	}
+	nums.sort(function(a,b) { return a.data.event.createtime - b.data.event.createtime; });
+	for (var k=0; k<nums.length; k++) {
+		var num = nums[k].num, key = 'ch_basic'+nums[k];
+		var data = nums[k].data;
 		var mdata = MAPDATA[data.event.world];
-		var tr = $('<tr id="chfile'+num+'" class="chfile" onclick="chMenuLoadFile('+num+')"></tr>');
+		var tr = $('#chfile'+num);
+		if (tr.length <= 0) {
+			tr = $('<tr id="chfile'+num+'" class="chfile" onclick="chMenuLoadFile('+num+')"></tr>');
+			$('#tfileselect').append(tr);
+		}
 		var td = $('<td style="display:block"></td>');
 		td.append($('<img src="'+mdata.bannerImg+'" style="opacity:.25;position:absolute" />'));
 		var divMain = $('<div style="position:absolute;margin-left:20px"></div>');
@@ -91,8 +103,8 @@ function chMenuShowFiles() {
 		divMain.append(divProgress);
 		var divDelete = $('<div class="menufiledelete" onclick="chMenuClickedDeleteFile(this,'+num+');event.stopPropagation()">&#10006;</div>');
 		td.append(divDelete);
+		if (num == localStorage.ch_file) divDelete.hide();
 		tr.append(td);
-		$('#tfileselect').append(tr);
 	}
 }
 
@@ -129,6 +141,14 @@ function chMenuSelectedEvent(eventnum) {
 	$(".ui-dialog-titlebar").hide();
 }
 
+function chMenuBackEvent() {
+	$('#menuevents').show();
+	$('#menuloadfile').hide();
+	$('#menusettings').hide();
+	$('#fileKC3').val('');
+	$('#menufinfo').hide();
+}
+
 function chMenuDefaultSettings() {
 	$('#menusships').prop('checked',true);
 	$('#menusequips').prop('checked',true);
@@ -142,6 +162,8 @@ function chMenuDefaultSettings() {
 	
 	$('#menusdiff option[value="1"]').prop('disabled',(MAPDATA[EVENTNUM].diffMode != 1));
 	$('#menusdiff').val(MAPDATA[EVENTNUM].diffMode);
+	
+	$('#menuslock').prop('checked',false);
 }
 
 function chMenuExtractSettings() {
@@ -149,7 +171,8 @@ function chMenuExtractSettings() {
 	CHDATA.config.disableships = $('#menusships').prop('checked');
 	CHDATA.config.disableequips = $('#menusequips').prop('checked');
 	CHDATA.config.mechanicsdate = $('#menusmechanics').val();
-	CHDATA.config.diffmode = $('#menusdiff').val();
+	CHDATA.config.diffmode = parseInt($('#menusdiff').val());
+	CHDATA.config.disablelock = $('#menuslock').prop('checked');
 }
 
 function chMenuDone() {
