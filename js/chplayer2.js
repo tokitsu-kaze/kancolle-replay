@@ -1767,6 +1767,7 @@ function chReturnSortie() {
 }
 
 function chUIUpdateResources() {
+	if (!CHDATA.event.resources) return;
 	$('#resfuel').text(CHDATA.event.resources.fuel);
 	$('#resammo').text(CHDATA.event.resources.ammo);
 	$('#ressteel').text(CHDATA.event.resources.steel);
