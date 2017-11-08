@@ -417,7 +417,7 @@ function chProcessKC3File2() {
 		var shipO = kcdata.ships[sid];
 		var shipN = CHDATA.ships[sid] = {};
 		var shipd = SHIPDATA[shipO.masterId];
-		if (!shipd.SLOTS) continue;
+		if (!shipd || !shipd.SLOTS) continue;
 		shipN.masterId = shipO.masterId;
 		shipN.LVL = shipO.level;
 		shipN.HP = [shipO.hp[1],shipO.hp[1]];
