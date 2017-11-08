@@ -323,18 +323,21 @@ table.dialog4 img {
 	height:40px;
 	width:120px;
 	border-radius:5px;
-	background-color:darkgrey;
+	background-color:#D0D0D0;
 	cursor:pointer;
 	float:left;
 	margin-left:20px;
 	display:table-cell;
 	text-align:center;
 }
+.mainbutton div {
+	margin-top: 6px;
+}
 .mainbutton img, .mainbutton span {
 	vertical-align:middle;
 }
 .mainbutton:hover {
-	background-color:darkgreen;
+	background-color:#A0A0A0;
 }
 
 .hoverbox {
@@ -453,6 +456,18 @@ tr.chfile:hover {
 	height:50px;
 	border-radius:5px;
 	background-color:#808080;
+}
+
+#resourcespace table {
+	width: 160px;
+}
+#resourcespace span {
+	color: red;
+	margin-left: 4px;
+	vertical-align: middle;
+}
+#resourcespace img {
+	vertical-align: middle;
 }
 
 @keyframes fadein {

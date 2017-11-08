@@ -1631,6 +1631,8 @@ var MAPDATA = {
 						},
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 					},
 					'B':{
@@ -1640,6 +1642,8 @@ var MAPDATA = {
 						route: 'D',
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1'],
+							1: ['Easy 1','Easy 2'],
 						},
 					},
 					'C':{
@@ -1650,6 +1654,8 @@ var MAPDATA = {
 						subonly: true,
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1'],
 						},
 					},
 					'D':{
@@ -1667,6 +1673,8 @@ var MAPDATA = {
 						route: 'Z',
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1','Medium 2'],
+							1: ['Easy 1','Easy 2'],
 						},
 					},
 					'F':{
@@ -1677,6 +1685,8 @@ var MAPDATA = {
 						route: 'G',
 						compDiff: {
 							3: ['Hard 1','Hard 2'],
+							2: ['Medium 1'],
+							1: ['Easy 1'],
 						},
 					},
 					'G':{
@@ -1695,9 +1705,13 @@ var MAPDATA = {
 						end: true,
 						compDiff: {
 							3: ['Hard 1'],
+							2: ['Medium 1'],
+							1: ['Easy 1'],
 						},
 						compDiffF: {
 							3: ['Hard F'],
+							2: ['Medium F'],
+							1: ['Easy 1'],
 						},
 					},
 				},
