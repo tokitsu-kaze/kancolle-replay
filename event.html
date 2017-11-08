@@ -22,8 +22,14 @@
 		<div id="mainspace" style="display:none">
 		<span id="btnMenu" onclick="chOpenMenu(true)">Menu</span>
 		<br><br>
-		<div id="btnRepairAll" class="mainbutton" onclick="chRepairAll()" onmouseover="chPreviewRepair();chShowHoverBox('hbRepair',this)" onmouseout="chHideHoverBox('hbRepair')"><img src="assets/stats/bucket.png"/> <span>Repair All</span></div>
-		<div id="btnResupplyAll" class="mainbutton" onclick="chResupplyAll()"  onmouseover="chPreviewResupply();chShowHoverBox('hbResupply',this)" onmouseout="chHideHoverBox('hbResupply')"><img src="assets/stats/ammo.png"/> <span>Resupply All</span></div>
+		<div id="btnRepairAll" class="mainbutton" onclick="chRepairAll()" onmouseover="chPreviewRepair();chShowHoverBox('hbRepair',this)" onmouseout="chHideHoverBox('hbRepair')"><div><img src="assets/stats/bucket.png"/> <span>Repair All</span></div></div>
+		<div id="btnResupplyAll" class="mainbutton" onclick="chResupplyAll()"  onmouseover="chPreviewResupply();chShowHoverBox('hbResupply',this)" onmouseout="chHideHoverBox('hbResupply')"><div><img src="assets/stats/ammo.png"/> <span>Resupply All</span></div></div>
+		<div id="resourcespace" style="float:left;margin-left:580px" title="Resources Used">
+			<table style="width:160px">
+				<tr><td><img src="assets/stats/fuel.png" /><span id="resfuel">0</span></td><td><img src="assets/stats/steel.png" /><span id="ressteel">0</span></td></tr>
+				<tr><td><img src="assets/stats/ammo.png" /><span id="resammo">0</span></td><td><img src="assets/stats/baux.png" /><span id="resbaux">0</span></td></tr>
+			</table>
+		</div>
 		<br style="clear:both">
 		<br>
 		<div id="fleetspace">
@@ -58,11 +64,11 @@
 		<br style="clear:both">
 		
 		<table><tr>
-		<td><div id="btnsupportN" class="btnsupport" onclick="chAddSupportN()">
+		<td><div id="btnsupportN" class="btnsupport" title="Toggle Send Normal Support" onclick="chAddSupportN()">
 			<img src="assets/maps/nodeR.png" style="margin-top:15px;margin-left:15px" />
 			<img src="assets/stats/dark_support.png" style="position:absolute;margin-top:5px;margin-left:-24px" />
 		</div></td>
-		<td><div id="btnsupportB" class="btnsupport" onclick="chAddSupportB()">
+		<td><div id="btnsupportB" class="btnsupport" title="Toggle Send Boss Support" onclick="chAddSupportB()">
 			<img src="assets/maps/nodeBoss.png" style="margin-top:6px;margin-left:5px" />
 			<img src="assets/stats/dark_support.png" style="position:absolute;margin-top:5px;margin-left:-32px" />
 		</div></td>
@@ -163,7 +169,7 @@
 		</div>
 		
 		<div id="dialogselequip" style="background-color:#EDE6D8;display:none">
-			<div id="equipfilters"></div><br>
+			<div id="equipfilters" style="width:320px"></div><br>
 			<div id="esremove" onclick="chSetEquip(-1)"><span>Remove</span></div>
 			<table id="equipselecttable" class="dialog3"></table>
 		</div>
@@ -184,7 +190,7 @@
 		</div>
 		
 		<div id="dialogmainmenu">
-			<span>KanColle Event Simulator</span>
+			<span>KanColle Event Simulator</span><span style="margin-left:20px;color:red;font-size:12px">Beta</span>
 			<br><br><br>
 			<div id="menufileselect">
 				<table id="tfileselect">
@@ -204,6 +210,7 @@
 			</div>
 			<div id="menuloadfile">
 				<img src="" id="menucurbanner" /><br>
+				<div><input type="button" value="Back" onclick="chMenuBackEvent()" /></div>
 				<br>
 				<label for="fileKC3" style="font-weight:bold">Import .kc3 file: </label><input type="file" id="fileKC3" accept=".kc3" onchange="chLoadKC3File()"/><Br>
 				<span style="font-size:10px">Strategy Room > Profile > Export Basic Profile (player info, fleets, ships, equipment, config)</span>
@@ -233,10 +240,11 @@
 					<option value="1">Automatic By HQ Level</option>
 					<option value="2">By Choice</option>
 				</select><br><br>
-				<label for="menustime">Enable Time-based Mechanics: </label>
+				<!--<label for="menustime">Enable Time-based Mechanics: </label>
 				<input type="checkbox" id="menustime" disabled />
 				<span style="font-size:9px">(Morale is instantly restored, sparkling is free, map HP regen and debuff reset are disabled.)</span>
-				<br><br>
+				<br><br>-->
+				<input type="checkbox" id="menuslock" /><label for="menuslock">Disable Ship Locking?</label><br><br>
 				<input type="button" value="Restore Defaults" onclick="chMenuDefaultSettings()" />
 				<input type="button" value="Done" id="menusdone" onclick="chMenuDone()" disabled />
 			</div>
