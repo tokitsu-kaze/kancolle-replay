@@ -50,6 +50,7 @@ function chLoadFile(file) {
 	var basic = JSON.parse(localStorage['ch_basic'+FILE]);
 	CHDATA = JSON.parse(localStorage['ch_data'+FILE]);
 	for (var key in basic) CHDATA[key] = basic[key];
+	DIALOGSORT = -1;
 	InitUI();
 }
 

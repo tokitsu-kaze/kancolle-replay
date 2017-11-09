@@ -374,6 +374,7 @@ function chLoadKC3File() {
 	var reader = new FileReader();
 	reader.readAsText(files[0]);
 	reader.addEventListener('loadend',function() { chProcessKC3File(reader); });
+	console.log('LOAD');
 }
 
 function chProcessKC3File(reader){
@@ -415,9 +416,9 @@ function chProcessKC3File2() {
 	var stats = ['FP','TP','AA','AR','EV','ASW','LOS'];
 	for (var sid in kcdata.ships) {
 		var shipO = kcdata.ships[sid];
-		var shipN = CHDATA.ships[sid] = {};
 		var shipd = SHIPDATA[shipO.masterId];
 		if (!shipd || !shipd.SLOTS) continue;
+		var shipN = CHDATA.ships[sid] = {};
 		shipN.masterId = shipO.masterId;
 		shipN.LVL = shipO.level;
 		shipN.HP = [shipO.hp[1],shipO.hp[1]];
@@ -438,6 +439,15 @@ function chProcessKC3File2() {
 		shipN.morale = 49;
 		
 		if (CHDATA.config.disableships && shipd.added >= MAPDATA[CHDATA.event.world].date) {
+			for (var i=0; i<shipN.items.length; i++) {
+				if (shipN.items[i] <= 0) continue;
+				if (!EQDATA[CHDATA.gears['x'+shipN.items[i]].masterId]) {
+					CHDATA.gears['x'+shipN.items[i]].heldBy = null;
+					shipN.items[i] = -1;
+					chEmergencyResetStats(shipN,shipO);
+					break;
+				}
+			}
 			if (!chRevertShip(shipN)) {
 				shipN.disabled = true;
 				for (var i=0; i<shipN.items.length; i++) chShipEquipItem(sid,-1,i); //unequip items;
@@ -465,8 +475,15 @@ function chProcessKC3File2() {
 		// if (!CHDATA.config.mechanics.improvement) CHDATA.gears[eqid].stars = 0;
 		// if (!CHDATA.config.mechanics.proficiency) CHDATA.gears[eqid].ace = -1;
 	
-		if (!CHDATA.config.disableequips) continue; //maybe disallow newest ones because simulator can't handle?
-		if (EQDATA[CHDATA.gears[eqid].masterId].added >= MAPDATA[CHDATA.event.world].date) {
+		var eqd = EQDATA[CHDATA.gears[eqid].masterId];
+		if (!eqd) {
+			if (CHDATA.gears[eqid].heldBy) {
+				chEmergencyResetStats(CHDATA.ships[CHDATA.gears[eqid].heldBy],kcdata.ships[CHDATA.gears[eqid].heldBy]);
+			}
+			delete CHDATA.gears[eqid];
+			continue;
+		}
+		if (CHDATA.config.disableequips && eqd.added >= MAPDATA[CHDATA.event.world].date) {
 			var item = CHDATA.gears[eqid];
 			item.disabled = true;
 			if (item.heldBy) {
@@ -476,6 +493,18 @@ function chProcessKC3File2() {
 		}
 	}
 	
+}
+
+function chEmergencyResetStats(shipN,shipO) {
+	for (var i=0; i<shipN.items.length; i++) shipN.items[i] = -1;
+	shipN.FP = shipO.fp[1];
+	shipN.TP = shipO.tp[1];
+	shipN.AA = shipO.aa[1];
+	shipN.AR = shipO.ar[1];
+	shipN.EV = shipO.ev[1];
+	shipN.ASW = shipO.as[1];
+	shipN.LOS = shipO.ls[1];
+	shipN.RNG = SHIPDATA[shipN.masterId].RNG;
 }
 
 function chRevertShip(ship) {
@@ -499,7 +528,8 @@ function chRevertShip(ship) {
 		ship[stats[i]] =  Math.floor(base + (max-base)*ship.LVL/99);
 		for (var j=0; j<ship.items[j]; j++) {
 			if (ship.items[j] == -1) continue;
-			ship[stats[i]] += EQDATA[CHDATA.gears['x'+ship.items[j]].masterId][stats[i]] || 0;
+			var eqd = EQDATA[CHDATA.gears['x'+ship.items[j]].masterId];
+			if (eqd) ship[stats[i]] += EQDATA[CHDATA.gears['x'+ship.items[j]].masterId][stats[i]] || 0;
 		}
 	}
 	ship.RNG = newshipd.RNG;
