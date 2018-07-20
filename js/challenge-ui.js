@@ -206,8 +206,10 @@ function chDialogItemInit() {
 	itemids.sort(function(a,b) {
 		var eqid1 = CHDATA.gears[a].masterId;
 		var equip1 = EQDATA[eqid1];
+		if (equip1 == undefined) return 1;
 		var eqid2 = CHDATA.gears[b].masterId;
 		var equip2 = EQDATA[eqid2];
+		if (equip2 == undefined) return 1;
 		if (equip1.type != equip2.type) return (equip1.type < equip2.type)? -1:1;
 		return (eqid1 <= eqid2)? -1:1;
 	});
@@ -350,6 +352,7 @@ function chShipEquipItem(shipid,itemid,slot) {
 	var olditemid = ship.items[slot];
 	if (olditemid > 0) {
 		var oldeqd = EQDATA[CHDATA.gears['x'+olditemid].masterId];
+		if (oldeqd == undefined) return;
 		for (var i=0; i<stats.length; i++) {
 			if (oldeqd[stats[i]]) ship[stats[i]]-=oldeqd[stats[i]];
 		}
