@@ -38,6 +38,7 @@
 			<td><div id="tabmain" class="tabfleet" onclick="chClickedTab(this)"><img src="assets/maps/ship.png" /><span>Main</span></div></td>
 			<td><div id="tabsupportN" class="tabfleet" onclick="chClickedTab(this)"><img src="assets/maps/nodeR.png" /><span>Support</span></div></td>
 			<td><div id="tabsupportB" class="tabfleet" onclick="chClickedTab(this)"><img src="assets/maps/nodeBoss.png" /><span>Support</span></div></td>
+			<td><div id="tabLBAS" class="tabfleet" onclick="chClickedTab(this)"><img src="assets/plane13.png" /><span>LBAS</span></div></td>
 			</tr></table>
 		</div>
 		<div id="mainfleetspacewrap">
@@ -59,6 +60,10 @@
 			<div id="supportfleetspace2"></div>
 			<br style="clear:both"><div class="combinespacec" style="height:40px"></div>
 		</div>
+		<div id="lbasspacewrap" style="display:none">
+			<div id="lbasspace"></div>
+			<br style="clear:both"><div class="combinespacec" style="height:40px"></div>
+		</div>
 		</div>
 		
 		<br style="clear:both">
@@ -71,6 +76,16 @@
 		<td><div id="btnsupportB" class="btnsupport" title="Toggle Send Boss Support" onclick="chAddSupportB()">
 			<img src="assets/maps/nodeBoss.png" style="margin-top:6px;margin-left:5px" />
 			<img src="assets/stats/dark_support.png" style="position:absolute;margin-top:5px;margin-left:-32px" />
+		</div></td>
+		<td style="width:20px"></td>
+		<td><div id="btnLBAS1" class="btnsupport" title="Send LBAS 1" onclick="chAddLBAS(1)">
+			<img src="assets/plane13.png" style="width:50px;margin-top:8px;margin-left:2px" />
+		</div></td>
+		<td><div id="btnLBAS2" class="btnsupport" title="Send LBAS 2" onclick="chAddLBAS(2)">
+			<img src="assets/plane13.png" style="width:50px;margin-top:8px;margin-left:2px" />
+		</div></td>
+		<td><div id="btnLBAS3" class="btnsupport" title="Send LBAS 3" onclick="chAddLBAS(3)">
+			<img src="assets/plane13.png" style="width:50px;margin-top:8px;margin-left:2px" />
 		</div></td>
 		</tr></table>
 
@@ -207,7 +222,8 @@
 				<div class="eventbutton" style="background-image:url(http://i.imgur.com/WGhBfSf.jpg)"><img src="http://i.imgur.com/HGuOC0q.jpg" alt="Winter 2013" onclick="chMenuSelectedEvent(25)"/></div>
 				<div class="eventbutton" style="background-image:url(http://i.imgur.com/1rQiUHS.jpg)"><img src="http://i.imgur.com/TsVcRjn.jpg" alt="Summer 2014" onclick="chMenuSelectedEvent(27)"/></div>
 				<div class="eventbutton" style="background-image:url(http://i.imgur.com/2qArUXu.png)"><img src="http://i.imgur.com/rB0Q7Z6.png" alt="Summer 2015" onclick="chMenuSelectedEvent(31)"/></div>
-				<div class="eventbutton" style="background-image:url(http://i.imgur.com/46s7gmq.png)"><img src="http://i.imgur.com/JWmN8EI.png" alt="Summer 2015" onclick="chMenuSelectedEvent(32)"/></div>
+				<div class="eventbutton" style="background-image:url(http://i.imgur.com/46s7gmq.png)"><img src="http://i.imgur.com/JWmN8EI.png" alt="Fall 2015" onclick="chMenuSelectedEvent(32)"/></div>
+				<div class="eventbutton" style="background-image:url(http://i.imgur.com/6zdOwyN.png)"><img src="http://i.imgur.com/8Di99lM.png" alt="Spring 2016" onclick="chMenuSelectedEvent(34)"/></div>
 			</div>
 			<div id="menuloadfile">
 				<img src="" id="menucurbanner" /><br>
