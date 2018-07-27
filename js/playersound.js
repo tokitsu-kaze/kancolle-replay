@@ -179,6 +179,7 @@ var BGMLIST = {
 	2032: {url:'assets/music/905w.ogg'},
 	2034: {url:'assets/music/907c.ogg'},
 	2134: {url:'assets/music/908i.ogg'},
+	2035: {url:'assets/music/909q.ogg'},
 	3001: {url:'assets/music/Sound_se_18.ogg'},
 	3002: {url:'assets/music/Sound_se_63.ogg'},
 	3003: {url:'assets/music/Sound_se_52.ogg'},

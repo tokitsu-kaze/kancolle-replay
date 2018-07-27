@@ -1207,8 +1207,16 @@ function prepBattle(letter) {
 	if (mapdata.debuffAmount) {
 		var debuffCheck = MAPDATA[WORLD].maps[MAPNUM].debuffCheck;
 		if (debuffCheck && debuffCheck(CHDATA.event.maps[MAPNUM].debuff)) {
-			if (mapdata.debuffAmount) FLEETS2[0].ships[0].debuff = mapdata.debuffAmount;
-			console.log('debuff applied');
+			if (typeof mapdata.debuffAmount === 'object') {
+				for (var i=0; i<FLEETS2[0].ships.length; i++) {
+					var ship = FLEETS2[0].ships[i];
+					if (mapdata.debuffAmount[ship.mid]) ship.debuff = mapdata.debuffAmount[ship.mid];
+				}
+				console.log('debuff applied by mid');
+			} else if (mapdata.debuffAmount) {
+				FLEETS2[0].ships[0].debuff = mapdata.debuffAmount;
+				console.log('debuff applied to flag');
+			}
 		}
 	}
 	
@@ -1280,7 +1288,10 @@ function prepBattle(letter) {
 	var res;
 	if (CHDATA.fleets.combined) res = simCombined(CHDATA.fleets.combined,FLEETS1[0],FLEETS1[1],FLEETS2[0],supportfleet,LBASwaves,doNB,NBonly,aironly,landbomb,false,BAPI,true);
 	else res = sim(FLEETS1[0],FLEETS2[0],supportfleet,LBASwaves,doNB,NBonly,aironly,landbomb,false,BAPI,true);
-	if (FLEETS2[0].ships[0].debuff) BAPI.data.api_boss_damaged = 1;
+	if (FLEETS2[0].ships[0].debuff) {
+		if (NBonly) BAPI.yasen.api_boss_damaged = 1;
+		else BAPI.data.api_boss_damaged = 1;
+	}
 	CHAPI.battles.push(BAPI);
 	$('#code').val(JSON.stringify(CHAPI)); //remove?
 	
@@ -2056,7 +2067,7 @@ function getLBASRange(ship) {
 		}
 		return rangeMax;
 	}
-	var rangeMin = 999, rangeScout = 0;
+	var rangeMin = 9999, rangeScout = 0;
 	for (var i=0; i<ship.items.length; i++) {
 		if (ship.items[i] <= -1) continue;
 		var eq = CHDATA.gears['x'+ship.items[i]];
@@ -2066,5 +2077,6 @@ function getLBASRange(ship) {
 		}
 	}
 	if (rangeScout > rangeMin) rangeMin += Math.round(Math.sqrt(rangeScout-rangeMin));
+	if (rangeMin == 9999) return 0;
 	return rangeMin;
 }
