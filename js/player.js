@@ -1042,22 +1042,26 @@ function processAPI(root) {
 						eventqueue.push([shootDA,d,getState()]); break;
 					case 2:
 					case 3:
-						d[2] += d[3]; d[3] = (d[4]||d[5]); d[4] = d[6];
+						if (d.length >= 7) { d[2] += d[3]; d[3] = (d[4]||d[5]); d[4] = d[6]; }
 						eventqueue.push([shootBigTorp,d,getState()]); break;
 					case 4:
-						d[2] += Math.max(0,d[3]); d[3] = (d[4]||d[5]); d[4] = d[6];
+						if (d.length >= 7) { d[2] += Math.max(0,d[3]); d[3] = (d[4]||d[5]); d[4] = d[6]; }
 						eventqueue.push([shootBigGun,d,getState()]); break;
 					case 5:
-						d[2] += Math.max(0,d[3]); d[3] = (d[4]||d[5]); d[4] = d[6];
+						if (d.length >= 7) { d[2] += Math.max(0,d[3]); d[3] = (d[4]||d[5]); d[4] = d[6]; }
 						eventqueue.push([shootSpecialGun,d,getState()]); break;
 					case 6:
-						d[2] += Math.max(0,d[3]); d[2] += Math.max(0,d[4]);
-						d.splice(3,2);
+						if (d.length >= 7) { 
+							d[2] += Math.max(0,d[3]); d[2] += Math.max(0,d[4]);
+							d.splice(3,2);
+						}
 						eventqueue.push([shootPlaneCutIn,d,getState()]); break;
 					case 7:
 					case 8:
-						d[2] += Math.max(0,d[3]); d[2] += Math.max(0,d[4]);
-						d.splice(3,2);
+						if (d.length >= 7) { 
+							d[2] += Math.max(0,d[3]); d[2] += Math.max(0,d[4]);
+							d.splice(3,2);
+						}
 						eventqueue.push([shootBigTorp,d,getState()]); break;
 				}
 				
