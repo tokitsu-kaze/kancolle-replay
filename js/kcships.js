@@ -34,7 +34,7 @@ Fleet.prototype.loadShips = function(ships) {
 Fleet.prototype.fleetAirPower = function(jetonly) {  //get air power
 	this.AP = 0;
 	for (var i=0; i<this.ships.length; i++) {
-		if (this.ships[i].HP <= 0) continue;
+		if (this.ships[i].HP <= 0 || this.ships[i].retreated) continue;
 		this.AP += this.ships[i].airPower(jetonly);
 	}
 	return this.AP;
