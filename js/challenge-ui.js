@@ -1252,6 +1252,7 @@ function chLoadSortieInfo(mapnum) {
 		$('#srtDiffEasy').hide();
 		$('#srtDiffBack').hide();
 		$('#srtDiffChange').hide();
+		chRemoveSortieError(1);
 	} else {
 		switch(CHDATA.event.maps[mapnum].diff) {
 			case 3:
