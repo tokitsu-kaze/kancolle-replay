@@ -99,6 +99,7 @@ var MECHANICS = {
 	AACI: true,
 	fitGun: true,
 	morale: true,
+	fixFleetAA: true,
 };
 var NERFPTIMPS = false;
 var BREAKPTIMPS = false;
@@ -873,7 +874,8 @@ function getAAShotProp(defender,slotsize) {
 
 function getAAShotFlat(defender) {
 	var mod = (defender.side==0)? .1 : 0.09375;
-	return (defender.weightedAntiAir()+defender.fleet.fleetAntiAir())*mod;
+	var fAA = (MECHANICS.fixFleetAA)? defender.fleet.fleetAntiAir() : 0;
+	return (defender.weightedAntiAir()+fAA)*mod;
 }
 
 function getContact(carriers) {

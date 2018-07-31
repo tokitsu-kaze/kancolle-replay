@@ -196,58 +196,92 @@ function chMenuDone() {
 }
 
 function chAddReward(data) {
-	if (!data.ships) return;
-	for (var i=0; i<data.ships.length; i++) {
-		var mid = data.ships[i];
-		if (!SHIPDATA[mid]) continue;
-		for (var j=0; j<100; j++) {
-			var sid = 'x'+(90000+j);
-			if (CHDATA.ships[sid]) continue;
-			var sdata = SHIPDATA[mid];
-			var lvl = 20;
-			var newship = {
-				HP: [sdata.HP,sdata.HP],
-				LVL: lvl,
-				FP: sdata.FP,
-				TP: sdata.TP,
-				AA: sdata.AA,
-				AR: sdata.AR,
-				EV: sdata.EVbase + Math.floor((sdata.EV-sdata.EVbase)*lvl/99),
-				LOS: sdata.LOSbase + Math.floor((sdata.LOS-sdata.LOSbase)*lvl/99),
-				ASW: sdata.ASWbase + Math.floor((sdata.ASW-sdata.ASWbase)*lvl/99),
-				LUK: sdata.LUK,
-				RNG: sdata.RNG,
-				ammo: 10,
-				fuel: 10,
-				items: [-1,-1,-1,-1,-1],
-				masterId: mid,
-				morale: 49,
-				planes: sdata.SLOTS.slice(),
-			};
-			CHDATA.ships[sid] = newship;
-			break;
+	if (data.ships) {;
+		for (var i=0; i<data.ships.length; i++) {
+			var mid = data.ships[i];
+			if (!SHIPDATA[mid]) continue;
+			for (var j=0; j<100; j++) {
+				var sid = 'x'+(90000+j);
+				if (CHDATA.ships[sid]) continue;
+				var sdata = SHIPDATA[mid];
+				var lvl = 20;
+				var newship = {
+					HP: [sdata.HP,sdata.HP],
+					LVL: lvl,
+					FP: sdata.FP,
+					TP: sdata.TP,
+					AA: sdata.AA,
+					AR: sdata.AR,
+					EV: sdata.EVbase + Math.floor((sdata.EV-sdata.EVbase)*lvl/99),
+					LOS: sdata.LOSbase + Math.floor((sdata.LOS-sdata.LOSbase)*lvl/99),
+					ASW: sdata.ASWbase + Math.floor((sdata.ASW-sdata.ASWbase)*lvl/99),
+					LUK: sdata.LUK,
+					RNG: sdata.RNG,
+					ammo: 10,
+					fuel: 10,
+					items: [-1,-1,-1,-1,-1],
+					masterId: mid,
+					morale: 49,
+					planes: sdata.SLOTS.slice(),
+				};
+				CHDATA.ships[sid] = newship;
+				break;
+			}
+		}
+		DIALOGSORT = null;
+		chFillDialogShip(1);
+	}
+	if (data.items) {
+		//right now this is "just for fun"
+		for (var i=0; i<data.items.length; i++) {
+			var mid = data.items[i];
+			if (!EQDATA[mid]) continue;
+			for (var j=0; j<100; j++) {
+				var eqid = 'x'+(90000+j);
+				if (CHDATA.gears[eqid]) continue;
+				var newequip = {
+					itemId: eqid,
+					masterId: mid,
+					lock: 1,
+					stars: 0,
+					ace: ((EQTDATA[EQDATA[mid].type].isPlane)? 7 : -1)
+				};
+				CHDATA.gears[eqid] = newequip;
+				break;
+			}
 		}
 	}
-	DIALOGSORT = null;
-	chFillDialogShip(1);
 }
 
 function chShowReward(data,tracker) {
 	if (tracker === undefined) tracker = 0;
-	if (!data.ships) return;
-	$('#dialogreward').dialog('open');
-	$('#rewardshine').css('animation','spin 5s linear infinite');
-	$('#rewardship').attr('src','assets/icons/'+SHIPDATA[data.ships[tracker]].image);
-	$('#rewardship').css('animation','appear 1s linear 1');
-	tracker++;
-	if (tracker < data.ships.length) {
-		$('#dialogreward').dialog('option','close',function() {
-			setTimeout(function() { chShowReward(data,tracker); }, 1);
-		});
-	} else {
-		$('#dialogreward').dialog('option','close',function() {
-			$('#rewardshine').css('animation','');
-			$('#rewardship').css('animation','');
-		});
+	var numShips = (data.ships)? data.ships.length : 0;
+	var numItems = (data.items)? data.items.length : 0;
+	if (numShips + numItems) {
+		$('#dialogreward').dialog('open');
+		$('#rewardshine').css('animation','spin 5s linear infinite');
+		if (tracker < numShips) {
+			$('#rewardship').attr('src','assets/icons/'+SHIPDATA[data.ships[tracker]].image);
+		} else {
+			//right now this is "just for fun"
+			var ind = tracker-numShips;
+			if (data.items[ind] == 56) { //shinden kai use image
+				$('#rewardship').attr('src','assets/maps/22/Shinden_Kai_056_Card.png');
+			} else {
+				$('#rewardship').attr('src','assets/items/'+EQTDATA[EQDATA[data.items[ind]].type].image+'.png');
+			}
+		}
+		$('#rewardship').css('animation','appear 1s linear 1');
+		tracker++;
+		if (tracker < numShips + numItems) {
+			$('#dialogreward').dialog('option','close',function() {
+				setTimeout(function() { chShowReward(data,tracker); }, 1);
+			});
+		} else {
+			$('#dialogreward').dialog('option','close',function() {
+				$('#rewardshine').css('animation','');
+				$('#rewardship').css('animation','');
+			});
+		}
 	}
 }

@@ -965,6 +965,16 @@ function Equip(equipid,level,rank) {
 	if (EQTDATA[eq.type].isfighter && eq.AA) this.isfighter = true;
 	if (EQTDATA[eq.type].isdivebomber) this.isdivebomber = true;
 	if (EQTDATA[eq.type].istorpbomber) this.istorpbomber = true;
+	
+	if (eq.btype == null && EQTDATA[eq.type].btype) {
+		this.btype = EQTDATA[eq.type].btype;
+		if (this.btype == B_RADAR && this.AA >= 2) this.atype = A_AIRRADAR;
+	}
+	if (eq.atype == null && EQTDATA[eq.type].atype) {
+		this.atype = EQTDATA[eq.type].atype;
+		if (this.atype == A_HAGUN && this.AA >= 8) this.atype = A_HAFD;
+		if (this.atype == A_AAGUN && this.AA >= 9) this.isconcentrated = true;
+	}
 }
 Equip.prototype.setImprovement = function(level) {
 	this.level = level;

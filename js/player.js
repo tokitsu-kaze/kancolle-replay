@@ -428,6 +428,9 @@ function processAPI(root) {
 		data = root.battles[0].yasen;
 		stage.removeChild(bg);
 		stage.addChildAt(bg2,0);
+	} else if (data.api_n_hougeki1) {
+		stage.removeChild(bg);
+		stage.addChildAt(bg2,0);
 	}
 	console.log(root);
 	COMBINED = root.combined;
@@ -1096,6 +1099,8 @@ function processAPI(root) {
 		//------------------------------
 		
 		//night first
+		var f1 = (COMBINED)? fleet1C : fleet1;
+		var f2e = f2;
 		if (data.api_n_hougeki1) {
 			eventqueue.push([NBstart,[data.api_flare_pos,data.api_touch_plane,(orel)?999:(isboss)? map.bgmNB : map.bgmNN, data.api_ship_ke_combined]]);
 			if (data.api_n_support_flag) {
@@ -1145,7 +1150,7 @@ function processAPI(root) {
 		}
 		
 		//earlier air support for night-to-day
-		if (data.api_n_hougeki1 && data.api_support_info) {
+		if (data.api_n_hougeki1 && data.api_support_info && data.api_day_flag == 1) {
 			processSupport(data.api_support_flag, data.api_support_info);
 		}
 		
@@ -1153,7 +1158,7 @@ function processAPI(root) {
 		if (data.api_kouku) processKouku(data.api_kouku);
 		
 		//support phase
-		if (data.api_support_info && !data.api_n_hougeki1) {
+		if (data.api_support_info && (!data.api_n_hougeki1 || data.api_day_flag != 1)) {
 			processSupport(data.api_support_flag, data.api_support_info);
 		}
 		
@@ -1210,8 +1215,8 @@ function processAPI(root) {
 		
 		
 		//night battle
-		var f1 = (COMBINED)? fleet1C : fleet1;
-		var f2e = f2;
+		f1 = (COMBINED)? fleet1C : fleet1;
+		f2e = f2;
 		var yasen = (data.api_hougeki)? data : root.battles[b].yasen;
 		var combinedEType = (!yasen.api_ship_ke_combined)? 0 : (yasen.api_active_deck && yasen.api_active_deck[1] == 1)? 1 : 2;
 		if (combinedEType==2) f2e = f2c;

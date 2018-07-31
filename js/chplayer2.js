@@ -3,6 +3,14 @@ function InitUI() {
 	WORLD = CHDATA.event.world;
 	MAPNUM = CHDATA.event.mapnum;
 	
+	if (CHHPREGENTIMER.running) {
+		CHHPREGENTIMER.stop();
+	}
+	if (MAPDATA[WORLD].maps[CHDATA.event.unlocked] && MAPDATA[WORLD].maps[CHDATA.event.unlocked].hpRegenTick) {
+		var elapsed = (Date.now() - CHDATA.event.lasttime)/1000 + (CHDATA.event.regenCounter || 0);
+		CHHPREGENTIMER.start(CHDATA.event.unlocked,elapsed);
+	}
+	
 	for (var mapnum in CHDATA.event.maps) {
 		if (!CHDATA.event.maps[mapnum].part) continue;
 		mapChangePart(WORLD,mapnum,CHDATA.event.maps[mapnum].part);
@@ -618,6 +626,12 @@ function createResource(type,num) {
 		case 2: icon = PIXI.Sprite.fromImage('assets/stats/ammo.png'); break;
 		case 3: icon = PIXI.Sprite.fromImage('assets/stats/steel.png'); break;
 		case 4: icon = PIXI.Sprite.fromImage('assets/stats/baux.png'); break;
+		case 5: icon = PIXI.Sprite.fromImage('assets/stats/bucket.png'); break;
+		case 6: icon = PIXI.Sprite.fromImage('assets/stats/devmat.png'); break;
+		case 7: icon = PIXI.Sprite.fromImage('assets/stats/ibuild.png'); break;
+		case 8: icon = PIXI.Sprite.fromImage('assets/stats/box1.png'); break;
+		case 9: icon = PIXI.Sprite.fromImage('assets/stats/box2.png'); break;
+		case 10: icon = PIXI.Sprite.fromImage('assets/stats/box3.png'); break;
 		case 0: icon = PIXI.Sprite.fromImage('assets/items/25.png'); icon.y = -8; break;
 	}
 	res.addChild(icon);
@@ -1179,15 +1193,19 @@ function prepBattle(letter) {
 	var comps;
 	if (CHDATA.config.diffmode == 1) {
 		var compHQ = (mapdata.compHQF && lastdance)? mapdata.compHQF : mapdata.compHQ;
-		var hqs = []; for (var key in compHQ) hqs.push(parseInt(key));
-		hqs.sort(function(a,b) { return a-b; });
-		// console.log(hqs);
-		comps = compHQ[hqs[0]];
-		for (var i=hqs.length-1; i>0; i--) {
-			if (CHDATA.player.level >= hqs[i]) {
-				comps = compHQ[hqs[i]];
-				// console.log('chose: '+hqs[i]);
-				break;
+		if (!compHQ) {
+			comps = mapdata.compDiff[2];
+		} else {
+			var hqs = []; for (var key in compHQ) hqs.push(parseInt(key));
+			hqs.sort(function(a,b) { return a-b; });
+			// console.log(hqs);
+			comps = compHQ[hqs[0]];
+			for (var i=hqs.length-1; i>0; i--) {
+				if (CHDATA.player.level >= hqs[i]) {
+					comps = compHQ[hqs[i]];
+					// console.log('chose: '+hqs[i]);
+					break;
+				}
 			}
 		}
 		// console.log(comps);
@@ -1292,6 +1310,18 @@ function prepBattle(letter) {
 		if (NBonly) BAPI.yasen.api_boss_damaged = 1;
 		else BAPI.data.api_boss_damaged = 1;
 	}
+	if (mapdata.nightToDay) {
+		if (MAPDATA[WORLD].maps[MAPNUM].dayCheck && !MAPDATA[WORLD].maps[MAPNUM].dayCheck()) {
+			
+		} else {
+			res = sim(FLEETS1[0],FLEETS2[0],supportfleet,LBASwaves,false,false,false,false,false,BAPI,true);
+			BAPI.yasen.api_n_hougeki1 = BAPI.yasen.api_hougeki;
+			delete BAPI.yasen.api_hougeki;
+			for (var prop in BAPI.yasen) BAPI.data[prop] = BAPI.yasen[prop];
+			BAPI.data.api_day_flag = 2;
+			BAPI.yasen = {};
+		}
+	}
 	CHAPI.battles.push(BAPI);
 	$('#code').val(JSON.stringify(CHAPI)); //remove?
 	
@@ -1318,9 +1348,12 @@ function prepBattle(letter) {
 	eventqueue = [[shuttersPrebattle,[]]]; e = -1;
 	processAPI(CHAPI);
 	NBSELECT = false;
-	for (var i=0; i<eventqueue.length; i++) {
-		if (eventqueue[i][0] == shutters) { eventqueue[i][0] = shuttersSelect; break; }
+	if (!mapdata.nightToDay) {
+		for (var i=0; i<eventqueue.length; i++) {
+			if (eventqueue[i][0] == shutters) { eventqueue[i][0] = shuttersSelect; break; }
+		}
 	}
+	if (!MAPDATA[WORLD].maps[MAPNUM].transport) lastdance = FLEETS2[0].ships[0].maxHP >= CHDATA.event.maps[MAPNUM].hp; //if last dance hp < boss hp, still play sunk line
 	if (mapdata.boss && lastdance && res.flagsunk) {
 		var shipid = compd.c[0];
 		if (VOICES[shipid] && VOICES[shipid]['sunk']) {
@@ -1375,6 +1408,9 @@ function endMap() {
 		} else {
 			CHDATA.event.unlocked++;
 			cleared = true;
+			if (MAPDATA[WORLD].maps[CHDATA.event.unlocked] && MAPDATA[WORLD].maps[CHDATA.event.unlocked].hpRegenTick) {
+				CHHPREGENTIMER.start(CHDATA.event.unlocked);
+			}
 		}
 	}
 	
@@ -1773,7 +1809,7 @@ function FCFSelect() {
 }
 
 function continueSelect() {
-	if (FLEETS1[0].ships[0].HP/FLEETS1[0].ships[0].maxHP <= .25) {
+	if (FLEETS1[0].ships[0].HP/FLEETS1[0].ships[0].maxHP <= .25 && !MAPDATA[WORLD].noForceFlagRetreat) {
 		if (!FLEETS1[0].ships[0].repairs || !FLEETS1[0].ships[0].repairs.length) {
 			eventqueue.push([endMap,[]]);
 			addTimeout(function() { ecomplete = true; }, 1);
@@ -2031,6 +2067,7 @@ function chUIUpdateResources() {
 	$('#resammo').text(CHDATA.event.resources.ammo);
 	$('#ressteel').text(CHDATA.event.resources.steel);
 	$('#resbaux').text(CHDATA.event.resources.baux);
+	$('#resbucket').text(CHDATA.event.resources.bucket || 0);
 }
 
 function chGetShips() {
