@@ -1691,7 +1691,7 @@ var CHHPREGENTIMER = {
 			if (CHDATA.event.maps[mapnum].hp >= maxhp) {
 				self.counter = 0;
 			} else if (++self.counter >= regenTick) {
-				var nowhp = CHDATA.event.maps[mapnum].hp += 1// * RATE;
+				var nowhp = CHDATA.event.maps[mapnum].hp += 1 * RATE;
 				self.counter = 0;
 				if (mapnum == MAPNUM) {
 					$('#srtHPText').text(nowhp + '/' + maxhp);
