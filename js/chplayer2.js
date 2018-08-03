@@ -19,6 +19,7 @@ function InitUI() {
 	$('#equipfilters').html('');
 	$('#equipselecttable').html('');
 	chDialogItemInit();
+	DIALOGSORT = null;
 	
 	for (var fleetnum in CHDATA.fleets) chFillTable(CHDATA.fleets[fleetnum],fleetnum);
 	if (CHDATA.fleets.combined) chClickedCombine(CHDATA.fleets.combined, true);
@@ -736,13 +737,17 @@ function spinCompass(result,fairy) {
 	
 }
 
-function mapSendScout(ship,node) {
+function mapSendScout(ship,node,isSuccess) {
 	var scout = getFromPool('scout','assets/maps/recon.png');
 	scout.pivot.set(37,29);
 	scout.position.set(ship.x,ship.y); scout.scale.set(0); scout.timer = 0;
 	stage.addChild(scout);
 	var startx = ship.x, starty = ship.y - 10;
 	var targetx = node.x + MAPOFFX, targety = node.y + MAPOFFY;
+	if (!isSuccess) {
+		targetx = startx + (targetx - startx)*.4;
+		targety = starty + (targety - starty)*.4;
+	}
 	var dir = (ship.x < targetx)? 1 : -1;
 	scout.scale.x *= dir;
 	
@@ -895,10 +900,7 @@ function mapPhase(first) {
 			if (r < sum) { nextletter = letter; break; }
 		}
 	} else if (curnode.routeL) {
-		var LOSs = Object.keys(curnode.routeL).sort(function(a,b) { return (parseInt(a) < parseInt(b))? -1:1; } );
-		for (var i=LOSs.length-1; i>=0; i--) {
-			if (testLOS > LOSs[i]) { nextletter = curnode.routeL[LOSs[i]]; break; }
-		}
+		nextletter = checkELoS33(getELoS33(1,1,CHDATA.fleets.combined),curnode.routeL);
 	} else if (curnode.routeS) {
 		eventqueue.push([selectNode,[curnode.routeS]]);
 	}
@@ -919,9 +921,16 @@ function mapPhase2(nextletter) {
 	if (curnode.routeC||curnode.routeR) {
 		var dir = Math.atan2(curnode.x-nextnode.x,curnode.y-nextnode.y);
 		eventqueue.push([spinCompass,[dir]]);
-	} else if (curnode.routeL) {
-		var badletter = curnode.routeL[0];
-		if (nextletter != badletter) eventqueue.push([mapSendScout,[mapship,nextnode]]);
+	}
+	if (curnode.routeL || curnode.showLoSPlane) {
+		var targetLetter;
+		if (curnode.showLoSPlane) {
+			targetLetter = curnode.showLoSPlane;
+		} else {
+			var LOSs = Object.keys(curnode.routeL).sort(function(a,b) { return (parseInt(a) > parseInt(b))? -1:1; } );
+			targetLetter = curnode.routeL[LOSs[0]];
+		}
+		eventqueue.push([mapSendScout,[mapship,MAPDATA[WORLD].maps[MAPNUM].nodes[targetLetter],(nextletter==targetLetter)]]);
 	}
 
 	eventqueue.push([mapMoveShip,[mapship,nextnode.x+MAPOFFX,nextnode.y+MAPOFFY]]);
@@ -2116,4 +2125,96 @@ function getLBASRange(ship) {
 	if (rangeScout > rangeMin) rangeMin += Math.round(Math.sqrt(rangeScout-rangeMin));
 	if (rangeMin == 9999) return 0;
 	return rangeMin;
+}
+
+function getELoS33(fleet,coef,includeCombined) {
+	coef = coef || 1;
+	var los = 0;
+	var ships = CHDATA.fleets[fleet].slice();
+	if (includeCombined) ships = ships.concat(CHDATA.fleets[2]);
+	for (var i=0; i<ships.length; i++) {
+		var ship = CHDATA.ships[ships[i]];
+		if (!ship) continue;
+		var shiplos = ship.LOS;
+		for (var j=0; j<4; j++) {
+			if (ship.items[j] <= 0) continue;
+			var eq = CHDATA.gears['x'+ship.items[j]];
+			var eqd = EQDATA[eq.masterId];
+			
+			if (eqd.LOS) {
+				var mod;
+				switch(eqd.type) {
+					default: mod = .6; break;
+					case TORPBOMBER: mod = .8; break;
+					case CARRIERSCOUT: mod = 1; break;
+					case SEAPLANEBOMBER: mod = 1.1; break;
+					case SEAPLANE: mod = 1.2; break;
+				}
+				var bonus = 0;
+				var impr = (CHDATA.config.mechanics.improvement && eq.stars>0)? eq.stars : 0;
+				if (impr && EQTDATA[eqd.type].improve && EQTDATA[eqd.type].improve.LOS) {
+					bonus = Math.sqrt(impr)*EQTDATA[eqd.type].improve.LOS;
+				}
+				los += coef * mod * (eqd.LOS+bonus);
+				shiplos -= eqd.LOS;
+			}
+		}
+		los += Math.sqrt(shiplos);
+	}
+	los -= Math.ceil(CHDATA.player.level*.4);
+	los += 2*(6-ships.length);
+	return los;
+}
+
+function checkELoS33(los,routeMap) {
+	var nextletter = null;
+	var LOSs = Object.keys(routeMap).sort(function(a,b) { return (parseInt(a) > parseInt(b))? -1:1; } );
+	if (los >= LOSs[0] || LOSs.length == 1) {
+		nextletter = routeMap[LOSs[0]];
+	} else {
+		for (var i=0; i<LOSs.length-1; i++) {
+			if (los < LOSs[i+1]) continue;
+			var diff1 = los - LOSs[i+1], diff2 = LOSs[i] - LOSs[i+1];
+			if (Math.random() < diff1/diff2) {
+				nextletter = routeMap[LOSs[i]];
+			} else {
+				nextletter = routeMap[LOSs[i+1]];
+			}
+			break;
+		}
+		if (!nextletter) nextletter = routeMap[LOSs[LOSs.length-1]];
+	}
+	return nextletter;
+}
+function testGetLoSOld(fleetnum,includeCombined) {
+	var los = 0;
+	var ships = CHDATA.fleets[fleetnum].slice();
+	if (includeCombined) ships = ships.concat(CHDATA.fleets[2]);
+	var shiplos = 0;
+	for (var i=0; i<ships.length; i++) {
+		var ship = CHDATA.ships[ships[i]];
+		if (!ship) continue;
+		shiplos += ship.LOS;
+		for (var j=0; j<4; j++) {
+			if (ship.items[j] <= 0) continue;
+			var eq = CHDATA.gears['x'+ship.items[j]];
+			var eqd = EQDATA[eq.masterId];
+			
+			if (eqd.LOS) {
+				var mod;
+				switch(eqd.type) {
+					default: mod = 0; break;
+					case RADARS: mod = 1; break;
+					case RADARL: mod = 1; break;
+					case CARRIERSCOUT: mod = 2; break;
+					case SEAPLANEBOMBER: mod = 2; break;
+					case SEAPLANE: mod = 2; break;
+				}
+				los += mod * eqd.LOS;
+				shiplos -= eqd.LOS;
+			}
+		}
+	}
+	los += Math.sqrt(shiplos);
+	return los;
 }

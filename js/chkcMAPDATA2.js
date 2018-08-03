@@ -1765,6 +1765,832 @@ var MAPDATA = {
 			},
 		},
 	},
+	26: {
+		name: 'Spring 2014',
+		date: '2014-04-23',
+		diffMode: 1,
+		allowDiffs: [3,2,1],
+		allowFleets: [0,1],
+		bannerImg: 'http://i.imgur.com/txZwlUB.png',
+		bannerImgAlt: 'http://i.imgur.com/Xs9uKF7.png',
+		maps: {
+			1: {
+				name: 'E-1',
+				nameT: 'Southwest of Samewani Sea - Battle of Samewani Sea',
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 8,
+				bgmNN: 8,
+				bgmDB: 9,
+				bgmNB: 9,
+				bossnode: 8,
+				maphp: {
+					3: { 1: 528 },
+					2: { 1: 528 },
+					1: { 1: 456 },
+				},
+				finalhp: {
+					3: 0,
+					2: 0,
+					1: 0,
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 106,
+						y: 99,
+						route: 'A'
+					},
+					'A': {
+						type: 1,
+						x: 183,
+						y: 184,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							70: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						routeC: function(ships) {
+							if (ships.CV + ships.CVB >= 2) return 'B';
+							let numDrums = 0, numDrumShips = 0;
+							for (let ship of FLEETS1[0].ships) {
+								let found = false;
+								for (let eq of ship.equips) {
+									if (eq.type == DRUM) {
+										numDrums++;
+										found = true;
+									}
+								}
+								if (found) numDrumShips++;
+							}
+							if (ships.CA >= 2 && numDrums >= 3 && numDrumShips >= 2) return 'C';
+							return (Math.random() < .5)? 'B' : 'C';
+						}
+					},
+					'B': {
+						type: 1,
+						x: 296,
+						y: 127,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							70: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						route: 'D'
+					},
+					'C': {
+						type: 3,
+						x: 269,
+						y: 220,
+						route: 'E'
+					},
+					'D': {
+						type: 1,
+						x: 472,
+						y: 154,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							75: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						routeL: { 40: 'H', 37: 'F' }
+					},
+					'E': {
+						type: 1,
+						x: 363,
+						y: 213,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							70: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						routeC: function(ships) {
+							let numDrums = 0, numDrumShips = 0;
+							for (let ship of FLEETS1[0].ships) {
+								let found = false;
+								for (let eq of ship.equips) {
+									if (eq.type == DRUM) {
+										numDrums++;
+										found = true;
+									}
+								}
+								if (found) numDrumShips++;
+							}
+							if (ships.CA >= 2 && numDrums >= 3 && numDrumShips >= 2) return 'G';
+							return 'D';
+						}
+					},
+					'F': {
+						type: 3,
+						x: 564,
+						y: 85,
+						end: true
+					},
+					'G': {
+						type: 2,
+						x: 444,
+						y: 263,
+						resource: 3,
+						amount: [20],
+						route: 'H'
+					},
+					'H': {
+						type: 1,
+						x: 539,
+						y: 271,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							75: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						end: true,
+						boss: true
+					},
+				}
+			},
+			2: {
+				name: 'E-2',
+				nameT: 'Southwest of Zunda Strait - Across The Zunda Strait',
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 8,
+				bgmNN: 8,
+				bgmDB: 9,
+				bgmNB: 9,
+				bossnode: 10,
+				maphp: {
+					3: { 1: 780 },
+					2: { 1: 780 },
+					1: { 1: 588 },
+				},
+				finalhp: {
+					3: 0,
+					2: 0,
+					1: 0,
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 353,
+						y: 82,
+						routeC: function(ships) {
+							if (ships.CV && ships.aCV == 2) return 'A';
+							return (Math.random() < .5)? 'A' : 'B';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 265,
+						y: 152,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							75: ['1'],
+							35: ['2'],
+							1: ['3','4'],
+						},
+						routeC: function(ships) {
+							if (ships.CV == 1) return (Math.random() < .9)? 'D' : 'E';
+							if (ships.BBV) return (Math.random() < .75)? 'D' : 'E';
+							return (Math.random() < .5)? 'D' : 'E';
+						}
+					},
+					'B': {
+						type: 1,
+						x: 403,
+						y: 154,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							65: ['1'],
+							30: ['2'],
+							1: ['3'],
+						},
+						routeC: function(ships) {
+							if (ships.CA == 2) return 'D';
+							if (ships.CAV == 2) return 'D';
+							return (Math.random() < .5)? 'C' : 'D';
+						}
+					},
+					'C': {
+						type: 1,
+						x: 479,
+						y: 204,
+						compDiff: {
+							
+						},
+						routeC: function(ships) {
+							if (ships.CLT) return (Math.random() < .5)? 'F' : 'H';
+							return 'H';
+						}
+					},
+					'D': {
+						type: 1,
+						x: 354,
+						y: 234,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							75: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						route: 'G'
+					},
+					'E': {
+						type: 2,
+						x: 112,
+						y: 210,
+						resource: 4,
+						amount: [30],
+						end: true
+					},
+					'F': {
+						type: 4,
+						x: 581,
+						y: 151,
+						resource: 1,
+						end: true
+					},
+					'G': {
+						type: 3,
+						x: 358,
+						y: 304,
+						route: 'H'
+					},
+					'H': {
+						type: 1,
+						x: 447,
+						y: 319,
+						compDiff: {
+							3: ['1'],
+							2: ['1'],
+							1: ['2'],
+						},
+						compHQ: {
+							40: ['1'],
+							1: ['2'],
+						},
+						routeL: { 40: 'J', 37: 'I' }
+					},
+					'I': {
+						type: 3,
+						x: 562,
+						y: 344,
+						end: true
+					},
+					'J': {
+						type: 1,
+						x: 593,
+						y: 242,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							50: ['2'],
+							1: ['3'],
+						},
+						end: true,
+						boss: true
+					},
+				}
+			},
+			3: {
+				name: 'E-3',
+				nameT: 'Port Wine Area - Assault! Destroy Port Wine Operation',
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 8,
+				bgmNN: 8,
+				bgmDB: 9,
+				bgmNB: 9,
+				bossnode: 12,
+				maphp: {
+					3: { 1: 2660 },
+					2: { 1: 2660 },
+					1: { 1: 2660 },
+				},
+				finalhp: {
+					3: 0,
+					2: 0,
+					1: 0,
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 248,
+						y: 82,
+						routeC: function(ships) {
+							if (ships.CV + ships.CVB >= 2) return 'A';
+							return (Math.random() < .5)? 'A' : 'B';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 331,
+						y: 146,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						route: 'C'
+					},
+					'B': {
+						type: 1,
+						x: 194,
+						y: 210,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							65: ['1'],
+							30: ['2'],
+							1: ['3'],
+						},
+						route: 'D'
+					},
+					'C': {
+						type: 3,
+						x: 448,
+						y: 109,
+						routeC: function(ships) {
+							if (ships.CV + ships.CVB >= 2) return 'E';
+							return (Math.random() < .5)? 'E' : 'F';
+						}
+					},
+					'D': {
+						type: 2,
+						x: 213,
+						y: 285,
+						route: 'G'
+					},
+					'E': {
+						type: 1,
+						x: 551,
+						y: 133,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						route: 'H'
+					},
+					'F': {
+						type: 1,
+						x: 431,
+						y: 200,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						route: 'I'
+					},
+					'G': {
+						type: 1,
+						x: 315,
+						y: 325,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						route: 'I'
+					},
+					'H': {
+						type: 1,
+						x: 523,
+						y: 221,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						routeL: { 40: 'L', 37: 'J' }
+					},
+					'I': {
+						type: 1,
+						x: 451,
+						y: 268,
+						compDiff: {
+							3: ['1'],
+							2: ['1'],
+							1: ['2'],
+						},
+						compHQ: {
+							40: ['1'],
+							1: ['2'],
+						},
+						routeL: { 40: 'L', 37: 'K' }
+					},
+					'J': {
+						type: 4,
+						x: 636,
+						y: 219,
+						resource: 1,
+						end: true
+					},
+					'K': {
+						type: 3,
+						x: 441,
+						y: 350,
+						end: true
+					},
+					'L': {
+						type: 1,
+						x: 562,
+						y: 310,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						end: true,
+						boss: true
+					},
+				}
+			},
+			4: {
+				name: 'E-4',
+				nameT: 'Central Pacific Sea - Sweep Against Subs in the Frontline',
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 10,
+				bgmNN: 10,
+				bgmDB: 9,
+				bgmNB: 9,
+				bossnode: 8,
+				maphp: {
+					3: { 1: 315 },
+					2: { 1: 315 },
+					1: { 1: 315 },
+				},
+				finalhp: {
+					3: 0,
+					2: 0,
+					1: 0,
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 105,
+						y: 210,
+						routeC: function(ships) {
+							if (ships.CL >= 4 || ships.SS + ships.SSV >= 3) return 'B';
+							return 'A';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 210,
+						y: 203,
+						subonly: true,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							75: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						routeC: function(ships) {
+							if (ships.DD >= 2) return 'C';
+							return (Math.random() < .5)? 'C' : 'B';
+						}
+					},
+					'B': {
+						type: 1,
+						x: 268,
+						y: 310,
+						compDiff: {
+							3: ['1'],
+							2: ['1'],
+							1: ['1'],
+						},
+						compHQ: {
+							1: ['1'],
+						},
+						end: true
+					},
+					'C': {
+						type: 3,
+						x: 281,
+						y: 143,
+						routeC: function(ships) {
+							if (ships.DD >= 5 || ships.DD >= 4 && ships.CL >= 1) return 'D';
+							return 'E';
+						}
+					},
+					'D': {
+						type: 1,
+						x: 424,
+						y: 114,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							75: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						routeL: { 5: 'H', 2: 'F' }
+					},
+					'E': {
+						type: 1,
+						x: 381,
+						y: 281,
+						subonly: true,
+						compDiff: {
+							3: ['1'],
+							2: ['1'],
+							1: ['2'],
+						},
+						compHQ: {
+							40: ['1'],
+							1: ['2'],
+						},
+						routeR: { 'D': .5, 'G': .5 }
+					},
+					'F': {
+						type: 3,
+						x: 595,
+						y: 78,
+						end: true
+					},
+					'G': {
+						type: 1,
+						x: 551,
+						y: 329,
+						compDiff: {
+							3: ['1'],
+							2: ['1'],
+							1: ['2'],
+						},
+						compHQ: {
+							40: ['1'],
+							1: ['2'],
+						},
+						end: true
+					},
+					'H': {
+						type: 1,
+						x: 558,
+						y: 206,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						end: true,
+						boss: true
+					},
+				}
+			},
+			5: {
+				name: 'E-5',
+				nameT: 'North Pacific Sea - Capture Peacock Island Operation',
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 10,
+				bgmNN: 10,
+				bgmDB: 9,
+				bgmNB: 9,
+				bossnode: 10,
+				maphp: {
+					3: { 1: 3600 },
+					2: { 1: 3600 },
+					1: { 1: 3600 },
+				},
+				finalhp: {
+					3: 0,
+					2: 0,
+					1: 0,
+				},
+				reward: {
+					ships: [140]
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 98,
+						y: 130,
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV >= 3) return 'A';
+							return 'B';
+						}
+					},
+					'A': {
+						type: 3,
+						x: 248,
+						y: 101,
+						end: true
+					},
+					'B': {
+						type: 1,
+						x: 226,
+						y: 182,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						routeC: function(ships) {
+							if (ships.speed == 10) return 'C';
+							if (ships.CLT >= 2) return 'C';
+							return 'D';
+						}
+					},
+					'C': {
+						type: 4,
+						x: 305,
+						y: 129,
+						resource: 1,
+						route: 'E'
+					},
+					'D': {
+						type: 3,
+						x: 252,
+						y: 302,
+						route: 'E'
+					},
+					'E': {
+						type: 1,
+						x: 376,
+						y: 189,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							75: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						routeC: function(ships) {
+							if (ships.CV + ships.CVB == 3) return 'F';
+							if (ships.CV + ships.CVB <= 2 && ships.BB >= 3) return 'G';
+							if (ships.CV + ships.CVB <= 2 && ships.FBB >= 3) return 'G';
+							return (Math.random() < .5)? 'F': 'G';
+						}
+					},
+					'F': {
+						type: 1,
+						x: 464,
+						y: 128,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						showLoSPlane: 'J',
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV) return 'H';
+							return checkELoS33(getELoS33(1),{ 40: 'J', 37: 'H' });
+						}
+					},
+					'G': {
+						type: 1,
+						x: 463,
+						y: 288,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						showLoSPlane: 'J',
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV) return 'I';
+							return checkELoS33(getELoS33(1),{ 40: 'J', 37: 'I' });
+						}
+					},
+					'H': {
+						type: 3,
+						x: 589,
+						y: 89,
+						end: true
+					},
+					'I': {
+						type: 3,
+						x: 612,
+						y: 319,
+						end: true
+					},
+					'J': {
+						type: 1,
+						x: 553,
+						y: 210,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						compHQ: {
+							80: ['1'],
+							40: ['2'],
+							1: ['3'],
+						},
+						end: true,
+						boss: true
+					},
+				}
+			}
+		}
+	},
 	27: {
 		name: 'Summer 2014',
 		date: '2014-08-08',
@@ -1882,7 +2708,7 @@ var MAPDATA = {
 						type: 3,
 						x: 503,
 						y: 129,
-						routeL: { 100:'K', 0:'G' }
+						routeL: { 60:'K', 57:'G' }
 					},
 					'F': {
 						type: 3,
@@ -1927,7 +2753,11 @@ var MAPDATA = {
 							50:['HQ50+ 1','HQ50+ 2'],
 							1:['HQ1+ 1','HQ1+ 2'],
 						},
-						routeL: {100:'K',0:'J'}
+						showLoSPlane: 'K',
+						routeC: function(ships) {
+							if (ships.DD + ships.CL + ships.CLT + ships.CA + ships.CAV < 2) return 'J';
+							return checkELoS33(getELoS33(1),{60:'K',57:'J'});
+						}
 					},
 					'J': {
 						type: 3,
@@ -2063,7 +2893,7 @@ var MAPDATA = {
 							30: ['3','5'],
 							1: ['4','5'],
 						},
-						routeL: { 100: 'K', 0: 'F' },
+						routeL: { 70: 'K', 50: 'F' },
 					},
 					'F': {
 						type: 3,
@@ -2085,7 +2915,7 @@ var MAPDATA = {
 							40: ['3','2b'],
 							1: ['3','1'],
 						},
-						routeL: { 100: 'E', 50: 'I', 0: 'H' },
+						routeL: { 60: 'E', 59: 'I', 40: 'H' },
 					},
 					'H': {
 						type: 3,
@@ -2105,7 +2935,10 @@ var MAPDATA = {
 						compHQ: {
 							1: ['1'],
 						},
-						routeL: { 100: 'K', 0: 'J' },
+						routeC: function(ships) {
+							if (ships.DD >= 4) return 'K';
+							return (Math.random() < .5)? 'K' : 'J';
+						}
 					},
 					'J': {
 						type: 2,
@@ -2244,7 +3077,7 @@ var MAPDATA = {
 						type: 3,
 						x: 425,
 						y: 305,
-						routeL: {100:'H',0:'I'},
+						routeL: {100:'H',90:'I'},
 					},
 					'G': {
 						type: 3,
@@ -2266,7 +3099,7 @@ var MAPDATA = {
 							100:['1','2'],
 							1:['1','3'],
 						},
-						routeL: {80:'J',0:'G'},
+						routeL: {100:'J',90:'G'},
 					},
 					'I': {
 						type: 3,
@@ -2402,7 +3235,7 @@ var MAPDATA = {
 							100: ['1','2'],
 							1: ['2','3'],
 						},
-						routeL: {100:'H',0:'L'},
+						routeL: {100:'H',90:'L'},
 					},
 					'E': {
 						type: 1,
@@ -2425,7 +3258,7 @@ var MAPDATA = {
 						type: 3,
 						x: 540,
 						y: 176,
-						routeL: {100:'J',0:'I'},
+						routeL: {100:'J',90:'I'},
 					},
 					'G': {
 						type: 3,
@@ -2468,7 +3301,7 @@ var MAPDATA = {
 							100: ['1','2','4'],
 							1: ['1','3','5'],
 						},
-						routeL: {100:'K',0:'H'},
+						routeL: {100:'K',90:'H'},
 					},
 					'K': {
 						type: 1,
@@ -2629,7 +3462,7 @@ var MAPDATA = {
 						compHQ: {
 							1: ['1','2'],
 						},
-						routeL: {100:'L',0:'J'},
+						routeL: {100:'L',90:'J'},
 					},
 					'H': {
 						type: 1,
@@ -2662,7 +3495,7 @@ var MAPDATA = {
 							90: ['1','2','3'],
 							1: ['2','3','4'],
 						},
-						routeL: {100:'L',0:'K'},
+						routeL: {100:'L',90:'K'},
 					},
 					'J': {
 						type: 3,
@@ -2819,7 +3652,7 @@ var MAPDATA = {
 							75: ['2','3'],
 							1: ['3'],
 						},
-						routeL: {100: 'J', 90: 'H', 0: 'G' },
+						routeL: {75: 'J', 50: 'H', 0: 'G' },
 					},
 					'G': {
 						type: 3,
@@ -2841,7 +3674,7 @@ var MAPDATA = {
 							75: ['3','4'],
 							1: ['5'],
 						},
-						routeL: {100:'J',0:'I'},
+						routeL: {75:'J',0:'I'},
 					},
 					'I': {
 						type: 3,
@@ -3140,7 +3973,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2'],
 							1: ['Easy 1','Easy 2'],
 						},
-						routeL: { 100:'Z', 0:'L' },
+						routeL: { 3:'Z', 0:'L' },
 					},
 					'I': {
 						type: 4,
@@ -3158,7 +3991,7 @@ var MAPDATA = {
 							2: ['Medium'],
 							1: ['Easy'],
 						},
-						routeL: { 100:'H', 0:'L' },
+						routeL: { 3:'H', 0:'L' },
 					},
 					'K': {
 						type: 3,
@@ -3301,7 +4134,7 @@ var MAPDATA = {
 							2: ['Medium'],
 							1: ['Easy'],
 						},
-						routeL: {100:'Z',0:'H'},
+						routeL: {3:'Z',0:'H'},
 					},
 					'H': {
 						type: 1,
@@ -3312,7 +4145,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2'],
 							1: ['Easy 1','Easy 2'],
 						},
-						routeL: {100:'Z',0:'J'},
+						routeL: {3:'Z',0:'J'},
 					},
 					'I': {
 						type: 1,
@@ -3515,7 +4348,7 @@ var MAPDATA = {
 							2: ['Medium 1'],
 							1: ['Easy F'],
 						},
-						routeL: {100:'Z',0:'L'},
+						routeL: {3:'Z',0:'L'},
 					},
 					'I': {
 						type: 4,
@@ -4164,7 +4997,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2'],
 							1: ['Easy 1','Easy 2'],
 						},
-						routeL: {100:'M',0:'P'},
+						routeL: {3:'M',0:'P'},
 					},
 					'L': {
 						type: 1,
@@ -4722,7 +5555,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3','Medium 4'],
 							1: ['Easy 1','Easy 2','Easy 3','Easy 4'],
 						},
-						routeL: { 100: 'K', 0: 'J' }
+						routeL: { 3: 'K', 0: 'J' }
 					},
 					'I': {
 						type: 3,
@@ -4939,7 +5772,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						routeL: { 100: 'O', 0: 'L' }
+						routeL: { 3: 'O', 0: 'L' }
 					},
 					'O': {
 						type: 1,
@@ -5159,7 +5992,7 @@ var MAPDATA = {
 							}
 							CHDATA.event.maps[5].debuff.imp = (CHDATA.event.maps[5].debuff.imp || 0) + num;
 						},
-						routeL: { 100: 'N', 0: 'M' }
+						routeL: { 3: 'N', 0: 'M' }
 					},
 					'M': {
 						type: 3,
@@ -5315,7 +6148,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3','Medium 4','Medium 5'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						routeL: { 100: 'H', 0: 'K' }
+						routeL: { 3: 'H', 0: 'K' }
 					},
 					'H': {
 						type: 1,
@@ -5474,7 +6307,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						routeL: { 100: 'J', 0: 'L' }
+						routeL: { 3: 'J', 0: 'L' }
 					},
 					'H': {
 						type: 3,
@@ -5639,7 +6472,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3','Medium 4','Medium 5'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						routeL: { 100: 'J', 0: 'L' }
+						routeL: { 3: 'J', 0: 'L' }
 					},
 					'I': {
 						type: 1,
@@ -5662,7 +6495,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						routeL: { 100: 'K', 0: 'M' }
+						routeL: { 3: 'K', 0: 'M' }
 					},
 					'K': {
 						type: 1,
@@ -5813,7 +6646,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						routeL: { 100: 'K', 0: 'L' }
+						routeL: { 3: 'K', 0: 'L' }
 					},
 					'G': {
 						type: 1,
@@ -5866,7 +6699,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						routeL: { 100: 'K', 0: 'L' }
+						routeL: { 3: 'K', 0: 'L' }
 					},
 					'K': {
 						type: 1,
@@ -6282,7 +7115,7 @@ var MAPDATA = {
 								CHDATA.event.maps[6].debuff.G = true;
 							}
 						},
-						routeL: { 100: 'F', 0: 'O' }
+						routeL: { 3: 'F', 0: 'O' }
 					},
 					'H': {
 						type: 1,
@@ -6592,7 +7425,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						routeL: { 100: 'N', 0: 'O' }
+						routeL: { 3: 'N', 0: 'O' }
 					},
 					'M': {
 						type: 1,
@@ -6604,7 +7437,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						routeL: { 100: 'N', 0: 'P' }
+						routeL: { 3: 'N', 0: 'P' }
 					},
 					'N': {
 						type: 1,
@@ -6765,7 +7598,7 @@ var MAPDATA = {
 							2: ['Medium 1', 'Medium 2', 'Medium 3', 'Medium 4', 'Medium 5'],
 							1: ['Easy 1', 'Easy 2', 'Easy 3', 'Easy 4']
 						},
-						routeL : {100:"I",0:"H"},
+						routeL : {3:"I",0:"H"},
 					},
 					'H': {
 						type: 3,
@@ -6932,7 +7765,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3','Medium 4'],
 							1: ['Easy 1','Easy 2','Easy 3']
 						},
-						routeL: {100:"J",0:"L"},
+						routeL: {3:"J",0:"L"},
 					},
 					"J": {
 						type: 2,
@@ -6940,7 +7773,7 @@ var MAPDATA = {
 						y: 281,
 						distance: 5,
 						resource: 0,
-						routeL: {100:"M",0:"0"},
+						routeL: {3:"M",0:"0"},
 					},
 					"K": {
 						type: 3,
@@ -7124,7 +7957,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3']
 						},
-						routeL : {100:"H",0:"I"},
+						routeL : {3:"H",0:"I"},
 					},
 					'H' : {
 						type: 1,
@@ -7408,7 +8241,7 @@ var MAPDATA = {
 						y: 190,
 						raid: true,
 						distance: 8,
-						routeL: { 100:'Q', 0:'P' },
+						routeL: { 3:'Q', 0:'P' },
 						compDiff:{
 							3:['Hard 1','Hard 2','Hard 3'],
 							2: ['Medium 1','Medium 2','Medium 3'],

@@ -51,8 +51,8 @@ function chCreateFleetTable(root,num,name,noheader) {
 	$(root).append(divWrap);
 	if (!noheader) {
 		divWrap.append('<div class="ftinfo" style="width:125px">'+name+'</div>');
-		divWrap.append('<div class="ftinfo" style="width:80px;display:none"><img title="Effective LoS" src="assets/stats/los3.png"/><span id="fleetefflos'+num+'"></span></div>');
 		divWrap.append('<div class="ftinfo" style="width:80px"><img title="Air Power" src="assets/stats/ac.png"/><span id="fleetap'+num+'"></span></div>');
+		divWrap.append('<div class="ftinfo" style="width:80px"><img title="Effective LoS" src="assets/stats/los3.png"/><span id="fleetefflos'+num+'"></span></div>');
 		divWrap.append('<div class="ftinfo" style="width:80px"><img title="Fleet Speed" src="assets/stats/sp.png"/><span id="fleetspd'+num+'"></span></div>');
 		divWrap.append('<div class="ftinfo" style="width:80px"><img title="Transport Load-Off" src="assets/items/25.png" style="margin-top:-6px"/><span id="fleettransport'+num+'"></span></div>');
 		divWrap.append('<br style="clear:both"/>');
@@ -1113,8 +1113,9 @@ function chTableSetEquip(itemid,fleet,shipslot,itemslot) {
 
 function chUpdateFleetInfo(fleetnum) {
 	// if (fleetnum != 1 && fleetnum != 2) return;
+	if (fleetnum == 5) return;
 	if (fleetnum == 2) fleetnum = 1;
-	var ap = 0, los = 0, spd = 'Fast';
+	var ap = 0, spd = 'Fast';
 	var ships = [];
 	for (var i=0; i<CHDATA.fleets[fleetnum].length; i++) ships.push(CHDATA.ships[CHDATA.fleets[fleetnum][i]]);
 	if (CHDATA.fleets.combined) {
@@ -1124,7 +1125,6 @@ function chUpdateFleetInfo(fleetnum) {
 		var ship = ships[i];
 		if (!ship) continue;
 		if (SHIPDATA[ship.masterId].SPD == 5) spd = 'Slow';
-		var shiplos = ship.LOS;
 		for (var j=0; j<4; j++) {
 			if (ship.items[j] <= 0) continue;
 			var eq = CHDATA.gears['x'+ship.items[j]];
@@ -1136,28 +1136,18 @@ function chUpdateFleetInfo(fleetnum) {
 				ap += Math.floor((eqd.AA+impr*.2) * Math.sqrt(ship.planes[j]) + (eqo.APbonus||0));
 			}
 			
-			if (eqd.LOS) {
-				var mod;
-				switch(eqd.type) {
-					case DIVEBOMBER: mod = 1.04; break;
-					case TORPBOMBER: mod = 1.37; break;
-					case CARRIERSCOUT: mod = 1.66; break;
-					case SEAPLANE: mod = 2; break;
-					case SEAPLANEBOMBER: mod = 1.78; break;
-					case RADARS: mod = 1; break;
-					case RADARL: mod = .99; break;
-					case SEARCHLIGHTS: case SEARCHLIGHTL: mod = .91; break;
-					default: mod = 0; break;
-				}
-				los += mod * eqd.LOS;
-				shiplos -= eqd.LOS;
-			}
 		}
-		los += Math.sqrt(shiplos)*1.69;
 	}
-	los -= Math.ceil(CHDATA.player.level/5)*5 * .61;
+	var los1 = getELoS33(fleetnum,1,CHDATA.fleets.combined);
 	$('#fleetap'+fleetnum).text(ap);
-	$('#fleetefflos'+fleetnum).text(Math.floor(los*10)/10);
+	$('#fleetefflos'+fleetnum).text(Math.floor(los1*10)/10);
+	if (WORLD <= 27) { //Summer14 and before only
+		var losOld = testGetLoSOld(fleetnum,CHDATA.fleets.combined);
+		$('#fleetefflos'+fleetnum).parent().attr('title','Old = '+(Math.floor(losOld*10)/10));
+	} else {
+		var los3 = getELoS33(fleetnum,3,CHDATA.fleets.combined), los4 = getELoS33(fleetnum,4,CHDATA.fleets.combined);
+		$('#fleetefflos'+fleetnum).parent().attr('title','C3 = '+(Math.floor(los3*10)/10)+', C4 = '+(Math.floor(los4*10)/10));
+	}
 	$('#fleetspd'+fleetnum).text(spd);
 	
 	if (MAPDATA[CHDATA.event.world].transportCalc) {
