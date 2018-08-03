@@ -8,6 +8,12 @@ var MAPDATA = {
 		bannerImg: 'http://i.imgur.com/yl66bLe.png',
 		bannerImgAlt: 'http://i.imgur.com/qEAfodg.png',
 		noForceFlagRetreat: true,
+		overrideStats: {
+			1530: { HP: 24 },
+			1531: { HP: 30 },
+			1532: { HP: 33 },
+			1533: { HP: 39 },
+		},
 		maps: {
 			1: {
 				name: 'E-1',
