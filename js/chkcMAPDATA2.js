@@ -3717,6 +3717,657 @@ var MAPDATA = {
 			},
 		}
 	},
+	28: {
+		name: 'Fall 2014',
+		date: '2014-11-14',
+		diffMode: 1,
+		allowDiffs: [2,1],
+		allowFleets: [0,1,2],
+		bannerImg: 'http://i.imgur.com/N9FDaqh.png',
+		bannerImgAlt: 'http://i.imgur.com/JJYgFR8.png',
+		maps: {
+			1: {
+				name: 'E-1',
+				nameT: 'First Operation Kon',
+				fleetTypes: [2],
+				bgmMap: 2001,
+				bgmDN: 27,
+				bgmNN: 27,
+				bgmDB: 28,
+				bgmNB: 28,
+				bossnode: 6,
+				maphp: {
+					3: { 1: 352 },
+					2: { 1: 352 },
+					1: { 1: 352 },
+				},
+				finalhp: {
+					3: 88,
+					2: 88,
+					1: 88,
+				},
+				giveLock: 1,
+				checkLock: [2],
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 139,
+						y: 212,
+						routeC: function(ships) {
+							if (ships.escort.aBB) return (Math.random() < .75)? 'B' : 'A';
+							return (Math.random() < .5)? 'A' : 'B';
+						}
+					},
+					'A': {
+						type: 3,
+						x: 238,
+						y: 197,
+						route: 'C'
+					},
+					'B': {
+						type: 1,
+						x: 295,
+						y: 301,
+						compDiff: {
+							2: ['1','2'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							80: ['1','2'],
+							1: ['3','4'],
+						},
+						route: 'D'
+					},
+					'C': {
+						type: 1,
+						x: 322,
+						y: 117,
+						compDiff: {
+							2: ['1','2','3','4'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							80: ['1','2','3','4'],
+							1: ['3','4'],
+						},
+						routeC: function(ships) {
+							if (ships.escort.DD >= 4) return (Math.random() < .75)? 'E' : 'D';
+							return (Math.random() < .25)? 'E' : 'D';
+						}
+					},
+					'D': {
+						type: 1,
+						x: 399,
+						y: 184,
+						compDiff: {
+							2: ['1','2','3','4'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							80: ['1','2','3','4'],
+							1: ['3','4'],
+						},
+						routeC: function(ships) {
+							if (ships.aBB <= 3 && ships.CV+ships.CVB <= 0 && ships.CVL <= 1 && ships.escort.DD >= 4) return 'F';
+							return 'E';
+						}
+					},
+					'E': {
+						type: 1,
+						x: 486,
+						y: 156,
+						compDiff: {
+							2: ['1','3','5'],
+							1: ['2','4'],
+						},
+						compHQ: {
+							80: ['1','3','5'],
+							1: ['2','4'],
+						},
+						routeL: { 100: 'F', 97: 'G' }
+					},
+					'F': {
+						type: 1,
+						x: 593,
+						y: 249,
+						compDiff: {
+							2: ['1','2','3','4'],
+							1: ['5','6'],
+						},
+						compHQ: {
+							80: ['1','2','3','4'],
+							1: ['5','6'],
+						},
+						compDiffF: {
+							2: ['1'],
+							1: ['5'],
+						},
+						compHQF: {
+							80: ['1'],
+							1: ['5'],
+						},
+						end: true,
+						boss: true
+					},
+					'G': {
+						type: 3,
+						x: 610,
+						y: 135,
+						end: true
+					},
+				}
+			},
+			2: {
+				name: 'E-2',
+				nameT: 'Second Operation Kon',
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 27,
+				bgmNN: 27,
+				bgmDB: 28,
+				bgmNB: 28,
+				bossnode: 9,
+				maphp: {
+					3: { 1: 850 },
+					2: { 1: 850 },
+					1: { 1: 750 },
+				},
+				finalhp: {
+					3: 190,
+					2: 190,
+					1: 190,
+				},
+				giveLock: 1,
+				checkLock: [2],
+				additionalChecks: function(ships,errors) {
+					if (ships.total > ships.CL + ships.DD) errors.push('CL and DD only');
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 111,
+						y: 246,
+						routeR: { 'A': .5, 'C': .5 }
+					},
+					'A': {
+						type: 1,
+						x: 179,
+						y: 187,
+						subonly: true,
+						compDiff: {
+							2: ['1','2'],
+							1: ['2','3','4'],
+						},
+						compHQ: {
+							80: ['1','2'],
+							1: ['2','3','4'],
+						},
+						route: 'D'
+					},
+					'B': {
+						type: 3,
+						x: 184,
+						y: 114,
+						end: true
+					},
+					'C': {
+						type: 1,
+						x: 271,
+						y: 264,
+						compDiff: {
+							2: ['1','2'],
+							1: ['3','4','5'],
+						},
+						compHQ: {
+							80: ['1','2'],
+							1: ['3','4','5'],
+						},
+						showLoSPlane: 'G',
+						routeC: function(ships) {
+							if (ships.CL >= 3) return 'E';
+							if (ships.CL == 2) return 'D';
+							return checkELoS33(getELoS33(1),{ 24: 'G', 21: 'D' });
+						}
+					},
+					'D': {
+						type: 1,
+						x: 278,
+						y: 153,
+						compDiff: {
+							2: ['1','2'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							80: ['1','2'],
+							1: ['3','4'],
+						},
+						showLoSPlane: 'G',
+						routeC: function(ships) {
+							if (ships.CL >= 3) return 'B';
+							return checkELoS33(getELoS33(1),{ 20: 'G', 17: 'F' });
+						}
+					},
+					'E': {
+						type: 3,
+						x: 281,
+						y: 332,
+						end: true
+					},
+					'F': {
+						type: 4,
+						x: 388,
+						y: 124,
+						resource: 1,
+						route: 'H'
+					},
+					'G': {
+						type: 1,
+						x: 430,
+						y: 187,
+						compDiff: {
+							2: ['1','2'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							80: ['1','2'],
+							1: ['3','4'],
+						},
+						route: 'I'
+					},
+					'H': {
+						type: 1,
+						x: 490,
+						y: 95,
+						compDiff: {
+							2: ['1','2'],
+							1: ['1','2'],
+						},
+						compHQ: {
+							1: ['1','2'],
+						},
+						routeL: { 15: 'I', 12: 'J' }
+					},
+					'I': {
+						type: 1,
+						x: 565,
+						y: 158,
+						compDiff: {
+							2: ['1','2','3'],
+							1: ['5','6'],
+						},
+						compHQ: {
+							80: ['1','2','3'],
+							1: ['5','6'],
+						},
+						compDiffF: {
+							2: ['4'],
+							1: ['7'],
+						},
+						compHQF: {
+							80: ['4'],
+							1: ['7'],
+						},
+						end: true,
+						boss: true
+					},
+					'J': {
+						type: 3,
+						x: 593,
+						y: 96,
+						end: true
+					},
+				}
+			},
+			3: {
+				name: 'E-3',
+				nameT: 'Third Operation Kon',
+				fleetTypes: [2],
+				bgmMap: 2001,
+				bgmDN: 25,
+				bgmNN: 25,
+				bgmDB: 26,
+				bgmNB: 26,
+				bossnode: 9,
+				maphp: {
+					3: { 1: 2000 },
+					2: { 1: 2000 },
+					1: { 1: 2000 },
+				},
+				finalhp: {
+					3: 400,
+					2: 400,
+					1: 400,
+				},
+				giveLock: 2,
+				checkLock: [1],
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 180,
+						y: 131,
+						routeC: function(ships) {
+							if (ships.aCV >= 2 || ships.escort.CLT >= 2) return 'A';
+							if (ships.LHA + ships.AV + ships.CL + ship.DD <= 0) return 'A';
+							if (ships.CV + ships.CVB + ships.BB + ships.FBB) return 'B';
+							if (ships.BBV <= 2 && ships.CA + ships.CAV + ships.CLT + (ships.CL + ships.DD)/2 <= 3) return 'C';
+							return 'B';
+						}
+					},
+					'A': {
+						type: 4,
+						x: 94,
+						y: 218,
+						resource: 1,
+						route: 'B'
+					},
+					'B': {
+						type: 1,
+						x: 275,
+						y: 311,
+						compDiff: {
+							2: ['1','2'],
+							1: ['2','3','4'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							1: ['2','3','4'],
+						},
+						route: 'F'
+					},
+					'C': {
+						type: 1,
+						x: 287,
+						y: 169,
+						compDiff: {
+							2: ['1','2'],
+							1: ['1','3'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							1: ['1','3'],
+						},
+						route: 'E'
+					},
+					'D': {
+						type: 3,
+						x: 295,
+						y: 89,
+						end: true
+					},
+					'E': {
+						type: 4,
+						x: 385,
+						y: 143,
+						resource: 1,
+						routeL: { 100: 'G', 97: 'D' }
+					},
+					'F': {
+						type: 1,
+						x: 398,
+						y: 319,
+						compDiff: {
+							2: ['1','2'],
+							1: ['2','3','4'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							1: ['2','3','4'],
+						},
+						routeC: function(ships) {
+							if (ships.LHA) return 'H';
+							if (isShipInList(ships.ids,62) && isShipInList(ships.ids,65)) return 'H';
+							if (isShipInList(ships.escort.ids,50) && isShipInList(ships.escort.ids,138)) return 'H';
+							if (ships.BBV == 2) return (Math.random() < .75)? 'H' : 'E';
+							if (ships.CA == 2) return (Math.random() < .75)? 'H' : 'E';
+							return (Math.random() < .75)? 'E' : 'H';
+						}
+					},
+					'G': {
+						type: 1,
+						x: 468,
+						y: 86,
+						compDiff: {
+							2: ['1','2'],
+							1: ['2','3'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							1: ['2','3'],
+						},
+						routeC: function(ships) {
+							if (ships.aCV || ships.escort.CA + ships.escort.CAV) return 'H';
+							return 'I';
+						}
+					},
+					'H': {
+						type: 1,
+						x: 515,
+						y: 168,
+						compDiff: {
+							2: ['1','2','3'],
+							1: ['3','4','5'],
+						},
+						compHQ: {
+							100: ['1','2','3'],
+							1: ['3','4','5'],
+						},
+						routeL: { 100: 'I', 97: 'J' }
+					},
+					'I': {
+						type: 1,
+						x: 631,
+						y: 124,
+						compDiff: {
+							2: ['1','2'],
+							1: ['4','5'],
+						},
+						compHQ: {
+							85: ['1','2'],
+							1: ['4','5'],
+						},
+						compDiffF: {
+							2: ['3'],
+							1: ['6'],
+						},
+						compHQF: {
+							85: ['3'],
+							1: ['6'],
+						},
+						end: true,
+						boss: true
+					},
+					'J': {
+						type: 3,
+						x: 649,
+						y: 226,
+						end: true
+					},
+				}
+			},
+			4: {
+				name: 'E-4',
+				nameT: 'Operation Intercept Task Force',
+				fleetTypes: [1,2],
+				bgmMap: 2001,
+				bgmDN: 25,
+				bgmNN: 25,
+				bgmDB: 26,
+				bgmNB: 26,
+				bossnode: 10,
+				maphp: {
+					3: { 1: 2420 },
+					2: { 1: 2420 },
+					1: { 1: 2220 },
+				},
+				finalhp: {
+					3: 390,
+					2: 390,
+					1: 370,
+				},
+				reward: {
+					ships: [415],
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 96,
+						y: 172,
+						routeC: function(ships) {
+							if (ships.escort.DD == 2 && ships.escort.CLT >= 2) return 'C';
+							if (ships.escort.DD >= 5) return (Math.random() < .75)? 'B' : 'C';
+							if (ships.escort.DD == 4) return (Math.random() < .5)? 'B' : 'C';
+							if (ships.escort.DD == 3) return (Math.random() < .25)? 'B' : 'C';
+							return 'C';
+						}
+					},
+					'A': {
+						type: 3,
+						x: 168,
+						y: 281,
+						end: true
+					},
+					'B': {
+						type: 3,
+						x: 232,
+						y: 95,
+						route: 'D'
+					},
+					'C': {
+						type: 1,
+						x: 236,
+						y: 168,
+						subonly: true,
+						compDiff: {
+							2: ['1','2','3'],
+							1: ['4','5'],
+						},
+						compHQ: {
+							80: ['1','2','3'],
+							1: ['4','5'],
+						},
+						routeC: function(ships) {
+							let letter = checkELoS33(getELoS33(1,1,true),{ 90: 'X', 87: 'A' });
+							if (letter == 'A') return 'A';
+							return (Math.random() < .5)? 'D' : 'E';
+						}
+					},
+					'D': {
+						type: 1,
+						x: 356,
+						y: 129,
+						compDiff: {
+							2: ['1','2'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							80: ['1','2'],
+							1: ['3','4'],
+						},
+						routeC: function(ships) {
+							if (ships.escort.CLT >= 3) return 'E';
+							if (ships.aBB + ships.escort.aBB >= 5) return 'E';
+							if (ships.aBB + ships.escort.aBB == 4) return (Math.random() < .25)? 'G' : 'E';
+							if (ships.aBB + ships.escort.aBB == 3) return (Math.random() < .75)? 'G' : 'E';
+							if (ships.aBB + ships.escort.aBB <= 2) return 'G';
+						}
+					},
+					'E': {
+						type: 1,
+						x: 375,
+						y: 269,
+						compDiff: {
+							2: ['1','2','3','4'],
+							1: ['1','2','3','4'],
+						},
+						compHQ: {
+							1: ['1','2','3','4'],
+						},
+						route: 'G'
+					},
+					'F': {
+						type: 3,
+						x: 422,
+						y: 95,
+						end: true
+					},
+					'G': {
+						type: 1,
+						x: 482,
+						y: 175,
+						compDiff: {
+							2: ['1','2'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							100: ['1','2'],
+							1: ['3','4'],
+						},
+						showLoSPlane: 'J',
+						routeC: function(ships) {
+							if (checkELoS33(getELoS33(1,1,true),{ 90: 'X', 87: 'F' }) == 'F') return 'F';
+							if (ships.aCV <= 2 && ships.LHA + ships.CL) return 'J';
+							if (ships.aCV >= 3 && ships.aBB >= 2) return 'I';
+							if (ships.CV + ships.CVB >= 3) return 'I';
+							if (ships.CVL >= 4) return (Math.random() < .9)? 'J' : 'I';
+							if (ships.aCV <= 3 && ships.CV + ships.CVB <= 2) return 'J';
+							return (Math.random() < .5)? 'H' : 'J';
+						}
+					},
+					'H': {
+						type: 1,
+						x: 543,
+						y: 268,
+						compDiff: {
+							2: ['1','2'],
+							1: ['3','4'],
+						},
+						compHQ: {
+							80: ['1','2'],
+							1: ['3','4'],
+						},
+						route: 'J'
+					},
+					'I': {
+						type: 1,
+						x: 578,
+						y: 107,
+						compDiff: {
+							2: ['1','2'],
+							1: ['1','2'],
+						},
+						compHQ: {
+							80: ['1','2'],
+							1: ['1','2'],
+						},
+						route: 'J'
+					},
+					'J': {
+						type: 1,
+						x: 637,
+						y: 190,
+						compDiff: {
+							2: ['1','2'],
+							1: ['4','5'],
+						},
+						compHQ: {
+							90: ['1','2'],
+							1: ['4','5'],
+						},
+						compDiffF: {
+							2: ['3'],
+							1: ['6'],
+						},
+						compHQF: {
+							90: ['3'],
+							1: ['6'],
+						},
+						end: true,
+						boss: true
+					},
+				}
+			}
+		}
+	},
 	31: {
 		name: 'Summer 2015',
 		date: '2015-08-10',

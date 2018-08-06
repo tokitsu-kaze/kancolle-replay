@@ -1225,23 +1225,12 @@ function prepBattle(letter) {
 	var compd = ENEMYCOMPS[MAPDATA[WORLD].name]['E-'+MAPNUM][letter][comp];
 	for (var i=0; i<compd.c.length; i++) {
 		var sid = compd.c[i];
-		enemies.push(createDefaultShip(sid));
+		var overrideStats = (MAPDATA[WORLD].overrideStats)? MAPDATA[WORLD].overrideStats[sid] : null;
+		enemies.push(createDefaultShip(sid,overrideStats));
 	}
 	FLEETS2[0] = new Fleet(1);
 	FLEETS2[0].loadShips(enemies);
 	FLEETS2[0].formation = ALLFORMATIONS[compd.f];
-	
-	if (MAPDATA[WORLD].overrideStats) {
-		for (var i=0; i<FLEETS2[0].ships.length; i++) {
-			var ship = FLEETS2[0].ships[i];
-			if (MAPDATA[WORLD].overrideStats[ship.mid]) {
-				for (var stat in MAPDATA[WORLD].overrideStats[ship.mid]) {
-					ship[stat] = MAPDATA[WORLD].overrideStats[ship.mid][stat];
-					if (stat == 'HP') ship.maxHP = ship.HP;
-				}
-			}
-		}
-	}
 	
 	if (mapdata.debuffAmount) {
 		var debuffCheck = MAPDATA[WORLD].maps[MAPNUM].debuffCheck;

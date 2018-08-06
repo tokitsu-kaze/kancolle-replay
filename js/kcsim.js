@@ -1642,8 +1642,16 @@ function updateMorale(ships1,rank,mvp,NBonly,didNB) {
 	// else if (side==3) FLEETS1S[1] = f;
 // }
 
-function createDefaultShip(mid) {
-	var data = SHIPDATA[mid];
+function createDefaultShip(mid,overrideStats) {
+	var dataOrig = SHIPDATA[mid], data = {};
+	if (overrideStats) {
+		for (var stat in dataOrig) {
+			if (overrideStats[stat]) data[stat] = overrideStats[stat];
+			else data[stat] = dataOrig[stat];
+		}
+	} else {
+		data = dataOrig;
+	}
 	var ShipType = window[data.type];
 	var ship = new ShipType(mid,data.name,(isPlayable(mid))?0:1,(isPlayable(mid))?99:1,data.HP,data.FP,data.TP,data.AA,data.AR,data.EV,data.ASW,data.LOS,data.LUK,data.RNG,data.SLOTS);
 	if (ship.isSub) ship.LVL = 50;
