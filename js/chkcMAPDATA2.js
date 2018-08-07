@@ -4368,6 +4368,828 @@ var MAPDATA = {
 			}
 		}
 	},
+	29: {
+		name: 'Winter 2015',
+		date: '2015-02-06',
+		diffMode: 2,
+		allowDiffs: [3,2,1],
+		allowFleets: [0,1,2],
+		bannerImg: 'http://i.imgur.com/0Hva9QA.png',
+		bannerImgAlt: 'http://i.imgur.com/eLlUiO1.png',
+		maps: {
+			1: {
+				name: 'E-1',
+				nameT: 'Wreck the enemy submarines around our anchorage!',
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 30,
+				bgmNN: 30,
+				bgmDB: 32,
+				bgmNB: 32,
+				bossnode: 9,
+				maphp: {
+					3: { 1: 200 },
+					2: { 1: 180 },
+					1: { 1: 180 },
+				},
+				finalhp: {
+					3: 48,
+					2: 45,
+					1: 45,
+				},
+				additionalChecks: function(ships,errors) {
+					if (ships.total > ships.CL + ships.DD) errors.push('CL and DD only');
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 355,
+						y: 238,
+						routeR: { 'A': .5, 'B': .5 }
+					},
+					'A': {
+						type: 1,
+						x: 338,
+						y: 319,
+						subonly: true,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'C'
+					},
+					'B': {
+						type: 3,
+						x: 252,
+						y: 305,
+						route: 'E'
+					},
+					'C': {
+						type: 3,
+						x: 481,
+						y: 340,
+						route: 'D'
+					},
+					'D': {
+						type: 1,
+						x: 611,
+						y: 260,
+						subonly: true,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'G'
+					},
+					'E': {
+						type: 1,
+						x: 144,
+						y: 257,
+						subonly: true,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'F'
+					},
+					'F': {
+						type: 3,
+						x: 160,
+						y: 147,
+						routeL: { 3: 'H', 0: 'J' }
+					},
+					'G': {
+						type: 1,
+						x: 589,
+						y: 174,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeC: function(ships) {
+							if (ships.CL >= 5) return 'K';
+							return 'I';
+						}
+					},
+					'H': {
+						type: 1,
+						x: 329,
+						y: 88,
+						subonly: true,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5'],
+						},
+						showLoSPlane: 'I',
+						routeC: function(ships) {
+							if (ships.CL >= 4) return 'J';
+							if (ships.CL > 1) return 'G';
+							return checkELoS33(getELoS33(1,1),{ 8: 'I', 5: 'G' });
+						}
+					},
+					'I': {
+						type: 1,
+						x: 546,
+						y: 101,
+						compDiff: {
+							3: ['1'],
+							2: ['3'],
+							1: ['5'],
+						},
+						compDiffF: {
+							3: ['2'],
+							2: ['4'],
+							1: ['6'],
+						},
+						end: true,
+						boss: true
+					},
+					'J': {
+						type: 3,
+						x: 257,
+						y: 200,
+						end: true
+					},
+					'K': {
+						type: 3,
+						x: 647,
+						y: 125,
+						end: true
+					},
+				}
+			},
+			2: {
+				name: 'E-2',
+				nameT: 'Bombing of Truk anchorage',
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 30,
+				bgmNN: 30,
+				bgmDB: 33,
+				bgmNB: 33,
+				bossnode: 9,
+				maphp: {
+					3: { 1: 736 },
+					2: { 1: 736 },
+					1: { 1: 736 },
+				},
+				finalhp: {
+					3: 160,
+					2: 160,
+					1: 160,
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 247,
+						y: 185,
+						routeC: function(ships) {
+							if (ships.aBB > 2) return 'B';
+							if (ships.CV + ships.CVB > 2) return 'B';
+							if (ships.CLT > 1) return 'B';
+							if (ships.DD + ships.CL + ships.CVL + ships.LHA + ships.AR >= 2) return 'A';
+							return 'B';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 336,
+						y: 240,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeC: function(ships) {
+							if (ships.speed == 10 && ships.CL >= 1 && ships.CAV <= 1 && ships.DD+ships.CAV >= 4) return 'D';
+							return 'F';
+						}
+					},
+					'B': {
+						type: 4,
+						x: 210,
+						y: 108,
+						resource: 1,
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV >= 3) return 'J';
+							if (ships.DD + ships.CL + ships.CVL + ships.LHA + ships.AR <= 0) return 'J';
+							return 'C';
+						}
+					},
+					'C': {
+						type: 1,
+						x: 360,
+						y: 113,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'F'
+					},
+					'D': {
+						type: 3,
+						x: 247,
+						y: 307,
+						route: 'E'
+					},
+					'E': {
+						type: 1,
+						x: 423,
+						y: 285,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'G'
+					},
+					'F': {
+						type: 1,
+						x: 469,
+						y: 201,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeC: function(ships) {
+							if (ships.DD >= 1 && ships.aCV <= 4 && ships.CV + ships.CVB <= 1 && ships.aBB + ships.CV + ships.CVB <= 2 && ships.CLT <= 1) return 'G';
+							return 'H';
+						}
+					},
+					'G': {
+						type: 1,
+						x: 557,
+						y: 328,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeL: { 20: 'I', 17: 'L' }
+					},
+					'H': {
+						type: 1,
+						x: 565,
+						y: 134,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeL: { 20: 'I', 17: 'K' }
+					},
+					'I': {
+						type: 1,
+						x: 638,
+						y: 210,
+						compDiff: {
+							3: ['1'],
+							2: ['3'],
+							1: ['5'],
+						},
+						compDiffF: {
+							3: ['2'],
+							2: ['4'],
+							1: ['6'],
+						},
+						end: true,
+						boss: true
+					},
+					'J': {
+						type: 3,
+						x: 108,
+						y: 192,
+						end: true
+					},
+					'K': {
+						type: 3,
+						x: 645,
+						y: 94,
+						end: true
+					},
+					'L': {
+						type: 3,
+						x: 659,
+						y: 276,
+						end: true
+					},
+				}
+			},
+			3: {
+				name: 'E-3',
+				nameT: 'Combined Fleet, sortie now!',
+				fleetTypes: [1,2],
+				bgmMap: 2001,
+				bgmDN: 30,
+				bgmNN: 30,
+				bgmDB: 34,
+				bgmNB: 34,
+				bossnode: 11,
+				maphp: {
+					3: { 1: 1080 },
+					2: { 1: 1080 },
+					1: { 1: 1000 },
+				},
+				finalhp: {
+					3: 270,
+					2: 270,
+					1: 210,
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 103,
+						y: 152,
+						routeC: function(ships) {
+							if (isShipInList(ships.escort.ids,56) && isShipInList(ships.escort.ids,137)) return 'C';
+							if (ships.CAV == 2) return 'C';
+							return (Math.random() < .7)? 'A' : 'C';
+						}
+					},
+					'A': {
+						type: 3,
+						x: 235,
+						y: 112,
+						route: 'B'
+					},
+					'B': {
+						type: 1,
+						x: 349,
+						y: 178,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3'],
+							1: ['4'],
+						},
+						routeC: function(ships) {
+							if (ships.aBB + ships.CV + ships.CVB >= 5) return 'F';
+							if (ships.escort.aBB + ships.escort.CLT) return 'F';
+							if (ships.escort.DD >= 4) return 'C';
+							if (ships.aBB >= 4) return 'F';
+							if (ships.aCV >= 4) return 'F';
+							return 'C';
+						}
+					},
+					'C': {
+						type: 1,
+						x: 314,
+						y: 273,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeC: function(ships) {
+							return 'E';
+						}
+					},
+					'D': {
+						type: 3,
+						x: 213,
+						y: 313,
+						end: true
+					},
+					'E': {
+						type: 4,
+						x: 418,
+						y: 330,
+						resource: 1,
+						routeC: function(ships) {
+							if (ships.aBB + ships.CV + ships.CVB >= 5) return 'F';
+							if (ships.escort.aBB + ships.escort.CLT) return 'F';
+							if (ships.escort.DD >= 4) return 'H';
+							if (ships.aBB >= 4) return 'F';
+							if (ships.aCV >= 4) return 'F';
+							return 'H';
+						}
+					},
+					'F': {
+						type: 1,
+						x: 429,
+						y: 265,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeC: function(ships) {
+							if (ships.escort.CLT >= 2) return 'G';
+							return 'H';
+						}
+					},
+					'G': {
+						type: 1,
+						x: 495,
+						y: 150,
+						compDiff: {
+							3: ['1','2'],
+							2: ['1','2'],
+							1: ['1','2'],
+						},
+						routeL: { 80: 'I', 77: 'J' }
+					},
+					'H': {
+						type: 1,
+						x: 543,
+						y: 313,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'K'
+					},
+					'I': {
+						type: 1,
+						x: 613,
+						y: 215,
+						compDiff: {
+							3: ['1'],
+							2: ['1'],
+							1: ['1'],
+						},
+						route: 'K'
+					},
+					'J': {
+						type: 3,
+						x: 629,
+						y: 89,
+						end: true
+					},
+					'K': {
+						type: 1,
+						x: 655,
+						y: 278,
+						compDiff: {
+							3: ['1'],
+							2: ['3'],
+							1: ['5'],
+						},
+						compDiffF: {
+							3: ['2'],
+							2: ['4'],
+							1: ['6'],
+						},
+						end: true,
+						boss: true
+					},
+				}
+			},
+			4: {
+				name: 'E-4',
+				nameT: 'Seize the Enemy Task Force!',
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 31,
+				bgmNN: 31,
+				bgmDB: 35,
+				bgmNB: 35,
+				bossnode: 11,
+				maphp: {
+					3: { 1: 2100 },
+					2: { 1: 2100 },
+					1: { 1: 2100 },
+				},
+				finalhp: {
+					3: 350,
+					2: 350,
+					1: 350,
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 180,
+						y: 192,
+						routeC: function(ships) {
+							if (ships.CLT >= 2) return 'A';
+							if (ships.speed == 10 && ships.aCV && ships.CL + ships.DD >= 3) return 'A';
+							if (ships.speed == 10 && ships.aCV >= 2) return 'A';
+							if (ships.CL == 1 && ships.DD >= 4 && ships.CLT + ships.CA + ships.CAV + ships.DD - 4 == 1) return 'E';
+							return 'B';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 141,
+						y: 117,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5'],
+						},
+						routeC: function(ships) {
+							return (Math.random() < .5)? 'E' : 'C';
+						}
+					},
+					'B': {
+						type: 3,
+						x: 272,
+						y: 203,
+						routeC: function(ships) {
+							if (ships.speed == 10 && ships.aCV + ships.CLT <= 0) return 'D';
+							if (isShipInList(ships.ids,56) || isShipInList(ships.ids,137) || (isShipInList(ships.ids,415) && isShipInList(ships.ids,122))) return 'D';
+							return 'F';
+						}
+					},
+					'C': {
+						type: 3,
+						x: 81,
+						y: 235,
+						end: true
+					},
+					'D': {
+						type: 1,
+						x: 328,
+						y: 274,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'G'
+					},
+					'E': {
+						type: 4,
+						x: 400,
+						y: 101,
+						resource: 1,
+						route: 'H'
+					},
+					'F': {
+						type: 1,
+						x: 402,
+						y: 201,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'H'
+					},
+					'G': {
+						type: 1,
+						x: 454,
+						y: 314,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'I'
+					},
+					'H': {
+						type: 1,
+						x: 504,
+						y: 142,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeC: function(ships) {
+							if (ships.aCV >= 2) return 'J';
+							if (ships.BBV >= 2) return 'J';
+							return 'I';
+						}
+					},
+					'I': {
+						type: 1,
+						x: 582,
+						y: 291,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeL: { 18: 'K', 15: 'M' }
+					},
+					'J': {
+						type: 1,
+						x: 611,
+						y: 96,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeL: { 18: 'K', 15: 'L' }
+					},
+					'K': {
+						type: 1,
+						x: 622,
+						y: 206,
+						compDiff: {
+							3: ['1'],
+							2: ['3'],
+							1: ['5'],
+						},
+						compDiffF: {
+							3: ['2'],
+							2: ['4'],
+							1: ['6'],
+						},
+						end: true,
+						boss: true
+					},
+					'L': {
+						type: 3,
+						x: 662,
+						y: 153,
+						end: true
+					},
+					'M': {
+						type: 3,
+						x: 666,
+						y: 257,
+						end: true
+					},
+				}
+			},
+			5: {
+				name: 'E-5',
+				nameT: 'Decisive Battle! Combined Fleet, Begin Counterattack!',
+				fleetTypes: [1,2],
+				bgmMap: 2001,
+				bgmDN: 31,
+				bgmNN: 31,
+				bgmDB: 36,
+				bgmNB: 36,
+				bossnode: 10,
+				maphp: {
+					3: { 1: 3000 },
+					2: { 1: 3000 },
+					1: { 1: 3000 },
+				},
+				finalhp: {
+					3: 500,
+					2: 500,
+					1: 415,
+				},
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 139,
+						y: 200,
+						routeC: function(ships) {
+							if (ships.aCV >= 3) return 'A';
+							if (ships.escort.CLT >= 2 || ships.escort.SS + ships.escort.SSV) return 'A';
+							if (ships.speed == 10) return 'B';
+							if (isShipInList(ships.escort.ids,56) || isShipInList(ships.escort.ids,137) || (isShipInList(ships.escort.ids,415) && isShipInList(ships.escort.ids,122))) return 'B';
+							return 'A';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 233,
+						y: 207,
+						compDiff: {
+							3: ['1'],
+							2: ['2'],
+							1: ['3'],
+						},
+						routeC: function(ships) {
+							if (ships.AR + ships.CT) return 'C';
+							if (ships.escort.SS + ships.escort.SSV) return 'C';
+							return (Math.random() < .7)? 'D' : 'C';
+						}
+					},
+					'B': {
+						type: 1,
+						x: 220,
+						y: 310,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'D'
+					},
+					'C': {
+						type: 3,
+						x: 313,
+						y: 120,
+						routeC: function(ships) {
+							if (ships.escort.SS + ships.escort.SSV) return 'M';
+							return 'E';
+						}
+					},
+					'D': {
+						type: 4,
+						x: 356,
+						y: 274,
+						resource: 1,
+						routeC: function(ships) {
+							if (CHDATA.fleets.combined == 2) return (Math.random() < .75)? 'E' : 'F';
+							return (Math.random() < .75)? 'F' : 'E';
+						}
+					},
+					'E': {
+						type: 1,
+						x: 453,
+						y: 90,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeC: function(ships) {
+							if (ships.CLT >= 3) return 'L';
+							return (Math.random() < .5)? 'G' : 'H';
+						}
+					},
+					'F': {
+						type: 1,
+						x: 473,
+						y: 309,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						routeC: function(ships) {
+							if (ships.CLT >= 3) return 'K';
+							return (Math.random() < .5)? 'G' : 'I';
+						}
+					},
+					'G': {
+						type: 1,
+						x: 521,
+						y: 207,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'J'
+					},
+					'H': {
+						type: 1,
+						x: 629,
+						y: 142,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'J'
+					},
+					'I': {
+						type: 1,
+						x: 628,
+						y: 278,
+						compDiff: {
+							3: ['1','2'],
+							2: ['3','4'],
+							1: ['5','6'],
+						},
+						route: 'J'
+					},
+					'J': {
+						type: 1,
+						x: 599,
+						y: 208,
+						compDiff: {
+							3: ['1'],
+							2: ['3'],
+							1: ['5'],
+						},
+						compDiffF: {
+							3: ['2'],
+							2: ['4'],
+							1: ['6'],
+						},
+						end: true,
+						boss: true
+					},
+					'K': {
+						type: 3,
+						x: 584,
+						y: 333,
+						end: true
+					},
+					'L': {
+						type: 3,
+						x: 635,
+						y: 80,
+						end: true
+					},
+					'M': {
+						type: 3,
+						x: 182,
+						y: 108,
+						end: true
+					},
+				}
+			}
+		}
+	},
 	31: {
 		name: 'Summer 2015',
 		date: '2015-08-10',
