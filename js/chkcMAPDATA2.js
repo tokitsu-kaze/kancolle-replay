@@ -5032,6 +5032,9 @@ var MAPDATA = {
 					2: 500,
 					1: 415,
 				},
+				reward: {
+					ships: [331],
+				},
 				nodes: {
 					'Start': {
 						type: 0,
