@@ -638,7 +638,7 @@ function torpedoPhase(alive1,subsalive1,alive2,subsalive2,opening,APIrai) {
 		if (ship.improves.ACCtorp) accflat += Math.floor(ship.improves.ACCtorp);
 		accflat += Math.floor(power/5);
 		if (ship.TACC) accflat += ship.TACC;
-		var ptMod = (target.isPT)? .5 : 1;
+		var ptMod = (target.isPT && !NERFPTIMPS)? .5 : 1;
 		var acc = hitRate(ship,85,accflat,ship.fleet.formation.torpacc*ship.moraleMod(true)*ptMod);
 		
 		var evFlat = (target.improves.EVtorp)? ship.improves.EVtorp : 0;

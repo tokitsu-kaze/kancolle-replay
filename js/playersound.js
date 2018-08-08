@@ -177,6 +177,7 @@ var BGMLIST = {
 	2031: {url:'assets/music/903y.ogg'},
 	2131: {url:'assets/music/904wNeo.ogg'},
 	2032: {url:'assets/music/905w.ogg'},
+	2033: {url:'assets/music/906y.ogg'},
 	2034: {url:'assets/music/907c.ogg'},
 	2134: {url:'assets/music/908i.ogg'},
 	2035: {url:'assets/music/909q.ogg'},
