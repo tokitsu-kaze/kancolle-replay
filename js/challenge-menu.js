@@ -260,13 +260,18 @@ function chShowReward(data,tracker) {
 	if (numShips + numItems) {
 		$('#dialogreward').dialog('open');
 		$('#rewardshine').css('animation','spin 5s linear infinite');
+		$('#rewardship').css('margin-top','105px');
 		if (tracker < numShips) {
 			$('#rewardship').attr('src','assets/icons/'+SHIPDATA[data.ships[tracker]].image);
 		} else {
 			//right now this is "just for fun"
 			var ind = tracker-numShips;
 			if (data.items[ind] == 56) { //shinden kai use image
+				$('#rewardship').css('margin-top','70px');
 				$('#rewardship').attr('src','assets/maps/22/Shinden_Kai_056_Card.png');
+			} else if (data.items[ind] == 'apology') {
+				$('#rewardship').css('margin-top','40px');
+				$('#rewardship').attr('src','assets/maps/Apology_scroll.png');
 			} else {
 				$('#rewardship').attr('src','assets/items/'+EQTDATA[EQDATA[data.items[ind]].type].image+'.png');
 			}

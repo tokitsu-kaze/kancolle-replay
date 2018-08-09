@@ -65,6 +65,11 @@ function InitUI() {
 	}
 	
 	$('#mainspace').show();
+	
+	if (WORLD == 24 && !CHDATA.event.apo && (CHDATA.event.lasttime < 1533866657853 || CHDATA.player.name == 'Juuryoushin')) {
+		CHDATA.event.apo = 1;
+		chShowReward({items:['apology']});
+	}
 }
 
 var WORLD, MAPNUM;
@@ -1325,6 +1330,10 @@ function prepBattle(letter) {
 		if (MAPDATA[WORLD].maps[MAPNUM].dayCheck && !MAPDATA[WORLD].maps[MAPNUM].dayCheck()) {
 			
 		} else {
+			for (var i=0; i<FLEETS1[0].ships.length; i++) {
+				let ship = FLEETS1[0].ships[i];
+				if (ship.HPprev/ship.maxHP > .25) ship.protection = true;
+			}
 			res = sim(FLEETS1[0],FLEETS2[0],supportfleet,LBASwaves,false,false,false,false,false,BAPI,true);
 			BAPI.yasen.api_n_hougeki1 = BAPI.yasen.api_hougeki;
 			delete BAPI.yasen.api_hougeki;
