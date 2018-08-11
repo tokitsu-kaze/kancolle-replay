@@ -8752,7 +8752,7 @@ var SHIPDATA = {
 		image: 'KAquilaKai.jpg',
 		type: 'CV',
 		nid: 1445,
-		added: '2015-08-12',
+		added: '2016-08-12',
 		HP: 48, HPmax: 78,
 		FP: 24, FPbase: 0,
 		TP: 0, TPbase: 0,

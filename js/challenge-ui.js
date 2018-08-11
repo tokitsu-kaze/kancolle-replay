@@ -1577,7 +1577,7 @@ function chPreviewRepair(fleetnum,shipnum) {
 		let cost = chGetRepairCost(ship);
 		fuel += cost.fuel;
 		steel += cost.steel;
-		if (cost.fuel && cost.steel) buckets += 1;
+		if (cost.steel) buckets += 1;
 	}
 	$('#hbRFuel').text(fuel);
 	$('#hbRSteel').text(steel);
