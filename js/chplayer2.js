@@ -65,11 +65,6 @@ function InitUI() {
 	}
 	
 	$('#mainspace').show();
-	
-	if (WORLD == 24 && !CHDATA.event.apo && (CHDATA.event.lasttime < 1533866657853 || CHDATA.player.name == 'Juuryoushin')) {
-		CHDATA.event.apo = 1;
-		chShowReward({items:['apology']});
-	}
 }
 
 var WORLD, MAPNUM;
@@ -1347,7 +1342,7 @@ function prepBattle(letter) {
 	
 	res.NBonly = NBonly;
 	res.landbomb = landbomb;
-	res.noammo = mapdata.subonly;
+	res.noammo = compd.noammo;
 	if (landbomb) {
 		res.rank = res.rankDay = getRankRaid(FLEETS1[0].ships,(CHDATA.fleets.combined)? FLEETS1[1].ships : null);
 		delete BAPI.data.api_hougeki1;

@@ -80,8 +80,22 @@ function chMenuShowFiles() {
 		var medals = [];
 		for (var mapnum in mdata.maps) total++;
 		for (var mapnum in data.event.maps) {
-			var nowhp = data.event.maps[mapnum].hp;
-			var maxhp = getMapHP(data.event.world,mapnum,data.event.maps[mapnum].diff) || 0;
+			var nowhp = 0, maxhp = 0;
+			if (mdata.maps[mapnum].parts) {
+				for (var part in mdata.maps[mapnum].parts) {
+					maxhp++;
+					if (part > data.event.maps[mapnum].part) {
+						nowhp++;
+					} else if (data.event.maps[mapnum].part == part) {
+						var nowhpP = data.event.maps[mapnum].hp;
+						var maxhpP = getMapHP(data.event.world,mapnum,data.event.maps[mapnum].diff,part);
+						nowhp += nowhpP/maxhpP;
+					}
+				}
+			} else {
+				nowhp = data.event.maps[mapnum].hp;
+				maxhp = getMapHP(data.event.world,mapnum,data.event.maps[mapnum].diff) || 0;
+			}
 			if (!maxhp) continue;
 			progress += (maxhp-nowhp)/maxhp/total;
 			if (nowhp <= 0) medals[mapnum-1] = data.event.maps[mapnum].diff;

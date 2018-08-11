@@ -8121,7 +8121,7 @@ var SHIPDATA = {
 		image: 'KAmagi.png',
 		type: 'CV',
 		nid: 202,
-		added: '2014-11-14',
+		added: '2015-02-06',
 		HP: 48, HPmax: 79,
 		FP: 25, FPbase: 0,
 		TP: 0, TPbase: 0,
