@@ -902,7 +902,7 @@ function mapPhase(first) {
 			if (r < sum) { nextletter = letter; break; }
 		}
 	} else if (curnode.routeL) {
-		nextletter = checkELoS33(getELoS33(1,1,CHDATA.fleets.combined),curnode.routeL);
+		nextletter = checkELoS33(getELoS33(1,curnode.routeLC || 1,CHDATA.fleets.combined),curnode.routeL);
 	} else if (curnode.routeS) {
 		eventqueue.push([selectNode,[curnode.routeS]]);
 	}

@@ -1189,7 +1189,7 @@ function chUpdateFleetInfo(fleetnum) {
 	var los1 = getELoS33(fleetnum,1,CHDATA.fleets.combined);
 	$('#fleetap'+fleetnum).text(ap);
 	$('#fleetefflos'+fleetnum).text(Math.floor(los1*10)/10);
-	if (WORLD <= 27) { //Summer14 and before only
+	if (WORLD <= 27 && WORLD > 20) { //Summer14 and before only
 		var losOld = testGetLoSOld(fleetnum,CHDATA.fleets.combined);
 		$('#fleetefflos'+fleetnum).parent().attr('title','Old = '+(Math.floor(losOld*10)/10));
 	} else {
