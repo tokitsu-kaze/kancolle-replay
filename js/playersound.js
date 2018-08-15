@@ -97,6 +97,8 @@ var BGMLIST = {
 	1000: {url: 'assets/music/bossold1.mp3',voldef:.6},
 	1001: {url: 'assets/music/bossold2.mp3',voldef:.6},
 	1002: {url:'assets/music/Sound_bgm_iron02.ogg'},
+    1003: {url:'assets/music/129w.ogg'}, //Combined Fleet Flagship
+    1004: {url:'assets/music/241e.ogg'}, //The Glistening Dew After The Rainy Season
 	3: {url:'assets/music/Sound_b_bgm_3.ogg'},
 	4: {url:'assets/music/Sound_b_bgm_4.ogg'},
 	5: {url:'assets/music/Sound_b_bgm_5.ogg'},
@@ -159,6 +161,7 @@ var BGMLIST = {
 	87: {url:'assets/music/Sound_b_bgm_87.ogg'},
 	88: {url:'assets/music/Sound_b_bgm_88.ogg'},
 	89: {url:'assets/music/Sound_b_bgm_89.ogg'},
+	90: {url:'assets/music/913p.ogg'},
 	91: {url:'assets/music/1_res.sounds.battle.BGM_91.mp3'},
 	92: {url:'assets/music/1_res.sounds.battle.BGM_92.mp3'},
 	93: {url:'assets/music/1_res.sounds.battle.BGM_93.mp3'},
@@ -168,7 +171,10 @@ var BGMLIST = {
 	98: {url:'assets/music/Sound_b_bgm_98.ogg'},
 	99: {url:'assets/music/Sound_b_bgm_99.ogg'},
 	100: {url:'assets/music/1_res.sounds.battle.BGM_100.mp3'},
+    103: {url:'assets/music/Sound_b_bgm_103.ogg'},
 	107: {url:'assets/music/107b.ogg'},
+	116: {url:'assets/music/Sound_b_bgm_116.oga'},
+	117: {url:'assets/music/Sound_b_bgm_117.oga'},
 	998: {url:'assets/music/savior of song.mp3',voldef:.25},
 	999: {url:'assets/music/Orel Cruising & LSC Song [ENG Sub].mp3',voldef:.3},
 	2001: {url:'assets/music/103v.ogg', voldef:.7},
