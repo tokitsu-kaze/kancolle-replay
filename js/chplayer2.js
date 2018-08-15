@@ -370,7 +370,7 @@ function addMapNode(letter,type) {
 	nodeG.position.set(node.x+MAPOFFX,node.y+MAPOFFY);
 	if (mapnodes[letter]) stage.removeChild(mapnodes[letter]);
 	mapnodes[letter] = nodeG;
-	stage.addChildAt(nodeG,stage.getChildIndex(map)+1);
+	stage.addChildAt(nodeG,stage.getChildIndex(mapship));
 	console.log(stage.getChildIndex(map));
 }
 
@@ -1226,7 +1226,7 @@ function prepBattle(letter) {
 	comp = comps[Math.floor(Math.random()*comps.length)];
 	var compd;
 	if (WORLD == 20) {
-		let n = (mapdata.boss)? 'Boss' : letter;
+		let n = (mapdata.compName)? mapdata.compName : (mapdata.boss)? 'Boss' : letter;
 		compd = ENEMYCOMPS['World '+MAPDATA[WORLD].maps[MAPNUM].world][MAPDATA[WORLD].maps[MAPNUM].name][n][comp];
 	} else {
 		compd = ENEMYCOMPS[MAPDATA[WORLD].name]['E-'+MAPNUM][letter][comp];
@@ -1494,7 +1494,7 @@ function shuttersPostbattle(noshutters) {
 		CHDATA.event.maps[MAPNUM].hp -= MAPDATA[WORLD].transportCalc(chGetShips(),rank);
 		if (CHDATA.event.maps[MAPNUM].hp < 0) CHDATA.event.maps[MAPNUM].hp = 0;
 	}
-	if (MAPDATA[WORLD].maps[MAPNUM].hpmode == -1) {
+	if (MAPDATA[WORLD].maps[MAPNUM].hpmode == -1 && MAPDATA[WORLD].maps[MAPNUM].nodes[curletter].boss) {
 		var rank = (!CHDATA.temp.NBonly && !NBSELECT)? CHDATA.temp.rankDay : CHDATA.temp.rank;
 		if (rank == 'S' || rank == 'A' || rank == 'B') CHDATA.event.maps[MAPNUM].hp = 0;
 	}

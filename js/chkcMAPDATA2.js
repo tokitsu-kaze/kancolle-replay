@@ -483,11 +483,71 @@ var MAPDATA = {
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
 				hpmode: -1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 71,
+						y: 227,
+						route: 'A'
+					},
+					'A': {
+						type: 1,
+						x: 211,
+						y: 318,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'B': .5, 'D': .5 }
+					},
+					'B': {
+						type: 2,
+						x: 173,
+						y: 254,
+						resource: 3,
+						amount: [10,20,25,30],
+						route: 'C'
+					},
+					'C': {
+						type: 1,
+						x: 122,
+						y: 178,
+						compName: 'C/F',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'D': {
+						type: 2,
+						x: 244,
+						y: 187,
+						resource: 7,
+						amount: [1],
+						routeC: function(ships) {
+							if (ships.CAV + ships.CV + ships.CVL + ships.aBB + ships.AV) return (Math.random() < .7)? 'E' : 'F';
+							return (Math.random() < .3)? 'E' : 'F';
+						}
+					},
+					'E': {
+						type: 1,
+						x: 152,
+						y: 99,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+					'F': {
+						type: 1,
+						x: 342,
+						y: 82,
+						compName: 'C/F',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
 				}
 			},
 			8: {
@@ -504,11 +564,79 @@ var MAPDATA = {
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
 				hpmode: -1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 65,
+						y: 228,
+						routeR: { 'A': .5, 'E': .5 }
+					},
+					'A': {
+						type: 1,
+						x: 130,
+						y: 163,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'B': .5, 'E': .5 }
+					},
+					'B': {
+						type: 2,
+						x: 259,
+						y: 139,
+						resource: 4,
+						amount: [5,10,15],
+						routeR: { 'C': .5, 'D': .5 }
+					},
+					'C': {
+						type: 2,
+						x: 185,
+						y: 77,
+						resource: 7,
+						amount: [1],
+						end: true
+					},
+					'D': {
+						type: 1,
+						x: 381,
+						y: 119,
+						compName: 'D/G',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'E': {
+						type: 2,
+						x: 189,
+						y: 241,
+						resource: 4,
+						amount: [15,20,25,30,35],
+						routeC: function(ships) {
+							if (ships.CV + ships.CVL + ships.AV) return (Math.random() < .7)? 'F' : 'G';
+							return (Math.random() < .3)? 'F' : 'G';
+						}
+					},
+					'F': {
+						type: 1,
+						x: 381,
+						y: 217,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+					'G': {
+						type: 1,
+						x: 312,
+						y: 316,
+						compName: 'D/G',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
 				}
 			},
 			9: {
@@ -525,11 +653,122 @@ var MAPDATA = {
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
 				hpmode: -1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 65,
+						y: 228,
+						routeR: { 'A': .5, 'C': .5 }
+					},
+					'A': {
+						type: 2,
+						x: 132,
+						y: 161,
+						resource: 1,
+						amount: [15,20,25,30,35,40,45],
+						route: 'B'
+					},
+					'B': {
+						type: 1,
+						x: 269,
+						y: 76,
+						compName: 'B/C',
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'E'
+					},
+					'C': {
+						type: 1,
+						x: 225,
+						y: 234,
+						compName: 'B/C',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CV + ships.CVL + ships.AV) return (Math.random() < .7)? 'D' : 'H';
+							return (Math.random() < .5)? 'D' : 'H';
+						}
+					},
+					'D': {
+						type: 2,
+						x: 307,
+						y: 175,
+						resource: 2,
+						amount: [20,25,30,35,40,45],
+						route: 'E'
+					},
+					'E': {
+						type: 2,
+						x: 381,
+						y: 175,
+						resource: 1,
+						amount: [15,20,25,30,35,40,45],
+						routeC: function(ships) {
+							if (ships.AV) return (Math.random() < .7)? 'G' : 'F';
+							return (Math.random() < .5)? 'G' : 'F';
+						}
+					},
+					'F': {
+						type: 1,
+						x: 438,
+						y: 68,
+						compName: 'F/H/K',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'G': {
+						type: 1,
+						x: 598,
+						y: 115,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+					'H': {
+						type: 1,
+						x: 248,
+						y: 332,
+						compName: 'F/H/K',
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'I'
+					},
+					'I': {
+						type: 2,
+						x: 398,
+						y: 271,
+						resource: 1,
+						amount: [15,20,30,45],
+						routeC: function(ships) {
+							if (ships.CL) return (Math.random() < .7)? 'J' : 'K';
+							return (Math.random() < .5)? 'J' : 'K';
+						}
+					},
+					'J': {
+						type: 2,
+						x: 476,
+						y: 188,
+						resource: 2,
+						amount: [20,25,30,35,45],
+						end: true
+					},
+					'K': {
+						type: 1,
+						x: 539,
+						y: 268,
+						compName: 'F/H/K',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					}
 				}
 			},
 			10: {
@@ -546,11 +785,186 @@ var MAPDATA = {
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
 				hpmode: -1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 65,
+						y: 228,
+						route: 'A'
+					},
+					'A': {
+						type: 1,
+						x: 227,
+						y: 257,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (Math.random() < .2) return 'F';
+							if (ships.CVL) return (Math.random() < .75)? 'K' : 'B';
+							return (Math.random() < .5)? 'K' : 'B';
+						}
+					},
+					'B': {
+						type: 2,
+						x: 144,
+						y: 209,
+						resource: 2,
+						amount: [20,25,30,35,40,50,55,60],
+						route: 'C'
+					},
+					'C': {
+						type: 1,
+						x: 167,
+						y: 145,
+						compName: 'C/F/L',
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'D'
+					},
+					'D': {
+						type: 1,
+						x: 324,
+						y: 108,
+						compName: 'D/G/H/N/P',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CL) return (Math.random() < .7)? 'E' : 'G';
+							return (Math.random() < .4)? 'E' : 'G';
+						}
+					},
+					'E': {
+						type: 2,
+						x: 180,
+						y: 85,
+						resource: 5,
+						amount: [1],
+						end: true,
+					},
+					'F': {
+						type: 1,
+						x: 287,
+						y: 167,
+						compName: 'C/F/L',
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'Q'
+					},
+					'G': {
+						type: 1,
+						x: 418,
+						y: 141,
+						compName: 'D/G/H/N/P',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CV) return (Math.random() < .9)? 'H' : 'I';
+							return (Math.random() < .4)? 'H' : 'I';
+						}
+					},
+					'Q': { //this is G when it's blue
+						type: 3,
+						x: 418,
+						y: 141,
+						routeC: function(ships) {
+							if (ships.CV) return (Math.random() < .9)? 'H' : 'I';
+							return (Math.random() < .4)? 'H' : 'I';
+						}
+					},
+					'H': {
+						type: 1,
+						x: 537,
+						y: 92,
+						compName: 'D/G/H/N/P',
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'J'
+					},
+					'I': {
+						type: 1,
+						x: 515,
+						y: 224,
+						compName: 'I/O',
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'J'
+					},
+					'J': {
+						type: 1,
+						x: 664,
+						y: 247,
+						compDiff: {
+							2: [1,2,3,4,5]
+						},
+						end: true,
+						boss: true
+					},
+					'K': {
+						type: 2,
+						x: 374,
+						y: 238,
+						resource: 1,
+						amount: [20,25,30,35,40,50,55,60],
+						route: 'L'
+					},
+					'L': {
+						type: 1,
+						x: 412,
+						y: 323,
+						compName: 'C/F/L',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.DD) return (Math.random() < .7)? 'M' : 'O';
+							return (Math.random() < .4)? 'M' : 'O';
+						}
+					},
+					'M': {
+						type: 2,
+						x: 311,
+						y: 322,
+						resource: 6,
+						amount: [1],
+						route: 'N'
+					},
+					'N': {
+						type: 1,
+						x: 218,
+						y: 315,
+						compName: 'D/G/H/N/P',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'O': {
+						type: 1,
+						x: 528,
+						y: 309,
+						compName: 'I/O',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'J': .4, 'P': .6 }
+					},
+					'P': {
+						type: 1,
+						x: 709,
+						y: 312,
+						compName: 'D/G/H/N/P',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					}
 				}
 			},
 			11: {
@@ -562,17 +976,205 @@ var MAPDATA = {
 				bgmDN: 11,
 				bgmNN: 31,
 				bgmDB: 27,
-				bgmNB: 21,
+				bgmNB: 27,
 				bossnode: 12,
 				bossHP: 4,
 				maphp: { 2: { 1: 4 } },
 				finalhp: { 2: 1 },
 				hpmode: 1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 145,
+						y: 248,
+						routeC: function(ships) {
+							if (ships.aCV) return 'B';
+							if (ships.AV >= 2) return 'B';
+							if (ships.DD >= 3 && ships.DD + ships.CL >= 4) return 'A';
+							if (ships.SS + ships.SSV >= 4) return 'A';
+							let numDrumShips = 0;
+							for (let ship of FLEETS1[0].ships) {
+								for (let eq of ship.equips) {
+									if (eq.type == DRUM) {
+										numDrumShips++;
+										break;
+									}
+								}
+							}
+							if (numDrumShips >= 2) return 'A';
+							if (ships.aBB) return 'B';
+							return (Math.random() < .7)? 'A' : 'B';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 250,
+						y: 147,
+						compDiff: {
+							2: ['HQ100+ 1','HQ100+ 2']
+						},
+						compHQ: {
+							100: ['HQ100+ 1','HQ100+ 2'],
+							70: ['HQ70+ 1','HQ70+ 2'],
+							1: ['HQ1+ 1','HQ1+ 2'],
+						},
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV >= 3) return 'C';
+							return 'D';
+						}
+					},
+					'B': {
+						type: 1,
+						x: 264,
+						y: 329,
+						compDiff: {
+							2: ['HQ90+ 1','HQ90+ 2']
+						},
+						compHQ: {
+							90: ['HQ90+ 1','HQ90+ 2'],
+							60: ['HQ60+ 1','HQ60+ 2'],
+							1: ['HQ1+ 1','HQ1+ 2'],
+						},
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV >= 3) return 'F';
+							if (ships.CV + ships.CVB >= 3) return 'F';
+							if (ships.CV + ships.CVB >= 2 && ships.CVL) return 'F';
+							if (ships.FBB == 2 || ships.FBB == 3) return 'F';
+							if (ships.BB == 2) return 'F';
+							if (ships.BBV >= 2) return 'F';
+							if (ships.DD >= 2 && ships.aBB <= 1 && ships.CV + ships.CVB <= 1) return 'E';
+							return (Math.random() < .75)? 'E' : 'F';
+						}
+					},
+					'C': {
+						type: 3,
+						x: 179,
+						y: 92,
+						end: true
+					},
+					'D': {
+						type: 1,
+						x: 396,
+						y: 149,
+						compDiff: {
+							2: ['HQ90+ 1','HQ90+ 2']
+						},
+						compHQ: {
+							90: ['HQ90+ 1','HQ90+ 2'],
+							60: ['HQ60+'],
+							1: ['HQ1+'],
+						},
+						routeC: function(ships) {
+							if (ships.AV) return 'H';
+							if (ships.DD >= 3 && ships.DD + ships.CL >= 4) return 'H';
+							if (ships.aBB <= 0) return 'H';
+							return (Math.random() < .5)? 'G' : 'H';
+						}
+					},
+					'E': {
+						type: 1,
+						x: 391,
+						y: 243,
+						compDiff: {
+							2: ['HQ80+ 1','HQ80+ 2']
+						},
+						compHQ: {
+							80: ['HQ80+ 1','HQ80+ 2'],
+							60: ['HQ60+ 1','HQ60+ 2'],
+							1: ['HQ1+ 1','HQ1+ 2'],
+						},
+						routeC: function(ships) {
+							if (ships.aBB + ships.CV + ships.CVB) return 'I';
+							if (ships.DD >= 2 && ships.CL == 1) return 'H';
+							if (ships.DD >= 2 && ships.CA == 2) return 'H';
+							if (ships.DD >= 2 && ships.CAV == 2) return 'H';
+							return (Math.random() < .4)? 'H' : 'I';
+						}
+					},
+					'F': {
+						type: 3,
+						x: 395,
+						y: 342,
+						end: true
+					},
+					'G': {
+						type: 2,
+						x: 507,
+						y: 109,
+						resource: 1,
+						amount: [50],
+						end: true
+					},
+					'H': {
+						type: 3,
+						x: 519,
+						y: 201,
+						routeL: { 33: 'L', 31: 'J' }
+					},
+					'I': {
+						type: 1,
+						x: 520,
+						y: 299,
+						compDiff: {
+							2: ['HQ100+']
+						},
+						compHQ: {
+							100: ['HQ100+'],
+							70: ['HQ70+'],
+							50: ['HQ50+'],
+							1: ['HQ1+'],
+						},
+						showLoSPlane: 'L',
+						routeC: function(ships) {
+							if (checkELoS33(getELoS33(1,1),{ 46: 'L', 37: 'X' }) == 'L') return 'L';
+							return (Math.random() < .5)? 'H' : 'K';
+						}
+					},
+					'J': {
+						type: 1,
+						x: 589,
+						y: 126,
+						compDiff: {
+							2: ['HQ80+']
+						},
+						compHQ: {
+							80: ['HQ80+'],
+							50: ['HQ50+'],
+							1: ['HQ1+'],
+						},
+						end: true
+					},
+					'K': {
+						type: 2,
+						x: 573,
+						y: 320,
+						resource: 3,
+						amount: [50],
+						end: true
+					},
+					'L': {
+						type: 1,
+						x: 641,
+						y: 215,
+						compDiff: {
+							2: ['HQ100+']
+						},
+						compDiffF: {
+							2: ['HQ100+ F']
+						},
+						compHQ: {
+							100: ['HQ100+'],
+							70: ['HQ70+'],
+							1: ['HQ1+'],
+						},
+						compHQF: {
+							100: ['HQ100+ F'],
+							70: ['HQ70+ F'],
+							1: ['HQ1+ F'],
+						},
+						end: true,
+						boss: true
+					},
 				}
 			},
 			12: {
@@ -752,8 +1354,8 @@ var MAPDATA = {
 				bgmMap: 2001,
 				bgmDN: 12,
 				bgmNN: 4,
-				bgmDB: 44,
-				bgmNB: 44,
+				bgmDB: 5,
+				bgmNB: 5,
 				bossnode: 8,
 				bossHP: 4,
 				maphp: { 2: { 1: 4 } },
@@ -906,7 +1508,7 @@ var MAPDATA = {
 				bgmDN: 20,
 				bgmNN: 20,
 				bgmDB: 6,
-				bgmNB: 21,
+				bgmNB: 6,
 				bossnode: 11,
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
@@ -1672,7 +2274,6 @@ var MAPDATA = {
 						type: 1,
 						x: 570,
 						y: 133,
-						subonly: true,
 						compDiff: {
 							2: ['1','2','3','4']
 						},
