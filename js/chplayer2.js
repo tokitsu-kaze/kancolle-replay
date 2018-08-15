@@ -581,12 +581,12 @@ function mapStormNode(ship,letter) {
 	var stormwrap = new PIXI.Container();
 	stormwrap.addChild(storm);
 	stormwrap.position.set(ship.x,ship.y); stormwrap.scale.y = .5;
-	stage.addChild(stormwrap); stage.swapChildren(stormwrap,mapship);
+	stage.addChildAt(stormwrap,stage.getChildIndex(mapship));// stage.swapChildren(stormwrap,mapship);
 	var stormtimer = 120, radius = 0;
 	SM.play('storm');
 	updates.push([function() {
 		storm.rotation += .1;
-		mapship.pivot.set(radius*Math.cos(storm.rotation)+mapship.defpivotx,radius*Math.sin(storm.rotation)+mapship.defpivoty);
+		mapship.pivot.set(radius*Math.cos(storm.rotation)*mapship.scale.x+mapship.defpivotx,radius*Math.sin(storm.rotation)+mapship.defpivoty);
 		stormtimer--;
 		if (stormtimer >= 115) radius += 4;
 		else if (stormtimer <= 100) radius -= .2;
@@ -1204,8 +1204,10 @@ function prepBattle(letter) {
 	var comps;
 	if (CHDATA.config.diffmode == 1) {
 		var compHQ = (mapdata.compHQF && lastdance)? mapdata.compHQF : mapdata.compHQ;
+		if (mapdata.compHQC && CHDATA.event.maps[MAPNUM].hp <= 0) compHQ = mapdata.compHQC;
 		if (!compHQ) {
-			comps = mapdata.compDiff[2];
+			comps = (mapdata.compDiffF && lastdance)? mapdata.compDiffF[2] : mapdata.compDiff[2];
+			if (mapdata.compDiffC && CHDATA.event.maps[MAPNUM].hp <= 0) comps = mapdata.compDiffC[2];
 		} else {
 			var hqs = []; for (var key in compHQ) hqs.push(parseInt(key));
 			hqs.sort(function(a,b) { return a-b; });
@@ -1222,6 +1224,7 @@ function prepBattle(letter) {
 		// console.log(comps);
 	} else {
 		comps = (mapdata.compDiffF && lastdance)? mapdata.compDiffF[diff] : mapdata.compDiff[diff];
+		if (mapdata.compDiffC && CHDATA.event.maps[MAPNUM].hp <= 0) comps = mapdata.compDiffC[diff];
 	}
 	comp = comps[Math.floor(Math.random()*comps.length)];
 	var compd;
@@ -1375,7 +1378,7 @@ function prepBattle(letter) {
 			if (eventqueue[i][0] == shutters) { eventqueue[i][0] = shuttersSelect; break; }
 		}
 	}
-	if (!MAPDATA[WORLD].maps[MAPNUM].transport) lastdance = FLEETS2[0].ships[0].maxHP >= CHDATA.event.maps[MAPNUM].hp; //if last dance hp < boss hp, still play sunk line
+	if (!MAPDATA[WORLD].maps[MAPNUM].transport && MAPDATA[WORLD].maps[MAPNUM].hpmode != 1) lastdance = FLEETS2[0].ships[0].maxHP >= CHDATA.event.maps[MAPNUM].hp; //if last dance hp < boss hp, still play sunk line
 	if (mapdata.boss && lastdance && res.flagsunk) {
 		var shipid = compd.c[0];
 		if (VOICES[shipid] && VOICES[shipid]['sunk']) {

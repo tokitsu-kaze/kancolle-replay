@@ -209,11 +209,11 @@ var MAPDATA = {
 				nameT: 'Hold the Line at the Nansei Islands',
 				world: 1,
 				fleetTypes: [0],
-                bgmMap: 116,
-                bgmDN: 117,
-                bgmNN: 2,
-                bgmDB: 12,
-                bgmNB: 12,
+				bgmMap: 116,
+				bgmDN: 117,
+				bgmNN: 2,
+				bgmDB: 12,
+				bgmNB: 12,
 				bossnode: 6,
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
@@ -1220,7 +1220,7 @@ var MAPDATA = {
 						type: 1,
 						x: 250,
 						y: 141,
-                        compName: 'C/F',
+						compName: 'C/F',
 						compDiff: {
 							2: [1,2,3]
 						},
@@ -1250,7 +1250,7 @@ var MAPDATA = {
 						type: 1,
 						x: 294,
 						y: 308,
-                        compName: 'C/F',
+						compName: 'C/F',
 						compDiff: {
 							2: [1,2,3]
 						},
@@ -1700,11 +1700,18 @@ var MAPDATA = {
 						compDiffF: {
 							2: ['HQ85+ F']
 						},
+						compDiffC: {
+							2: ['HQ85+ F']
+						},
 						compHQ: {
 							85: ['HQ85+','HQAll'],
 							1: ['HQ1+','HQAll'],
 						},
 						compHQF: {
+							85: ['HQ85+ F'],
+							1: ['HQAll'],
+						},
+						compHQC: {
 							85: ['HQ85+ F'],
 							1: ['HQAll'],
 						},
@@ -1743,11 +1750,18 @@ var MAPDATA = {
 						compDiffF: {
 							2: ['HQ85+ F']
 						},
+						compDiffC: {
+							2: ['HQ85+ F']
+						},
 						compHQ: {
 							85: ['HQ85+','HQAll'],
 							1: ['HQAll'],
 						},
 						compHQF: {
+							85: ['HQ85+ F'],
+							1: ['HQ1+ F'],
+						},
+						compHQC: {
 							85: ['HQ85+ F'],
 							1: ['HQ1+ F'],
 						},
@@ -1763,11 +1777,18 @@ var MAPDATA = {
 						compDiffF: {
 							2: ['HQ85+ F']
 						},
+						compDiffC: {
+							2: ['HQ85+ F']
+						},
 						compHQ: {
 							85: ['HQ85+ 1','HQ85+ 2'],
 							1: ['HQ1+ 1','HQ1+ 2'],
 						},
 						compHQF: {
+							85: ['HQ85+ F'],
+							1: ['HQ1+ F'],
+						},
+						compHQC: {
 							85: ['HQ85+ F'],
 							1: ['HQ1+ F'],
 						},
@@ -1790,11 +1811,18 @@ var MAPDATA = {
 						compDiffF: {
 							2: ['HQ100+ F']
 						},
+						compDiffC: {
+							2: ['HQ100+ F']
+						},
 						compHQ: {
 							100: ['HQ100+ 1','HQ100+ 2'],
 							1: ['HQ1+ 1','HQ1+ 2'],
 						},
 						compHQF: {
+							100: ['HQ100+ F'],
+							1: ['HQ1+ F'],
+						},
+						compHQC: {
 							100: ['HQ100+ F'],
 							1: ['HQ1+ F'],
 						},
@@ -1831,11 +1859,18 @@ var MAPDATA = {
 						compDiffF: {
 							2: ['HQ90+ F']
 						},
+						compDiffC: {
+							2: ['HQ90+ F']
+						},
 						compHQ: {
 							90: ['HQ90+','HQAll'],
 							1: ['HQ1+','HQAll'],
 						},
 						compHQF: {
+							90: ['HQ90+ F'],
+							1: ['HQ1+ F'],
+						},
+						compHQC: {
 							90: ['HQ90+ F'],
 							1: ['HQ1+ F'],
 						},
@@ -1858,11 +1893,105 @@ var MAPDATA = {
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
 				hpmode: -1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 662,
+						y: 107,
+						routeR: { 'A': .5, 'E': .5 }
+					},
+					'A': {
+						type: 1,
+						x: 488,
+						y: 97,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'B'
+					},
+					'B': {
+						type: 1,
+						x: 283,
+						y: 97,
+						subonly: true,
+						compName: 'B/G/H',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'C': .5, 'D': .5 }
+					},
+					'C': {
+						type: 1,
+						x: 96,
+						y: 109,
+						compName: 'C/I',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'D': {
+						type: 1,
+						x: 121,
+						y: 254,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+					'E': {
+						type: 1,
+						x: 559,
+						y: 246,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.DD >= 2) return 'F';
+							return (Math.random() < .5)? 'F' : 'H';
+						}
+					},
+					'F': {
+						type: 2,
+						x: 397,
+						y: 174,
+						resource: 1,
+						amount: [40,80,120],
+						routeR: { 'G': .5, 'I': .5 }
+					},
+					'G': {
+						type: 1,
+						x: 258,
+						y: 230,
+						subonly: true,
+						compName: 'B/G/H',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'D': .5, 'I': .5 }
+					},
+					'H': {
+						type: 1,
+						x: 456,
+						y: 318,
+						subonly: true,
+						compName: 'B/G/H',
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'I'
+					},
+					'I': {
+						type: 1,
+						x: 313,
+						y: 333,
+						compName: 'C/I',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					}
 				}
 			},
 			18: {
@@ -1879,11 +2008,99 @@ var MAPDATA = {
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
 				hpmode: -1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 629,
+						y: 231,
+						routeR: { 'A': .5, 'F': .5 }
+					},
+					'A': {
+						type: 1,
+						x: 523,
+						y: 179,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.DD >= 2) return 'E';
+							return (Math.random() < .5)? 'B' : 'E';
+						}
+					},
+					'B': {
+						type: 4,
+						x: 462,
+						y: 103,
+						resource: 1,
+						lostMax: .2,
+						route: 'C'
+					},
+					'C': {
+						type: 1,
+						x: 305,
+						y: 99,
+						subonly: true,
+						compName: 'C/F',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'D': .5, 'H': .5 }
+					},
+					'D': {
+						type: 1,
+						x: 112,
+						y: 159,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+					'E': {
+						type: 2,
+						x: 352,
+						y: 200,
+						resource: 3,
+						amount: [40,80,120],
+						route: 'H'
+					},
+					'F': {
+						type: 1,
+						x: 527,
+						y: 292,
+						subonly: true,
+						compName: 'C/F',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'E': .5, 'G': .5 }
+					},
+					'G': {
+						type: 2,
+						x: 383,
+						y: 334,
+						resource: 3,
+						amount: [20,40,60],
+						route: 'H'
+					},
+					'H': {
+						type: 1,
+						x: 235,
+						y: 235,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'D': .5, 'I': .5 }
+					},
+					'I': {
+						type: 1,
+						x: 167,
+						y: 331,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					}
 				}
 			},
 			19: {
@@ -1900,11 +2117,145 @@ var MAPDATA = {
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
 				hpmode: -1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 686,
+						y: 94,
+						routeC: function(ships) {
+							if (ships.DD >= 2) return 'A';
+							return (Math.random() < .5)? 'F' : 'J';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 595,
+						y: 58,
+						compName: 'A/J',
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'B'
+					},
+					'B': {
+						type: 2,
+						x: 533,
+						y: 115,
+						resource: 1,
+						amount: [30,60,90],
+						routeC: function(ships) {
+							if (ships.AV + ships.CAV) return 'D';
+							return (Math.random() < .5)? 'C' : 'F';
+						}
+					},
+					'C': {
+						type: 4,
+						x: 452,
+						y: 60,
+						resource: 2,
+						route: 'D'
+					},
+					'D': {
+						type: 1,
+						x: 384,
+						y: 107,
+						subonly: true,
+						compName: 'D/F/K',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'E': .5, 'G': .5 }
+					},
+					'E': {
+						type: 2,
+						x: 225,
+						y: 64,
+						resource: 4,
+						amount: [50,100,150],
+						end: true
+					},
+					'F': {
+						type: 1,
+						x: 530,
+						y: 262,
+						subonly: true,
+						compName: 'D/F/K',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CA >= 2) return 'G';
+							return (Math.random() < .5)? 'D' : 'K';
+						}
+					},
+					'G': {
+						type: 1,
+						x: 350,
+						y: 265,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'H': .33, 'I': .34, 'L': .33 }
+					},
+					'H': {
+						type: 1,
+						x: 293,
+						y: 178,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'I': {
+						type: 1,
+						x: 226,
+						y: 282,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+					'J': {
+						type: 1,
+						x: 640,
+						y: 282,
+						compName: 'A/J',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CAV + ships.AV) return 'K';
+							return 'F';
+						}
+					},
+					'K': {
+						type: 1,
+						x: 528,
+						y: 351,
+						subonly: true,
+						compName: 'D/F/K',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'G': .5, 'L': .5 }
+					},
+					'L': {
+						type: 4,
+						x: 255,
+						y: 351,
+						resource: 1,
+						route: 'M'
+					},
+					'M': {
+						type: 1,
+						x: 84,
+						y: 270,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					}
 				}
 			},
 			20: {
@@ -1922,11 +2273,118 @@ var MAPDATA = {
 				maphp: { 2: { 1: 4 } },
 				finalhp: { 2: 1 },
 				hpmode: 1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 699,
+						y: 102,
+						route: 'A'
+					},
+					'A': {
+						type: 1,
+						x: 625,
+						y: 195,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.DD >= 2) return 'F';
+							return (Math.random() < .5)? 'B' : 'I';
+						}
+					},
+					'B': {
+						type: 4,
+						x: 503,
+						y: 116,
+						resource: 2,
+						route: 'C'
+					},
+					'C': {
+						type: 1,
+						x: 368,
+						y: 169,
+						compName: 'C/J',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'D': .3, 'E': .3, 'G': .4 }
+					},
+					'D': {
+						type: 2,
+						x: 334,
+						y: 112,
+						resource: 1,
+						amount: [50,100,150],
+						end: true
+					},
+					'E': {
+						type: 2,
+						x: 190,
+						y: 168,
+						resource: 3,
+						amount: [35,70,105],
+						end: true
+					},
+					'F': {
+						type: 1,
+						x: 474,
+						y: 208,
+						subonly: true,
+						compName: 'F/I',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CA + ships.CAV) return 'G';
+							return 'C';
+						}
+					},
+					'G': {
+						type: 1,
+						x: 349,
+						y: 232,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'H': .7, 'J': .3 }
+					},
+					'H': {
+						type: 1,
+						x: 203,
+						y: 254,
+						compDiff: {
+							2: ['Pre-F']
+						},
+						compDiffF: {
+							2: ['F']
+						},
+						compDiffC: {
+							2: ['Pre-F','F','Post-F']
+						},
+						end: true,
+						boss: true
+					},
+					'I': {
+						type: 1,
+						x: 527,
+						y: 300,
+						subonly: true,
+						compName: 'F/I',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'G': .5, 'J': .5 }
+					},
+					'J': {
+						type: 1,
+						x: 373,
+						y: 341,
+						compName: 'C/J',
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					}
 				}
 			},
 			21: {
@@ -1944,11 +2402,148 @@ var MAPDATA = {
 				maphp: { 2: { 1: 5 } },
 				finalhp: { 2: 1 },
 				hpmode: 1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 636,
+						y: 228,
+						routeC: function(ships) {
+							if (ships.CL >= 1 && ships.DD >= 2 && ships.aBB + ships.CLT + ships.CV + ships.CVB + ships.AR + ships.SS + ships.SSV <= 2) return 'A';
+							return 'B';
+						}
+					},
+					'A': {
+						type: 3,
+						x: 550,
+						y: 120,
+						routeS: ['C','D']
+					},
+					'B': {
+						type: 3,
+						x: 529,
+						y: 281,
+						routeS: ['C','E']
+					},
+					'C': {
+						type: 1,
+						x: 460,
+						y: 191,
+						compDiff: {
+							2: [1,2,3,4]
+						},
+						route: 'F'
+					},
+					'D': {
+						type: 1,
+						x: 453,
+						y: 77,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'G'
+					},
+					'E': {
+						type: 1,
+						x: 438,
+						y: 319,
+						compDiff: {
+							2: [1,2,3,4]
+						},
+						route: 'H'
+					},
+					'F': {
+						type: 1,
+						x: 378,
+						y: 212,
+						subonly: true,
+						compDiff: {
+							2: [1,2,3,4,5]
+						},
+						routeC: function(ships) {
+							if (ships.aBB + ships.aCV <= 3) return 'J';
+							if (ships.DD && ships.DD + ships.AV >= 2) return 'J';
+							return 'H';
+						}
+					},
+					'G': {
+						type: 3,
+						x: 348,
+						y: 97,
+						routeS: ['F','I']
+					},
+					'H': {
+						type: 1,
+						x: 338,
+						y: 307,
+						compDiff: {
+							2: [1,2,3,4,5]
+						},
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV >= 2) {
+								this.showLoSPlane = null;
+								return 'K';
+							}
+							this.showLoSPlane = 'M';
+							return checkELoS33(getELoS33(1,3),{ 43: 'M', 40: 'K' });
+						}
+					},
+					'I': {
+						type: 1,
+						x: 270,
+						y: 154,
+						compDiff: {
+							2: [1,2,3,4]
+						},
+						routeC: function(ships) {
+							if (ships.aBB >= 2) return 'F';
+							if (ships.aCV >= 3) return 'F';
+							return 'J';
+						}
+					},
+					'J': {
+						type: 1,
+						x: 264,
+						y: 275,
+						compDiff: {
+							2: [1,2,3,4]
+						},
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV) {
+								this.showLoSPlane = null;
+								return 'L';
+							}
+							this.showLoSPlane = 'M';
+							return checkELoS33(getELoS33(1,3),{ 43: 'M', 40: 'L' });
+						}
+					},
+					'K': {
+						type: 3,
+						x: 250,
+						y: 342,
+						end: true
+					},
+					'L': {
+						type: 3,
+						x: 210,
+						y: 191,
+						end: true
+					},
+					'M': {
+						type: 1,
+						x: 155,
+						y: 311,
+						compDiff: {
+							2: ['Pre-F 1','Pre-F 2','Pre-F 3'],
+						},
+						compDiffF: {
+							2: ['F 1','F 2'],
+						},
+						compDiffC: {
+							2: ['Post-F 1','Post-F 2'],
+						},
+						end: true,
+						boss: true
+					}
 				}
 			},
 			22: {
@@ -1974,7 +2569,7 @@ var MAPDATA = {
 			},
 			23: {
 				name: '5-2',
-				nameT: 'Curry Ocean Ri-Lanka Island',
+				nameT: 'The Coral Islands',
 				world: 5,
 				fleetTypes: [0],
 				bgmMap: 2001,

@@ -97,8 +97,8 @@ var BGMLIST = {
 	1000: {url: 'assets/music/bossold1.mp3',voldef:.6},
 	1001: {url: 'assets/music/bossold2.mp3',voldef:.6},
 	1002: {url:'assets/music/Sound_bgm_iron02.ogg'},
-    1003: {url:'assets/music/129w.ogg'}, //Combined Fleet Flagship
-    1004: {url:'assets/music/241e.ogg'}, //The Glistening Dew After The Rainy Season
+	1003: {url:'assets/music/129w.ogg'}, //Combined Fleet Flagship
+	1004: {url:'assets/music/241e.ogg'}, //The Glistening Dew After The Rainy Season
 	3: {url:'assets/music/Sound_b_bgm_3.ogg'},
 	4: {url:'assets/music/Sound_b_bgm_4.ogg'},
 	5: {url:'assets/music/Sound_b_bgm_5.ogg'},
@@ -170,7 +170,7 @@ var BGMLIST = {
 	98: {url:'assets/music/Sound_b_bgm_98.ogg'},
 	99: {url:'assets/music/Sound_b_bgm_99.ogg'},
 	100: {url:'assets/music/1_res.sounds.battle.BGM_100.mp3'},
-    103: {url:'assets/music/Sound_b_bgm_103.ogg'},
+	103: {url:'assets/music/Sound_b_bgm_103.ogg'},
 	107: {url:'assets/music/107b.ogg'},
 	116: {url:'assets/music/Sound_b_bgm_116.oga'},
 	117: {url:'assets/music/Sound_b_bgm_117.oga'},
@@ -187,7 +187,7 @@ var BGMLIST = {
 	2034: {url:'assets/music/907c.ogg'},
 	2134: {url:'assets/music/908i.ogg'},
 	2035: {url:'assets/music/909q.ogg'},
-    2038: {url:'assets/music/913p.ogg'},
+	2038: {url:'assets/music/913p.ogg'},
 	3001: {url:'assets/music/Sound_se_18.ogg'},
 	3002: {url:'assets/music/Sound_se_63.ogg'},
 	3003: {url:'assets/music/Sound_se_52.ogg'},
