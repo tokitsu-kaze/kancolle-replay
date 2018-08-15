@@ -97,7 +97,7 @@ EQTDATA[MAINGUNS] = {
 	btype: B_MAINGUN,
 	atype: A_GUN,
 	improve: {Pshell:1,Pnb:1,ACCshell:1,ACCnb:1.3},
-	canequip: ['DD','CL','CT','CLT','AS','AV','AO','AR','LHA'],
+	canequip: ['DD','CL','CT','CLT','AS','AV','AO','AR','LHA','DE'],
 	canequipS: [541]
 };
 EQTDATA[MAINGUNSAA] = {
@@ -106,7 +106,7 @@ EQTDATA[MAINGUNSAA] = {
 	btype: B_MAINGUN,
 	atype: A_HAGUN,
 	improve: {Pshell:1,Pnb:1,ACCshell:1,ACCnb:1.3,AAfleet:2,AAself:1},
-	canequip: ['DD','CL','CT','CLT','AS','AV','AO','AR','LHA'],
+	canequip: ['DD','CL','CT','CLT','AS','AV','AO','AR','LHA','DE'],
 	canequipS: [541]
 };
 EQTDATA[MAINGUNM] = {
@@ -183,21 +183,21 @@ EQTDATA[AAGUN] = {
 	image: 15,
 	atype: A_AAGUN,
 	improve: {Pshell:1,Ptorp:1.2,ACCtorp:2,AAself:1},
-	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','AS','AV','AO','AR','LHA'],
+	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','AS','AV','AO','AR','LHA','DE'],
 };
 EQTDATA[AAFD] = {
 	name: 'Fire Director',
 	image: 30,
 	atype: A_AAFD,
 	improve: {Pshell:1,Pnb:1,ACCshell:1,ACCnb:1.3,AAfleet:2,AAself:1},
-	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','AS','AV','AO','AR','LHA'],
+	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','AS','AV','AO','AR','LHA','DE'],
 };
 EQTDATA[SONARS] = {
 	name: 'Sonar',
 	image: 18,
 	btype: B_SONAR,
 	improve: {Pshell:.75,Pasw:1,ACCasw:1.3,EVtorp:1.5},
-	canequip: ['DD','CL','CT','CLT','SS','SSV'],
+	canequip: ['DD','CL','CT','CLT','SS','SSV','DE'],
 	canequipS: [352, 372, 380, 450, 491, 500, 529],
 };
 EQTDATA[SONARL] = {
@@ -213,7 +213,7 @@ EQTDATA[DEPTHCHARGE] = {
 	image: 17,
 	btype: B_DEPTHCHARGE,
 	improve: {Pshell:.75,Pasw:1,ACCasw:1.3},
-	canequip: ['DD','CL','CT','CLT','AV'],
+	canequip: ['DD','CL','CT','CLT','AV','DE'],
 	canequipS: [380, 500, 529],
 	cannotequipS: [372, 491]
 };
@@ -299,7 +299,7 @@ EQTDATA[RADARS] = {
 	image: 11,
 	btype: B_RADAR,
 	improve: {LOS:1.25},
-	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','AS','AV','AO','AR','LHA'],
+	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','AS','AV','AO','AR','LHA','DE'],
 };
 EQTDATA[RADARL] = {
 	name: 'Radar (L)',
@@ -372,7 +372,7 @@ EQTDATA[STARSHELL] = {
 EQTDATA[PICKET] = {
 	name: 'Night Equip',
 	image: 32,
-	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','AS','AV'],
+	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','AS','AV','DE'],
 	canequipS: [500]
 };
 EQTDATA[WG42] = {
@@ -417,12 +417,12 @@ EQTDATA[FLYINGBOAT] = {
 EQTDATA[REPAIR] = {
 	name: 'Misc',
 	image: 14,
-	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','SS','SSV','AS','AV','AO','AR','LHA'],
+	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','SS','SSV','AS','AV','AO','AR','LHA','DE'],
 };
 EQTDATA[RATION] = {
 	name: 'Misc',
 	image: 34,
-	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','SS','SSV','AS','AV','AO','AR','LHA'],
+	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','SS','SSV','AS','AV','AO','AR','LHA','DE'],
 };
 EQTDATA[SEAPLANEFIGHTER] = {
 	name: 'Seaplane Fighter',
@@ -484,7 +484,7 @@ EQTDATA[JETBOMBER] = {
 EQTDATA[OTHER] = {
 	name: 'Misc',
 	image: 14,
-	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','SS','SSV','AS','AV','AO','AR','LHA'],
+	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','SS','SSV','AS','AV','AO','AR','LHA','DE'],
 };
 
 var IMPROVESPECIAL = {
