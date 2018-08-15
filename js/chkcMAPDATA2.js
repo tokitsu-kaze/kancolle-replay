@@ -1,4 +1,1021 @@
 var MAPDATA = {
+	20: {
+		name: 'Classic',
+		date: '2018-08-15',
+		diffMode: 1,
+		allowDiffs: [2],
+		allowFleets: [0],
+		bannerImg: 'http://i.imgur.com/yiKOFFm.png',
+		bannerImgAlt: 'http://i.imgur.com/yiKOFFm.png',
+		allowLBAS: true,
+		unlockDefault: 32,
+		maps: {
+			1: {
+				name: '1-1',
+				nameT: 'Sea in Front of the Naval Base',
+				world: 1,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 1,
+				bgmNN: 2,
+				bgmDB: 2,
+				bgmNB: 2,
+				bossnode: 3,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				nodes: {
+					'Start': {
+						type: 3,
+						x: 128,
+						y: 142,
+						route: 'A'
+					},
+					'A': {
+						type: 1,
+						x: 248,
+						y: 172,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'B': .5, 'C': .5 }
+					},
+					'B': {
+						type: 1,
+						x: 373,
+						y: 90,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'C': {
+						type: 1,
+						x: 352,
+						y: 246,
+						compDiff: {
+							2: [1,2,3,4]
+						},
+						end: true,
+						boss: true
+					},
+				}
+			},
+			2: {
+				name: '1-2',
+				nameT: 'Sea around the Nansei Islands',
+				world: 1,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 1,
+				bgmNN: 2,
+				bgmDB: 2,
+				bgmNB: 2,
+				bossnode: 2,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 128,
+						y: 141,
+						routeR: { 'A': .5, 'C': .5 }
+					},
+					'A': {
+						type: 1,
+						x: 332,
+						y: 122,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'B'
+					},
+					'B': {
+						type: 1,
+						x: 486,
+						y: 94,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+					'C': {
+						type: 2,
+						x: 283,
+						y: 232,
+						resource: 2,
+						amount: [10,15,20],
+						route: 'D'
+					},
+					'D': {
+						type: 1,
+						x: 401,
+						y: 309,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+				}
+			},
+			3: {
+				name: '1-3',
+				nameT: 'Coastal Refinery Zone',
+				world: 1,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 1,
+				bgmNN: 2,
+				bgmDB: 2,
+				bgmNB: 2,
+				bossnode: 7,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 128,
+						y: 142,
+						routeR: { 'A': .5, 'B': .5 }
+					},
+					'A': {
+						type: 1,
+						x: 292,
+						y: 88,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'D'
+					},
+					'B': {
+						type: 4,
+						x: 237,
+						y: 241,
+						resource: 2,
+						loseMax: .2,
+						routeR: { 'C': .3, 'E': .7 }
+					},
+					'C': {
+						type: 2,
+						x: 398,
+						y: 225,
+						resource: 1,
+						amount: [10,15,30],
+						route: 'F'
+					},
+					'D': {
+						type: 2,
+						x: 484,
+						y: 162,
+						resource: 1,
+						amount: [10,15,25,30],
+						routeR: { 'G': .5, 'C': .5 }
+					},
+					'E': {
+						type: 1,
+						x: 337,
+						y: 321,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'F'
+					},
+					'F': {
+						type: 1,
+						x: 462,
+						y: 335,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'G': {
+						type: 1,
+						x: 614,
+						y: 312,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+				}
+			},
+			4: {
+				name: '1-4',
+				nameT: 'Hold the Line at the Nansei Islands',
+				world: 1,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 29,
+				bgmNN: 2,
+				bgmDB: 12,
+				bgmNB: 12,
+				bossnode: 6,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 128,
+						y: 141,
+						routeR: { 'A': .33, 'B': .33, 'G': .34 }
+					},
+					'A': {
+						type: 1,
+						x: 235,
+						y: 82,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'C'
+					},
+					'B': {
+						type: 1,
+						x: 275,
+						y: 196,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'C'
+					},
+					'C': {
+						type: 2,
+						x: 383,
+						y: 124,
+						resource: 3,
+						amount: [10,15,20],
+						routeR: { 'D': .5, 'E': .5 }
+					},
+					'D': {
+						type: 2,
+						x: 559,
+						y: 93,
+						resource: 4,
+						amount: [10,15,20],
+						route: 'F'
+					},
+					'E': {
+						type: 1,
+						x: 500,
+						y: 190,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'F'
+					},
+					'F': {
+						type: 1,
+						x: 655,
+						y: 182,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+					'G': {
+						type: 2,
+						x: 263,
+						y: 261,
+						resource: 2,
+						amount: [10,15,20],
+						route: 'H'
+					},
+					'H': {
+						type: 2,
+						x: 393,
+						y: 257,
+						resource: 3,
+						amount: [10,15,20],
+						route: 'I'
+					},
+					'I': {
+						type: 1,
+						x: 521,
+						y: 275,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'F': .3, 'J': .7 }
+					},
+					'J': {
+						type: 1,
+						x: 700,
+						y: 312,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+				}
+			},
+			5: {
+				name: '1-5',
+				nameT: 'Adjacent Seas of the Naval Base',
+				world: 1,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 7,
+				bgmNN: 7,
+				bgmDB: 13,
+				bgmNB: 13,
+				bossnode: 9,
+				bossHP: 4,
+				maphp: { 2: { 1: 4 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				nodes: {
+					'Start': {
+						type: 0,
+						x: 154,
+						y: 156,
+						route: 'A'
+					},
+					'A': {
+						type: 1,
+						x: 312,
+						y: 88,
+						compDiff: {
+							2: ['HQ 80+']
+						},
+						compHQ: {
+							80: ['HQ 80+'],
+							1: ['HQ 1+'],
+						},
+						route: 'B'
+					},
+					'B': {
+						type: 1,
+						x: 511,
+						y: 101,
+						compDiff: {
+							2: ['HQ 80+']
+						},
+						compHQ: {
+							80: ['HQ 80+'],
+							40: ['HQ 40+ 1','HQ 40+ 2'],
+							1: ['HQ 1+'],
+						},
+						routeC: function(ships) {
+							if (ships.total <= 4) return 'C';
+							return (Math.random() < .5)? 'C' : 'D';
+						}
+					},
+					'C': {
+						type: 1,
+						x: 587,
+						y: 181,
+						compDiff: {
+							2: ['HQ 80+']
+						},
+						compHQ: {
+							80: ['HQ 80+'],
+							40: ['HQ 40+'],
+							1: ['HQ 1+'],
+						},
+						routeC: function(ships) {
+							if (ships.FBB + ships.BB) return 'F';
+							if (ships.SS + ships.SSV) return 'F';
+							if (ships.CL >= 3) return 'F';
+							if (ships.total >= 5) return 'F';
+							return 'E';
+						}
+					},
+					'D': {
+						type: 1,
+						x: 453,
+						y: 211,
+						compDiff: {
+							2: [1]
+						},
+						routeC: function(ships) {
+							if (ships.total >= 5) return 'H';
+							return (Math.random() < .5)? 'H' : 'I';
+						}
+					},
+					'E': {
+						type: 3,
+						x: 530,
+						y: 273,
+						routeC: function(ships) {
+							if (ships.CVL == 1 || ships.AV == 1 || ships.LHA == 1 || ships.CAV == 1) return 'I';
+							return (Math.random() < .5)? 'G' : 'I';
+						}
+					},
+					'F': {
+						type: 1,
+						x: 594,
+						y: 295,
+						compDiff: {
+							2: [1]
+						},
+						end: true
+					},
+					'G': {
+						type: 1,
+						x: 486,
+						y: 349,
+						compDiff: {
+							2: [1]
+						},
+						end: true
+					},
+					'H': {
+						type: 3,
+						x: 292,
+						y: 215,
+						end: true
+					},
+					'I': {
+						type: 1,
+						x: 292,
+						y: 301,
+						compDiff: {
+							2: ['HQ 80+']
+						},
+						compHQ: {
+							80: ['HQ 80+'],
+							40: ['HQ 40+'],
+							1: ['HQ 1+'],
+						},
+						end: true,
+						boss: true
+					},
+				}
+			},
+			6: {
+				name: '1-6',
+				nameT: 'Naval Base Adjacent Sea Route',
+				world: 1,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 29,
+				bgmNN: 2,
+				bgmDB: 12,
+				bgmNB: 12,
+				bossnode: 14,
+				maphp: { 2: { 1: 7 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			7: {
+				name: '2-1',
+				nameT: 'Cam Ranh Peninsula',
+				world: 2,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 1,
+				bgmNN: 2,
+				bgmDB: 30,
+				bgmNB: 30,
+				bossnode: 5,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			8: {
+				name: '2-2',
+				nameT: 'Bashi Island',
+				world: 2,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 8,
+				bgmNN: 2,
+				bgmDB: 46,
+				bgmNB: 46,
+				bossnode: 6,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			9: {
+				name: '2-3',
+				nameT: 'Eastern Orel Bay',
+				world: 2,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 1,
+				bgmNN: 2,
+				bgmDB: 3,
+				bgmNB: 3,
+				bossnode: 7,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			10: {
+				name: '2-4',
+				nameT: 'Okinoshima Island',
+				world: 2,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 31,
+				bgmNN: 2,
+				bgmDB: 4,
+				bgmNB: 5,
+				bossnode: 10,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			11: {
+				name: '2-5',
+				nameT: 'Okinoshima Sea',
+				world: 2,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 11,
+				bgmNN: 31,
+				bgmDB: 27,
+				bgmNB: 21,
+				bossnode: 12,
+				bossHP: 4,
+				maphp: { 2: { 1: 4 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			12: {
+				name: '3-1',
+				nameT: 'The Moray Sea',
+				world: 3,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 19,
+				bgmNN: 19,
+				bgmDB: 2,
+				bgmNB: 19,
+				bossnode: 5,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			13: {
+				name: '3-2',
+				nameT: 'The Kis Island',
+				world: 3,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 29,
+				bgmNN: 2,
+				bgmDB: 11,
+				bgmNB: 11,
+				bossnode: 8,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			14: {
+				name: '3-3',
+				nameT: 'The Alfonsinos',
+				world: 3,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 11,
+				bgmNN: 2,
+				bgmDB: 3,
+				bgmNB: 3,
+				bossnode: 7,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			15: {
+				name: '3-4',
+				nameT: 'Throughout the Northern Sea',
+				world: 3,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 8,
+				bgmNN: 4,
+				bgmDB: 4,
+				bgmNB: 5,
+				bossnode: 5,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			16: {
+				name: '3-5',
+				nameT: 'Northern AL Waters',
+				world: 3,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 19,
+				bgmNN: 3,
+				bgmDB: 13,
+				bgmNB: 6,
+				bossnode: 11,
+				bossHP: 4,
+				maphp: { 2: { 1: 4 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			17: {
+				name: '4-1',
+				nameT: 'Battle of Jam Island',
+				world: 4,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 1,
+				bgmNN: 2,
+				bgmDB: 8,
+				bgmNB: 8,
+				bossnode: 4,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			18: {
+				name: '4-2',
+				nameT: 'Curry Ocean Pacification',
+				world: 4,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 30,
+				bgmNN: 2,
+				bgmDB: 9,
+				bgmNB: 9,
+				bossnode: 4,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			19: {
+				name: '4-3',
+				nameT: 'Bombing of Ri Lanka',
+				world: 4,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 39,
+				bgmNN: 2,
+				bgmDB: 10,
+				bgmNB: 10,
+				bossnode: 9,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			20: {
+				name: '4-4',
+				nameT: 'Battle of Casgadama',
+				world: 4,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 12,
+				bgmNN: 4,
+				bgmDB: 44,
+				bgmNB: 44,
+				bossnode: 8,
+				bossHP: 4,
+				maphp: { 2: { 1: 4 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			21: {
+				name: '4-5',
+				nameT: 'Curry Ocean Ri-Lanka Island',
+				world: 4,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 30,
+				bgmNN: 40,
+				bgmDB: 40,
+				bgmNB: 39,
+				bossnode: 13,
+				bossHP: 5,
+				maphp: { 2: { 1: 5 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			22: {
+				name: '5-1',
+				nameT: 'The Forefront of the Southern Sea',
+				world: 5,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 13,
+				bgmNN: 2,
+				bgmDB: 3,
+				bgmNB: 3,
+				bossnode: 9,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			23: {
+				name: '5-2',
+				nameT: 'Curry Ocean Ri-Lanka Island',
+				world: 5,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 12,
+				bgmNN: 12,
+				bgmDB: 10,
+				bgmNB: 10,
+				bossnode: 4,
+				bossHP: 4,
+				maphp: { 2: { 1: 4 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			24: {
+				name: '5-3',
+				nameT: 'Sav Island',
+				world: 5,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 4,
+				bgmNN: 5,
+				bgmDB: 52,
+				bgmNB: 52,
+				bossnode: 11,
+				bossHP: 5,
+				maphp: { 2: { 1: 5 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			25: {
+				name: '5-4',
+				nameT: 'Salmon Sea Area',
+				world: 5,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 4,
+				bgmNN: 5,
+				bgmDB: 22,
+				bgmNB: 49,
+				bossnode: 15,
+				bossHP: 5,
+				maphp: { 2: { 1: 5 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			26: {
+				name: '5-5',
+				nameT: 'Northern Salmon Sea Area',
+				world: 5,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 4,
+				bgmNN: 5,
+				bgmDB: 49,
+				bgmNB: 50,
+				bossnode: 14,
+				bossHP: 5,
+				maphp: { 2: { 1: 5 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			27: {
+				name: '6-1',
+				nameT: 'Central Waters Patrol Line',
+				world: 6,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 20,
+				bgmNN: 20,
+				bgmDB: 6,
+				bgmNB: 21,
+				bossnode: 11,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			28: {
+				name: '6-2',
+				nameT: 'MS Archipelago',
+				world: 6,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 70,
+				bgmNN: 9,
+				bgmDB: 73,
+				bgmNB: 73,
+				bossnode: 11,
+				bossHP: 3,
+				maphp: { 2: { 1: 3 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			29: {
+				name: '6-3',
+				nameT: 'Guano Atoll Sea',
+				world: 6,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 8,
+				bgmNN: 3,
+				bgmDB: 4,
+				bgmNB: 5,
+				bossnode: 10,
+				bossHP: 4,
+				maphp: { 2: { 1: 4 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				// additionalChecks: function(ships,errors) {
+					// if (ships.total > ships.DD + ships.CL + ships.CT + ships.AV) errors.push('Only DD/CL/CT/AV allowed');
+					// if (ships.DD <= 0) errors.push('Must have 1+ DD');
+					// if (ships.CL + ships.CT <= 0) errors.push('Must have 1+ CL/CT');
+					// if (ships.AV <= 0) errors.push('Must have 1+ AV');
+				// },
+				nodes: {
+				
+				}
+			},
+			30: {
+				name: '6-4',
+				nameT: 'Central Northern Offshore Sea of Peacock Island',
+				world: 6,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 38,
+				bgmNN: 4,
+				bgmDB: 41,
+				bgmNB: 41,
+				bossnode: 14,
+				bossHP: 5,
+				maphp: { 2: { 1: 5 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				lbas: 1,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			},
+			31: {
+				name: '6-5',
+				nameT: 'KW Atoll Sea',
+				world: 6,
+				fleetTypes: [0],
+				bgmMap: 2001,
+				bgmDN: 75,
+				bgmNN: 75,
+				bgmDB: 68,
+				bgmNB: 68,
+				bossnode: 13,
+				bossHP: 6,
+				maphp: { 2: { 1: 6 } },
+				finalhp: { 2: 1 },
+				hpmode: 1,
+				lbas: 2,
+				additionalChecks(ships,errors) {
+					errors.push('COMING SOON');
+				},
+				nodes: {
+				
+				}
+			}
+		},
+	},
 	22: {
 		name: 'Spring 2013',
 		date: '2013-05-17',
@@ -1063,7 +2080,7 @@ var MAPDATA = {
 							2: ['1','2','3']
 						},
 						routeC: function(ships) {
-							if (ships.speed == 5) return (Math.random() < .5)? 'D' : 'E';
+							if (ships.speed <= 5) return (Math.random() < .5)? 'D' : 'E';
 							return 'E'; //?
 						}
 					},
@@ -1673,7 +2690,7 @@ var MAPDATA = {
 						},
 						routeC: function(ships) {
 							if (ships.SS+ships.SSV >= 4) return 'C';
-							if (ships.aBB + ships.CV + ships.CVB + ships.CVN <= 0 && ships.speed == 10) return 'D';
+							if (ships.aBB + ships.CV + ships.CVB + ships.CVN <= 0 && ships.speed >= 10) return 'D';
 							if (CHDATA.event.maps[3].hp <= 1) return 'C';
 							return (Math.random() < .75)? 'B':'C';
 						},
@@ -2492,7 +3509,7 @@ var MAPDATA = {
 							1: ['3'],
 						},
 						routeC: function(ships) {
-							if (ships.speed == 10) return 'C';
+							if (ships.speed >= 10) return 'C';
 							if (ships.CLT >= 2) return 'C';
 							return 'D';
 						}
@@ -3035,7 +4052,7 @@ var MAPDATA = {
 						x: 213,
 						y: 170,
 						routeC: function(ships) {
-							if (ships.speed == 5) return 'B';
+							if (ships.speed <= 5) return 'B';
 							if (ships.aCV <= 3) return 'D';
 							if (ships.AV) return 'C';
 							if (ships.aBB <= 0) return (Math.random()>.5)? 'C':'D';
@@ -3190,7 +4207,7 @@ var MAPDATA = {
 						routeC: function(ships) {
 							if (ships.LHA) return 'B';
 							if (ships.escort.DD >= 4) return (Math.random() < .8)? 'B':'A';
-							if (ships.aBB >= 2 && ships.speed==10) return 'A';
+							if (ships.aBB >= 2 && ships.speed>=10) return 'A';
 							return (Math.random() < .5)? 'A':'B';
 						},
 					},
@@ -3241,7 +4258,7 @@ var MAPDATA = {
 							1: ['2','3'],
 						},
 						routeC: function(ships) {
-							if (ships.aCV <= 3 && ships.speed==10) return 'F';
+							if (ships.aCV <= 3 && ships.speed>=10) return 'F';
 							return (Math.random()<.8)? 'E':'F';
 						},
 					},
@@ -4600,7 +5617,7 @@ var MAPDATA = {
 							1: ['5','6'],
 						},
 						routeC: function(ships) {
-							if (ships.speed == 10 && ships.CL >= 1 && ships.CAV <= 1 && ships.DD+ships.CAV >= 4) return 'D';
+							if (ships.speed >= 10 && ships.CL >= 1 && ships.CAV <= 1 && ships.DD+ships.CAV >= 4) return 'D';
 							return 'F';
 						}
 					},
@@ -4903,8 +5920,8 @@ var MAPDATA = {
 						y: 192,
 						routeC: function(ships) {
 							if (ships.CLT >= 2) return 'A';
-							if (ships.speed == 10 && ships.aCV && ships.CL + ships.DD >= 3) return 'A';
-							if (ships.speed == 10 && ships.aCV >= 2) return 'A';
+							if (ships.speed >= 10 && ships.aCV && ships.CL + ships.DD >= 3) return 'A';
+							if (ships.speed >= 10 && ships.aCV >= 2) return 'A';
 							if (ships.CL == 1 && ships.DD >= 4 && ships.CLT + ships.CA + ships.CAV + ships.DD - 4 == 1) return 'E';
 							return 'B';
 						}
@@ -4927,7 +5944,7 @@ var MAPDATA = {
 						x: 272,
 						y: 203,
 						routeC: function(ships) {
-							if (ships.speed == 10 && ships.aCV + ships.CLT <= 0) return 'D';
+							if (ships.speed >= 10 && ships.aCV + ships.CLT <= 0) return 'D';
 							if (isShipInList(ships.ids,56) || isShipInList(ships.ids,137) || (isShipInList(ships.ids,415) && isShipInList(ships.ids,122))) return 'D';
 							return 'F';
 						}
@@ -5077,7 +6094,7 @@ var MAPDATA = {
 						routeC: function(ships) {
 							if (ships.aCV >= 3) return 'A';
 							if (ships.escort.CLT >= 2 || ships.escort.SS + ships.escort.SSV) return 'A';
-							if (ships.speed == 10) return 'B';
+							if (ships.speed >= 10) return 'B';
 							if (isShipInList(ships.escort.ids,56) || isShipInList(ships.escort.ids,137) || (isShipInList(ships.escort.ids,415) && isShipInList(ships.escort.ids,122))) return 'B';
 							return 'A';
 						}
@@ -9476,7 +10493,7 @@ var MAPDATA = {
 							if (ships.CLT >= 2 && ships.CL <= 0 && ships.DD <= 1) return 'K';
 							if (ships.aBB + ships.CV + ships.CVB > 1) return 'K';
 							if (ships.DD == 6) return 'K';
-							if (ships.speed == 5) return 'F';
+							if (ships.speed <= 5) return 'F';
 							if (ships.aCV >= 2) return 'F';
 							if (ships.CL && ships.DD >= 3) return 'H';
 							return 'F';
@@ -9594,7 +10611,7 @@ var MAPDATA = {
 						x: 130,
 						y: 257,
 						routeC: function(ships) {
-							if (ships.speed == 10) return 'D';
+							if (ships.speed >= 10) return 'D';
 							return 'A';
 						}
 					},
@@ -9653,7 +10670,7 @@ var MAPDATA = {
 						y: 153,
 						resource: 0,
 						routeC: function(ships) {
-							if (ships.speed == 5) return 'I';
+							if (ships.speed <= 5) return 'I';
 							return (Math.random() < .5)? 'H' : 'J';
 						}
 					},
@@ -9813,7 +10830,7 @@ var MAPDATA = {
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
 						routeC: function(ships) {
-							if (ships.speed == 5) return 'E';
+							if (ships.speed <= 5) return 'E';
 							if (ships.escort.aBB) return 'E';
 							return 'F';
 						}						
@@ -9854,7 +10871,7 @@ var MAPDATA = {
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
 						routeC: function(ships) {
-							if (ships.speed == 5) return 'H';
+							if (ships.speed <= 5) return 'H';
 							let weight = Math.max(0, ships.aBB - 1);
 							return (Math.random() < .4*weight)? 'H' : 'I';
 						}
@@ -9998,8 +11015,8 @@ var MAPDATA = {
 						routeC: function(ships) {
 							if (ships.CA + ships.CLT >= 2) return 'E';
 							if (ships.aBB) return 'E';
-							if (ships.speed == 10 && ships.DD >= 4) return 'G';
-							if (ships.speed == 10 && ships.DD >= 3 && ships.AV && ships.CL) return 'G';
+							if (ships.speed >= 10 && ships.DD >= 4) return 'G';
+							if (ships.speed >= 10 && ships.DD >= 3 && ships.AV && ships.CL) return 'G';
 							return 'E';
 						}
 					},
@@ -10229,7 +11246,7 @@ var MAPDATA = {
 							}
 						},
 						routeC: function(ships) {
-							if (ships.speed == 5) return 'B';
+							if (ships.speed <= 5) return 'B';
 							return 'C';
 						}
 					},
@@ -10740,7 +11757,7 @@ var MAPDATA = {
 						},
 						routeC: function(ships){
 							if ((ships.FBB && ships.FBB + ships.CVL >= 2) || 6 - (ships.DD + ships.CL + ships.CLT + ships.CT) >= 2 ) return 'C';
-							else if (ships.speed == 10 && (ships.FBB == 0) && ships.CL) return 'D';
+							else if (ships.speed >= 10 && (ships.FBB == 0) && ships.CL) return 'D';
 							else return 'E';
 						}
 					},
@@ -11077,7 +12094,7 @@ var MAPDATA = {
 								if (isShipInList(ships.escort.ids,id)) historicalCount++;
 							});
 							if (CHDATA.fleets.combined == 1 || historicalCount > 6) return 'C';
-							else if (ships.speed == 5) return 'A';
+							else if (ships.speed <= 5) return 'A';
 							else return 'C';
 						},
 					},

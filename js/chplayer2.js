@@ -550,18 +550,19 @@ function mapStormNode(ship,letter) {
 	var node = MAPDATA[WORLD].maps[MAPNUM].nodes[letter];
 	var numradars = 0, lostpercent, lostshow;
 	for (var i=0; i<FLEETS1[0].ships.length; i++) {
-		for (var j=0; j<4; j++) {
+		for (var j=0; j<FLEETS1[0].ships[i].equips.length; j++) {
 			var equip = FLEETS1[0].ships[i].equips[j];
 			if (!equip) continue;
-			if (equip.type == RADARS || equip.type == RADARL || equip.type == RADARXL) numradars++;
+			if (equip.type == RADARS || equip.type == RADARL || equip.type == RADARXL) { numradars++; break; }
 		}
 	}
 	switch (numradars) {
 		case 0: lostpercent = .4; break;
 		case 1: lostpercent = .3; break;
-		case 2: lostpercent = .25; break;
+		case 2: lostpercent = .24; break;
 		default: lostpercent = .2; break;
 	}
+	if (node.lostMax && node.lostMax < lostpercent) lostpercent = node.lostMax;
 	var resname = (node.resource == 1)? 'fuelleft' : 'ammoleft';
 	lostshow = Math.floor(FLEETS1[0].ships[0][resname]*lostpercent*10);
 	for (var i=0; i<FLEETS1[0].ships.length; i++) {
@@ -1223,7 +1224,13 @@ function prepBattle(letter) {
 		comps = (mapdata.compDiffF && lastdance)? mapdata.compDiffF[diff] : mapdata.compDiff[diff];
 	}
 	comp = comps[Math.floor(Math.random()*comps.length)];
-	var compd = ENEMYCOMPS[MAPDATA[WORLD].name]['E-'+MAPNUM][letter][comp];
+	var compd;
+	if (WORLD == 20) {
+		let n = (mapdata.boss)? 'Boss' : letter;
+		compd = ENEMYCOMPS['World '+MAPDATA[WORLD].maps[MAPNUM].world][MAPDATA[WORLD].maps[MAPNUM].name][n][comp];
+	} else {
+		compd = ENEMYCOMPS[MAPDATA[WORLD].name]['E-'+MAPNUM][letter][comp];
+	}
 	for (var i=0; i<compd.c.length; i++) {
 		var sid = compd.c[i];
 		var overrideStats = (MAPDATA[WORLD].overrideStats)? MAPDATA[WORLD].overrideStats[sid] : null;
@@ -1262,7 +1269,7 @@ function prepBattle(letter) {
 	}
 	
 	var CHAPI = {battles:[],fleetnum:1,support1:3,support2:4,source:2,world:WORLD,mapnum:MAPNUM};
-	if (!MAPDATA[WORLD].maps[MAPNUM].transport) {
+	if (!MAPDATA[WORLD].maps[MAPNUM].transport && MAPDATA[WORLD].maps[MAPNUM].hpmode != -1) {
 		if (MAPDATA[WORLD].maps[MAPNUM].hpmode == 1) {
 			CHAPI.defeat_count = getMapHP(WORLD,MAPNUM,diff) - CHDATA.event.maps[MAPNUM].hp;
 			console.log(CHAPI.defeat_count);
@@ -1486,6 +1493,10 @@ function shuttersPostbattle(noshutters) {
 		var rank = (!CHDATA.temp.NBonly && !NBSELECT)? CHDATA.temp.rankDay : CHDATA.temp.rank;
 		CHDATA.event.maps[MAPNUM].hp -= MAPDATA[WORLD].transportCalc(chGetShips(),rank);
 		if (CHDATA.event.maps[MAPNUM].hp < 0) CHDATA.event.maps[MAPNUM].hp = 0;
+	}
+	if (MAPDATA[WORLD].maps[MAPNUM].hpmode == -1) {
+		var rank = (!CHDATA.temp.NBonly && !NBSELECT)? CHDATA.temp.rankDay : CHDATA.temp.rank;
+		if (rank == 'S' || rank == 'A' || rank == 'B') CHDATA.event.maps[MAPNUM].hp = 0;
 	}
 	chUpdateMorale();
 	chUpdateSupply();
@@ -2142,7 +2153,7 @@ function getELoS33(fleet,coef,includeCombined) {
 		var ship = CHDATA.ships[ships[i]];
 		if (!ship) continue;
 		var shiplos = ship.LOS;
-		for (var j=0; j<4; j++) {
+		for (var j=0; j<ship.items.length; j++) {
 			if (ship.items[j] <= 0) continue;
 			var eq = CHDATA.gears['x'+ship.items[j]];
 			var eqd = EQDATA[eq.masterId];
@@ -2201,7 +2212,7 @@ function testGetLoSOld(fleetnum,includeCombined) {
 		var ship = CHDATA.ships[ships[i]];
 		if (!ship) continue;
 		shiplos += ship.LOS;
-		for (var j=0; j<4; j++) {
+		for (var j=0; j<ship.items.length; j++) {
 			if (ship.items[j] <= 0) continue;
 			var eq = CHDATA.gears['x'+ship.items[j]];
 			var eqd = EQDATA[eq.masterId];

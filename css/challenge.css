@@ -166,6 +166,9 @@ table.t2 div.t2equip span.t2imprnum {
 	margin-top: 15px;
 	color: #45A9A5;
 }
+table.t2 div.t2equipex {
+	border-radius: 15px;
+}
 table.t2 div.t2stat {
 	margin: 1px 0 1px 0;
 }

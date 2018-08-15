@@ -6,6 +6,7 @@ var DIALOGITEMSEL = -1;
 var DIALOGFLEETSEL = 1;
 var DIALOGSORT = -1;
 var ITEMNODES = [];
+const CHITEMSMAX = 5; //also used as ex slot index
 
 var MECHANICDATES = {
 	artillerySpotting: '2014-04-23',
@@ -16,6 +17,9 @@ var MECHANICDATES = {
 	proficiency: '2015-08-10',
 	OASW: '2016-06-30',
 	shellingSoftCap: '2017-03-17',
+	CVCI: '2017-09-12',
+	destroyerNBCI: '2017-10-25',
+	aswSoftCap: '2017-11-10',
 };
 
 SHIPDATA[5001] = {
@@ -82,10 +86,12 @@ function chCreateFleetTable(root,num,name,noheader) {
 		tr.append($('<td colspan="2"><div class="t2stat"><img src="assets/stats/rn.png"/><span id="fleetrn'+num+i+'"></span></div></td>'));
 		tr.append($('<td colspan="2"><div class="t2stat"><img src="assets/stats/sp.png"/><span id="fleetsp'+num+i+'"></span></div></td>'));
 		table.append(tr);
-		for (var j=1; j<=4; j++) {
+		for (var j=1; j<=CHITEMSMAX+1; j++) {
 			var tr = $('<tr></tr>');
 			var td = $('<td colspan="4" onclick="chDialogItem('+num+','+j+','+i+')"></td>');
-			var div = $('<div id="fleeteq'+num+j+i+'" class="t2equip"></div>');
+			var dclass = (j == CHITEMSMAX+1)? 't2equipex t2equip' : 't2equip';
+			var dstyle = (j <= 4)? '' : ' style="display:none"';
+			var div = $('<div id="fleeteq'+num+j+i+'" class="'+dclass+'"'+dstyle+'></div>');
 			div.append($('<img id="fleeteqi'+num+j+i+'"/>'));
 			div.append($('<span class="t2slotnum" id="fleeteqs'+num+j+i+'"></span>'));
 			div.append($('<span class="t2imprnum" id="fleeteqimpr'+num+j+i+'"></span>'));
@@ -308,6 +314,16 @@ function chDialogShowItems(shipmid,types) {
 		if (include && types.indexOf(equip.type)==-1) include = false;
 		if (include && EQTDATA[equip.type].cannotequipS && EQTDATA[equip.type].cannotequipS.indexOf(shipmid) != -1) include = false;
 		if (include && EQTDATA[equip.type].canequip.indexOf(shiptype) == -1 && (!EQTDATA[equip.type].canequipS||EQTDATA[equip.type].canequipS.indexOf(shipmid) == -1)) include = false;
+		if (include && DIALOGITEMSEL == CHITEMSMAX+1) {
+			let found = false;
+			for (let date in EXPANSIONSLOTDATA) {
+				if (date > CHDATA.config.mechanicsdate) continue;
+				if (EXPANSIONSLOTDATA[date].types && EXPANSIONSLOTDATA[date].types.indexOf(equip.type) != -1) { found = true; break; }
+				if (EXPANSIONSLOTDATA[date].special && EXPANSIONSLOTDATA[date].special.indexOf(eqid) != -1) { found = true; break; }
+				if (EXPANSIONSLOTDATA[date].specialS && EXPANSIONSLOTDATA[date].specialS[eqid] && EXPANSIONSLOTDATA[date].specialS[eqid].indexOf(shipmid) != -1) { found = true; break; }
+			}
+			if (!found) include = false;
+		}
 		
 		if (include) {
 			$(this).css('display','');
@@ -342,24 +358,29 @@ function chDialogShowItems(shipmid,types) {
 function chDialogItem(fleet,eqnum,slot) {
 	var shipid = CHDATA.fleets[fleet][slot-1];
 	if (shipid <= 0) return;
-	if (shipid && SHIPDATA[CHDATA.ships[shipid].masterId].SLOTS.length < eqnum) return;
+	if (shipid && SHIPDATA[CHDATA.ships[shipid].masterId].SLOTS.length < eqnum && eqnum != CHITEMSMAX+1) return;
+	if (eqnum == CHITEMSMAX+1 && !CHDATA.ships[shipid].ex) return;
 	DIALOGFLEETSEL = fleet;
 	DIALOGSLOTSEL = slot;
 	DIALOGITEMSEL = eqnum;
 	$('#dialogselequip').dialog('open');
 	var defcat;
-	switch(SHIPDATA[CHDATA.ships[shipid].masterId].type) {
-		case 'CVL': case 'CV': case 'CVB': case 'LHA': defcat = 5; break;
-		case 'CL': case 'CLT': case 'CT': case 'CA': case 'CAV': defcat = 13; break;
-		case 'FBB': case 'BB': case 'BBV': defcat = 14; break;
-		case 'SS': case 'SSV': defcat = 3; break;
-		case 'LandBase': defcat = 6; break;
-		default: defcat = 1; break;
+	if (eqnum == CHITEMSMAX+1) {
+		defcat = 12;
+	} else {
+		switch(SHIPDATA[CHDATA.ships[shipid].masterId].type) {
+			case 'CVL': case 'CV': case 'CVB': case 'LHA': defcat = 5; break;
+			case 'CL': case 'CLT': case 'CT': case 'CA': case 'CAV': defcat = 13; break;
+			case 'FBB': case 'BB': case 'BBV': defcat = 14; break;
+			case 'SS': case 'SSV': defcat = 3; break;
+			case 'LandBase': defcat = 6; break;
+			default: defcat = 1; break;
+		}
 	}
 	chDialogItemFilter(defcat);
 }
 
-function chDialogItemFilter(category,frombutton) {
+function chDialogItemFilter(category) {
 	var mid = CHDATA.ships[CHDATA.fleets[DIALOGFLEETSEL][DIALOGSLOTSEL-1]].masterId;
 	var types;
 	switch (category) {
@@ -372,12 +393,12 @@ function chDialogItemFilter(category,frombutton) {
 		case 5: types=[FIGHTER,INTERCEPTOR]; break;
 		case 6: types=[DIVEBOMBER,LANDBOMBER]; break;
 		case 7: types=[TORPBOMBER]; break;
-		case 8: types=[CARRIERSCOUT,AUTOGYRO,ASWPLANE,JETBOMBER]; break;
+		case 8: types=[CARRIERSCOUT,AUTOGYRO,ASWPLANE,JETBOMBER,JETSCOUT]; break;
 		case 9: types=[RADARS,RADARL,RADARXL]; break;
 		case 10: types=[DEPTHCHARGE,SONARS,SONARL]; break;
 		case 11: types=[APSHELL,TYPE3SHELL]; break;
 		case 15: types=[AAGUN]; break;
-		case 12: types=[BULGEM,BULGEL,LANDINGCRAFT,LANDINGTANK,SEARCHLIGHTS,SEARCHLIGHTL,STARSHELL,PICKET,WG42,SRF,FCF,DRUM,SCAMP,REPAIR]; break;
+		case 12: types=[BULGEM,BULGEL,ENGINE,LANDINGCRAFT,LANDINGTANK,SEARCHLIGHTS,SEARCHLIGHTL,STARSHELL,PICKET,WG42,SRF,FCF,DRUM,SCAMP,REPAIR]; break;
 	}
 	chDialogShowItems(mid,types);
 	
@@ -472,6 +493,7 @@ function chProcessKC3File2() {
 	CHDATA.gears = kcdata.gears;
 	CHDATA.ships = {};
 	CHDATA.event = { createtime:Date.now(), lasttime:0, maps:{}, world:EVENTNUM, mapnum:1, unlocked:1, resources: { fuel: 0, ammo: 0, steel: 0, baux: 0 } };
+	if (MAPDATA[EVENTNUM].unlockDefault) CHDATA.event.unlocked = MAPDATA[EVENTNUM].unlockDefault;
 	CHDATA.fleets = {1:[null,null,null,null,null,null],2:[null,null,null,null,null,null],3:[null,null,null,null,null,null],4:[null,null,null,null,null,null],combined:0};
 	if (!CHDATA.config) CHDATA.config = {};
 	CHDATA.config.mechanics = {};
@@ -480,6 +502,7 @@ function chProcessKC3File2() {
 		CHDATA.config.mechanics[mechanic] = (MECHANICDATES[mechanic] <= mechanicsdate);
 	}
 	CHDATA.config.shelldmgbase = (CHDATA.config.mechanics.shellingSoftCap)? 180 : 150;
+	CHDATA.config.aswdmgbase = (CHDATA.config.mechanics.aswSoftCap)? 150 : 100;
 	
 	for (var mapnum in MAPDATA[EVENTNUM].maps) {
 		CHDATA.event.maps[mapnum] = { visited:[], hp:null };
@@ -511,7 +534,9 @@ function chProcessKC3File2() {
 		shipN.LOS = shipO.ls[0];
 		shipN.RNG = shipO.range;
 		shipN.items = shipO.items;
-		shipN.items[4] = shipO.ex_item || -1;
+		for (let i=shipN.items.length; i<CHITEMSMAX; i++) shipN.items.push(-1);
+		shipN.items[CHITEMSMAX] = shipO.ex_item || -1;
+		if (shipO.ex_item != 0 && CHDATA.config.mechanicsdate >= '2015-08-10') shipN.ex = 1;
 		shipN.planes = shipd.SLOTS;
 		shipN.fuel = 10;
 		shipN.ammo = 10;
@@ -542,7 +567,7 @@ function chProcessKC3File2() {
 			}
 		}
 		
-		chShipEquipItem(sid,-1,4); //unequip extra item if not allowed, currently not supported, add as option later
+		chShipEquipItem(sid,-1,CHITEMSMAX); //unequip extra item if not allowed
 		
 		for (var i=0; i<shipN.items.length; i++) {
 			if (shipN.items[i] <= 0) continue;
@@ -803,7 +828,7 @@ function chDoStartChecksFleet(fleetnum,errors) {
 			errors.push(SHIPDATA[ship.masterId].name + ' is locked to another map.');
 		//empty item slots
 		var noitem1 = 0, noitem2 = 0;
-		for (var j=0; j<ship.items.length; j++) {
+		for (var j=0; j<CHITEMSMAX; j++) {
 			if (ship.items[j] == -1) {
 				noitem2 = j+1;
 				if (!noitem1) noitem1 = noitem2;
@@ -862,6 +887,7 @@ function chStart() {
 	}
 	MECHANICS.morale = true;
 	SHELLDMGBASE = CHDATA.config.shelldmgbase;
+	ASWDMGBASE = CHDATA.config.aswdmgbase;
 	if (MAPDATA[CHDATA.event.world].ptImpSpecial == 2) { BREAKPTIMPS = true; NERFPTIMPS = false; }
 	else if (MAPDATA[CHDATA.event.world].ptImpSpecial == 1) { BREAKPTIMPS = false; NERFPTIMPS = true; }
 	else { BREAKPTIMPS = NERFPTIMPS = false; }
@@ -1042,8 +1068,13 @@ function chTableSetShip(sid,fleet,slot,noswap) {
 	if (ship.ammo === undefined) ship.ammo = 10;
 	chFleetSetResupply(fleet,slot,ship.fuel,ship.ammo,ship.planes,true);
 	
-	for (var i=0; i<4; i++) {
-		chTableSetEquip(ship.items[i],fleet,slot,i+1);
+	for (var i=0; i<CHITEMSMAX+1; i++) {
+		chTableSetEquip(ship.items[i] || -1,fleet,slot,i+1);
+		if (i == CHITEMSMAX) {
+			if (!ship.ex) $('#fleeteq'+fleet+(i+1)+slot).attr('class','t2equipno');
+			else $('#fleeteq'+fleet+(i+1)+slot).attr('class','t2equipex t2equip');
+			continue;
+		}
 		if (shipd.SLOTS.length <= i) $('#fleeteq'+fleet+(i+1)+slot).attr('class','t2equipno');
 		else $('#fleeteq'+fleet+(i+1)+slot).attr('class','t2equip');
 	}
@@ -1059,6 +1090,23 @@ function chTableSetShip(sid,fleet,slot,noswap) {
 			if (oldfleet) break;
 		}
 		if (oldfleet) chTableSetShip(oldsid,oldfleet,oldslot,true);
+	}
+	
+	let foundEx = false, found5 = false;
+	for (let shipid of CHDATA.fleets[fleet]) {
+		if (!shipid) continue;
+		if (CHDATA.ships[shipid].ex) foundEx = true;
+		if (SHIPDATA[CHDATA.ships[shipid].masterId].SLOTS.length >= 5) found5 = true;
+	}
+	if (foundEx) {
+		for (let i=1; i<=CHDATA.fleets[fleet].length; i++) $('#fleeteq'+fleet+(CHITEMSMAX+1)+i).show();
+	} else {
+		for (let i=1; i<=CHDATA.fleets[fleet].length; i++) $('#fleeteq'+fleet+(CHITEMSMAX+1)+i).hide();
+	}
+	if (found5) {
+		for (let i=1; i<=CHDATA.fleets[fleet].length; i++) $('#fleeteq'+fleet+'5'+i).show();
+	} else {
+		for (let i=1; i<=CHDATA.fleets[fleet].length; i++) $('#fleeteq'+fleet+'5'+i).hide();
 	}
 	
 	chUpdateFleetInfo(fleet);
@@ -1125,7 +1173,7 @@ function chUpdateFleetInfo(fleetnum) {
 		var ship = ships[i];
 		if (!ship) continue;
 		if (SHIPDATA[ship.masterId].SPD == 5) spd = 'Slow';
-		for (var j=0; j<4; j++) {
+		for (var j=0; j<ship.items.length; j++) {
 			if (ship.items[j] <= 0) continue;
 			var eq = CHDATA.gears['x'+ship.items[j]];
 			var eqd = EQDATA[eq.masterId];

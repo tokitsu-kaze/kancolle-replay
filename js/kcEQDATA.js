@@ -69,6 +69,10 @@ const B_LC1 = 10;
 const B_LC2 = 11;
 const B_LC3 = 12;
 const B_DEPTHCHARGE2 = 13;
+const B_NIGHTFIGHTER = 14;
+const B_NIGHTBOMBER = 15;
+const B_NIGHTBOMBER2 = 16;
+const B_NIGHTCREW = 17;
 const B_OTHER = 0;
 
 //anti-air type
@@ -883,7 +887,7 @@ var EQDATA = {
 		EV: 6
 	},
 	34: {
-		name: 'Enhanced Steam Turbine',
+		name: 'Enhanced Steam Boiler',
 		nameJP: '強化型艦本式缶',
 		added: '2013-04-17',
 		type: ENGINE,
@@ -2174,6 +2178,7 @@ var EQDATA = {
 		nameJP: '零戦62型(爆戦/岩井隊)',
 		added: '2015-10-30',
 		type: DIVEBOMBER,
+		btype: B_NIGHTBOMBER2,
 		improveType: 2,
 		DIVEBOMB: 4,
 		AA: 7,
@@ -3153,6 +3158,7 @@ var EQDATA = {
 		nameJP: 'Swordfish',
 		added: '2017-07-28',
 		type: TORPBOMBER,
+		btype: B_NIGHTBOMBER2,
 		FP: 2,
 		TP: 3,
 		ACC: 1,
@@ -3164,6 +3170,7 @@ var EQDATA = {
 		nameJP: 'Swordfish Mk.II(熟練)',
 		added: '2017-07-28',
 		type: TORPBOMBER,
+		btype: B_NIGHTBOMBER2,
 		FP: 3,
 		TP: 5,
 		ACC: 3,
@@ -3175,6 +3182,7 @@ var EQDATA = {
 		nameJP: 'Swordfish Mk.III(熟練)',
 		added: '2017-08-10',
 		type: TORPBOMBER,
+		btype: B_NIGHTBOMBER2,
 		FP: 4,
 		TP: 8,
 		ACC: 4,
@@ -3285,6 +3293,7 @@ var EQDATA = {
 		nameJP: 'F6F-3N',
 		added: '2017-09-12',
 		type: FIGHTER,
+		btype: B_NIGHTFIGHTER,
 		AA: 8,
 		ACC: 2,
 		EV: 3,
@@ -3296,6 +3305,7 @@ var EQDATA = {
 		nameJP: 'F6F-5N',
 		added: '2017-09-12',
 		type: FIGHTER,
+		btype: B_NIGHTFIGHTER,
 		AA: 10,
 		ACC: 3,
 		EV: 3,
@@ -3318,6 +3328,7 @@ var EQDATA = {
 		nameJP: 'TBM-3D',
 		added: '2017-09-12',
 		type: TORPBOMBER,
+		btype: B_NIGHTBOMBER,
 		FP: 2,
 		TP: 9,
 		AA: 1,
@@ -3330,6 +3341,7 @@ var EQDATA = {
 		nameJP: '夜間作戦航空要員',
 		added: '2017-09-12',
 		type: SCAMP,
+		btype: B_NIGHTCREW,
 		FP: 1,
 		AR: 1,
 		RNG: 2,
@@ -3339,6 +3351,7 @@ var EQDATA = {
 		nameJP: '夜間作戦航空要員+熟練甲板員',
 		added: '2017-09-12',
 		type: SCAMP,
+		btype: B_NIGHTCREW,
 		FP: 3,
 		AR: 1,
 		ACC: 2,
@@ -3471,6 +3484,7 @@ var EQDATA = {
 		nameJP: '12cm30連装噴進砲改二',
 		added: '2018-02-16',
 		type: AAGUN,
+		canBarrage: true,
 		AA: 8,
 		AR: 1,
 		ACC: 1,
@@ -4683,4 +4697,28 @@ var LBASDATA = {
 	277: { distance: 4, cost: 6 },
 	291: { distance: 5, cost: 5 },
 	292: { distance: 6, cost: 5 },
+};
+
+var EXPANSIONSLOTDATA = {
+	'2015-08-10': {
+		types: [REPAIR,RATION,OILDRUM]
+	},
+	'2016-12-22': {
+		types: [AAGUN,BULGEM,BULGEL]
+	},
+	'2017-01-10': {
+		special: [33]
+	},
+	'2017-04-05': {
+		specialS: {
+			66: [488,503,504,508,509,154,343,465,356,182,187,184,137,138,139,140,305,306,307,314],
+			220: [488,503,504,508,509,154,343,465,356,182,187,184,137,138,139,140,305,306,307,314],
+		}
+	},
+	'2018-04-06': {
+		specialS: {
+			71: [136,148,546,153,156,183,321],
+			275: [136,148,546,153,156,183,321],
+		}
+	}
 };
