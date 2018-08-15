@@ -102,11 +102,12 @@ function chMenuShowFiles() {
 		}
 		var divMedal = $('<div style="height:50px"></div>');
 		var divBar = $('<div style="width:420px;height:20px;float:left"></div>');
+		var height = (medals.length > 10)? 23 : 50;
 		for (var i=0; i<medals.length; i++) {
-			var div = $('<div style="width:50px;height:50px;float:left"></div>');
+			var div = $('<div style="width:'+height+'px;height:'+height+'px;float:left"></div>');
 			divMedal.append(div);
 			if (!medals[i]) continue;
-			div.append($('<img src="assets/maps/medal'+medals[i]+'.png" style="height:40px;margin-top:8px" />'));
+			div.append($('<img src="assets/maps/medal'+medals[i]+'.png" style="height:'+(height*.8)+'px;margin-top:8px" />'));
 		}
 		divMain.append(divMedal);
 		divBar.append($('<div style="width:400px;height:10px;position:absolute;border:1px solid black;background-color:white;border-radius:5px"></div>'));
