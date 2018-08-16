@@ -810,6 +810,10 @@ function chDoStartChecks() {
 		}
 	}
 	
+	if (WORLD == 20 && (CHDATA.fleets.supportN || CHDATA.fleets.supportB) && MAPDATA[WORLD].maps[MAPNUM].world != 5) { //special for classic
+		errors.push('Support not allowed');
+	}
+	
 	if (MAPDATA[WORLD].maps[MAPNUM].additionalChecks) MAPDATA[WORLD].maps[MAPNUM].additionalChecks(counts,errors);
 	
 	return errors;
