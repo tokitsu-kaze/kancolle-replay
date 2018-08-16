@@ -928,7 +928,7 @@ function AADefenceBombersAndAirstrike(carriers,targets,defenders,APIkouku,issupp
 			if ((e.istorpbomber || e.isdivebomber) && ship.planecount[j]>0 && (!isjetphase||e.isjet)) {
 				bombers[i].push(j);
 				hasbomber = true;
-				var side = (ship.side == 3)? 0 : ship.side;
+				var side = (ship.side == 2 || ship.side == 3)? 0 : ship.side;
 				if (C && APIkouku.api_plane_from[side].indexOf(ship.apiID2)==-1) APIkouku.api_plane_from[side].push(ship.apiID2);
 			}
 		}
