@@ -2506,7 +2506,7 @@ var VOICES = {
     546:{
         start: "assets/voice/MusashiKai2-Battle_Start.ogg",
         attack: "assets/voice/MusashiKai2-Attack.ogg",
-        nbattack: "assets/voice/MusashiKai2-Night_Attack.ogg.ogg",
+        nbattack: "assets/voice/MusashiKai2-Night_Attack.ogg",
         damage1: "assets/voice/Musashi-Minor_Damage_1.ogg",
         damage2: "assets/voice/Musashi-Minor_Damage_2.ogg",
         damage3: "assets/voice/Musashi-Major_Damage.ogg",
