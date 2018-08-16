@@ -461,6 +461,12 @@ function chShipEquipItem(shipid,itemid,slot) {
 	}
 	
 	ship.items[slot] = itemid;
+	
+	ship.RNG = SHIPDATA[ship.masterId].RNG || 1;
+	for (let item of ship.items) {
+		if (item < 0 || !item) continue;
+		if (EQDATA[CHDATA.gears['x'+item].masterId].RNG > ship.RNG) ship.RNG = EQDATA[CHDATA.gears['x'+item].masterId].RNG;
+	}
 }
 
 //------------------------
@@ -802,6 +808,10 @@ function chDoStartChecks() {
 				if (CHDATA.ships[ship].lock) errors.push(SHIPDATA[CHDATA.ships[ship].masterId].name + ' is locked out of support.');
 			}
 		}
+	}
+	
+	if (WORLD == 20 && (CHDATA.fleets.supportN || CHDATA.fleets.supportB) && MAPDATA[WORLD].maps[MAPNUM].world != 5) { //special for classic
+		errors.push('Support not allowed');
 	}
 	
 	if (MAPDATA[WORLD].maps[MAPNUM].additionalChecks) MAPDATA[WORLD].maps[MAPNUM].additionalChecks(counts,errors);

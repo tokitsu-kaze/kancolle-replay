@@ -2560,11 +2560,101 @@ var MAPDATA = {
 				maphp: { 2: { 1: 1 } },
 				finalhp: { 2: 1 },
 				hpmode: -1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 92,
+						y: 91,
+						routeC: function(ships) {
+							if (ships.CA + ships.CAV >= 2) return 'A';
+							return (Math.random() < .75)? 'B' : 'A';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 229,
+						y: 170,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'C': .5, 'F': .5 }
+					},
+					'B': {
+						type: 4,
+						x: 92,
+						y: 231,
+						resource: 1,
+						route: 'D'
+					},
+					'C': {
+						type: 2,
+						x: 399,
+						y: 125,
+						resource: 3,
+						amount: [25,50,75],
+						routeC: function(ships) {
+							if (ships.DD >= 2) return 'H';
+							return (Math.random() < .75)? 'E' : 'H';
+						}
+					},
+					'D': {
+						type: 1,
+						x: 260,
+						y: 344,
+						subonly: true,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'F'
+					},
+					'E': {
+						type: 1,
+						x: 549,
+						y: 132,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'G'
+					},
+					'F': {
+						type: 1,
+						x: 421,
+						y: 277,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'H'
+					},
+					'G': {
+						type: 2,
+						x: 652,
+						y: 81,
+						resource: 1,
+						amount: [40,80,120],
+						end: true
+					},
+					'H': {
+						type: 1,
+						x: 552,
+						y: 253,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CA + ships.CAV >= 2) return 'I';
+							return (Math.random() < .8)? 'E' : 'I';
+						}
+					},
+					'I': {
+						type: 1,
+						x: 605,
+						y: 345,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					}
 				}
 			},
 			23: {
@@ -2582,11 +2672,121 @@ var MAPDATA = {
 				maphp: { 2: { 1: 4 } },
 				finalhp: { 2: 1 },
 				hpmode: 1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 126,
+						y: 270,
+						route: 'A'
+					},
+					'A': {
+						type: 1,
+						x: 232,
+						y: 237,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CV + ships.CVB == 2 && ships.CVL == 1) return 'B';
+							return (Math.random() < .75)? 'F' : 'B';
+						}
+					},
+					'B': {
+						type: 1,
+						x: 281,
+						y: 112,
+						subonly: true,
+						compName: 'B/F',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'C': .5, 'G': .5 }
+					},
+					'C': {
+						type: 1,
+						x: 461,
+						y: 71,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'D'
+					},
+					'D': {
+						type: 1,
+						x: 605,
+						y: 67,
+						compDiff: {
+							2: [1]
+						},
+						compDiffF: {
+							2: [2]
+						},
+						compDiffC: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					},
+					'E': {
+						type: 2,
+						x: 437,
+						y: 156,
+						resource: 2,
+						amount: [25,50,75],
+						route: 'D'
+					},
+					'F': {
+						type: 1,
+						x: 325,
+						y: 333,
+						subonly: true,
+						compName: 'B/F',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'G': .5, 'I': .5 }
+					},
+					'G': {
+						type: 1,
+						x: 419,
+						y: 252,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CV + ships.CVB >= 2) return 'E';
+							return (Math.random() < .8)? 'H' : 'E';
+						}
+					},
+					'H': {
+						type: 2,
+						x: 567,
+						y: 255,
+						resource: 4,
+						amount: [40,70,105],
+						route: 'J'
+					},
+					'I': {
+						type: 1,
+						x: 488,
+						y: 345,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.CAV) return 'H';
+							return (Math.random() < .8)? 'J' : 'H';
+						}
+					},
+					'J': {
+						type: 1,
+						x: 640,
+						y: 337,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					}
 				}
 			},
 			24: {
@@ -2604,11 +2804,123 @@ var MAPDATA = {
 				maphp: { 2: { 1: 5 } },
 				finalhp: { 2: 1 },
 				hpmode: 1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 107,
+						y: 106,
+						route: 'A'
+					},
+					'A': {
+						type: 3,
+						x: 245,
+						y: 90,
+						routeC: function(ships) {
+							if (ships.speed >= 10) return 'C';
+							return (Math.random() < .8)? 'B' : 'C';
+						}
+					},
+					'B': {
+						type: 1,
+						x: 343,
+						y: 172,
+						subonly: true,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'D'
+					},
+					'C': {
+						type: 1,
+						x: 405,
+						y: 165,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'D'
+					},
+					'D': {
+						type: 1,
+						x: 512,
+						y: 231,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.aCV) return 'E';
+							if (ships.CA + ships.CAV >= 2 && ships.CL >= 1) return 'F';
+							if (Math.random() < .6) return 'I';
+							return (Math.random() < .75)? 'F' : 'E';
+						}
+					},
+					'E': {
+						type: 1,
+						x: 612,
+						y: 174,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'F': {
+						type: 1,
+						x: 602,
+						y: 279,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'G'
+					},
+					'G': {
+						type: 2,
+						x: 533,
+						y: 341,
+						resource: 1,
+						amount: [30,60,90],
+						routeR: { 'H': .5, 'I': .5 }
+					},
+					'H': {
+						type: 2,
+						x: 384,
+						y: 334,
+						resource: 2,
+						amount: [30,60,90],
+						route: 'I'
+					},
+					'I': {
+						type: 3,
+						x: 275,
+						y: 291,
+						routeC: function(ships) {
+							if (ships.DD >= 2) return 'K';
+							return (Math.random() < .75)? 'J' : 'K';
+						}
+					},
+					'J': {
+						type: 1,
+						x: 188,
+						y: 316,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'K': {
+						type: 1,
+						x: 194,
+						y: 203,
+						compDiff: {
+							2: ['Pre-F']
+						},
+						compDiffF: {
+							2: ['F']
+						},
+						compDiffC: {
+							2: ['Pre-F','F','Post-F']
+						},
+						end: true,
+						boss: true
+					}
 				}
 			},
 			25: {
@@ -2626,11 +2938,179 @@ var MAPDATA = {
 				maphp: { 2: { 1: 5 } },
 				finalhp: { 2: 1 },
 				hpmode: 1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 149,
+						y: 123,
+						routeC: function(ships) {
+							if (ships.aCV >= 2) return 'A';
+							if (ships.CLT >= 2) return 'B';
+							let numDrumShips = 0;
+							for (let ship of FLEETS1[0].ships) {
+								for (let eq of ship.equips) {
+									if (eq.type == DRUM) {
+										numDrumShips++;
+										break;
+									}
+								}
+							}
+							if (numDrumShips >= 3) return 'C';
+							return 'B';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 282,
+						y: 77,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.speed >= 10) return 'E';
+							return (Math.random() < .95)? 'D' : 'E';
+						}
+					},
+					'B': {
+						type: 3,
+						x: 219,
+						y: 174,
+						route: 'F'
+					},
+					'C': {
+						type: 1,
+						x: 193,
+						y: 253,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'G'
+					},
+					'D': {
+						type: 4,
+						x: 414,
+						y: 67,
+						resource: 1,
+						route: 'H'
+					},
+					'E': {
+						type: 3,
+						x: 399,
+						y: 127,
+						route: 'H'
+					},
+					'F': {
+						type: 1,
+						x: 304,
+						y: 209,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'I'
+					},
+					'G': {
+						type: 1,
+						x: 277,
+						y: 299,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'I'
+					},
+					'H': {
+						type: 1,
+						x: 545,
+						y: 93,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							let numDrums = 0;
+							for (let ship of FLEETS1[0].ships) {
+								for (let eq of ship.equips) {
+									if (eq.type == DRUM) numDrums++;
+								}
+							}
+							if (numDrums >= 4) return 'M';
+							retrun (Math.random() < .5)? 'J' : 'K';
+						}
+					},
+					'I': {
+						type: 1,
+						x: 368,
+						y: 234,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'L'
+					},
+					'J': {
+						type: 3,
+						x: 651,
+						y: 179,
+						end: true
+					},
+					'K': {
+						type: 1,
+						x: 618,
+						y: 224,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'O'
+					},
+					'L': {
+						type: 3,
+						x: 451,
+						y: 272,
+						routeC: function(ships) {
+							if (ships.CLT >= 2) return 'N';
+							let numDrumShips = 0;
+							for (let ship of FLEETS1[0].ships) {
+								for (let eq of ship.equips) {
+									if (eq.type == DRUM) {
+										numDrumShips++;
+										break;
+									}
+								}
+							}
+							if (numDrumShips >= 3) return 'M';
+							return 'N';
+						}
+					},
+					'M': {
+						type: 2,
+						x: 524,
+						y: 273,
+						resource: 1,
+						amount: [115],
+						route: 'O'
+					},
+					'N': {
+						type: 1,
+						x: 479,
+						y: 341,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'O'
+					},
+					'O': {
+						type: 1,
+						x: 633,
+						y: 309,
+						compDiff: {
+							2: [1]
+						},
+						compDiffF: {
+							2: [2]
+						},
+						compDiffC: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					}
 				}
 			},
 			26: {
@@ -2648,11 +3128,174 @@ var MAPDATA = {
 				maphp: { 2: { 1: 5 } },
 				finalhp: { 2: 1 },
 				hpmode: 1,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
-				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 275,
+						y: 89,
+						routeC: function(ships) {
+							let numDrums = 0, numDrumShips = 0;
+							for (let ship of FLEETS1[0].ships) {
+								let found = false;
+								for (let eq of ship.equips) {
+									if (eq.type == DRUM) {
+										numDrums++;
+										found = true;
+									}
+								}
+								if (found) numDrumShips++;
+							}
+							if (numDrums >= 5 && numDrumShips >= 4) return 'B';
+							return 'A';
+						}
+					},
+					'A': {
+						type: 1,
+						x: 403,
+						y: 132,
+						compName: 'A/B',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV >= 3) return 'F';
+							if (ships.speed >= 10) return 'D';
+							if (ships.CV + ships.CVB == 2 && ships.CVL == 1) return 'D';
+							return 'C';
+						}
+					},
+					'B': {
+						type: 1,
+						x: 209,
+						y: 178,
+						compName: 'A/B',
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'K'
+					},
+					'C': {
+						type: 1,
+						x: 493,
+						y: 138,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'E'
+					},
+					'D': {
+						type: 1,
+						x: 475,
+						y: 223,
+						compDiff: {
+							2: [1,2,3]
+						},
+						route: 'E'
+					},
+					'E': {
+						type: 1,
+						x: 562,
+						y: 196,
+						compName: 'E/G',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'N': .8, 'L': .2 }
+					},
+					'F': {
+						type: 1,
+						x: 349,
+						y: 199,
+						compDiff: {
+							2: [1,2]
+						},
+						route: 'G'
+					},
+					'G': {
+						type: 1,
+						x: 444,
+						y: 275,
+						compName: 'E/G',
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							//random if from I, SS routing if from F
+							//assume can't go B with 3 SS (non-Lui can't equip drums) 
+							if (ships.SS + ships.SSV >= 4) return 'H';
+							if (ships.SS + ships.SSV == 3) return 'N';
+							return (Math.random() < .5)? 'H' : 'N';
+						}
+					},
+					'H': {
+						type: 1,
+						x: 497,
+						y: 340,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'I': {
+						type: 3,
+						x: 409,
+						y: 336,
+						routeC: function(ships) {
+							if (ships.speed <= 5) return (Math.random() < .75)? 'H' : 'G';
+							return (Math.random() < .5)? 'H' : 'G';
+						}
+					},
+					'J': {
+						type: 2,
+						x: 319,
+						y: 313,
+						resource: 2,
+						amount: [110],
+						route: 'I'
+					},
+					'K': {
+						type: 1,
+						x: 240,
+						y: 266,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeC: function(ships) {
+							if (ships.SS + ships.SSV >= 2) return 'M';
+							return (Math.random() < .5)? 'J' : 'M';
+						}
+					},
+					'L': {
+						type: 3,
+						x: 645,
+						y: 213,
+						end: true
+					},
+					'M': {
+						type: 1,
+						x: 126,
+						y: 243,
+						compDiff: {
+							2: [1,2]
+						},
+						end: true
+					},
+					'N': {
+						type: 1,
+						x: 604,
+						y: 305,
+						compDiff: {
+							2: [1]
+						},
+						compDiffF: {
+							2: [2]
+						},
+						compDiffC: {
+							2: [1,2,3]
+						},
+						end: true,
+						boss: true
+					}
 				}
 			},
 			27: {
