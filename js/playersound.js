@@ -99,6 +99,7 @@ var BGMLIST = {
 	1002: {url:'assets/music/Sound_bgm_iron02.ogg'},
 	1003: {url:'assets/music/129w.ogg'}, //Combined Fleet Flagship
 	1004: {url:'assets/music/241e.ogg'}, //The Glistening Dew After The Rainy Season
+	1005: {url:'assets/music/125h.ogg'}, //World 6 moving BGM
 	3: {url:'assets/music/Sound_b_bgm_3.ogg'},
 	4: {url:'assets/music/Sound_b_bgm_4.ogg'},
 	5: {url:'assets/music/Sound_b_bgm_5.ogg'},
@@ -141,6 +142,7 @@ var BGMLIST = {
 	50: {url:'assets/music/Sound_b_bgm_50.ogg'},
 	52: {url:'assets/music/Sound_b_bgm_52.ogg'},
 	53: {url:'assets/music/Sound_b_bgm_53.ogg'},
+	54: {url:'assets/music/Sound_b_bgm_54.ogg'},
 	55: {url:'assets/music/Sound_b_bgm_55.ogg'},
 	58: {url:'assets/music/Sound_b_bgm_58.ogg'},
 	59: {url:'assets/music/Sound_b_bgm_59.ogg'},
