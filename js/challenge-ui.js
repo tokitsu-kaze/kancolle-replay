@@ -461,6 +461,12 @@ function chShipEquipItem(shipid,itemid,slot) {
 	}
 	
 	ship.items[slot] = itemid;
+	
+	ship.RNG = SHIPDATA[ship.masterId].RNG || 1;
+	for (let item of ship.items) {
+		if (item < 0 || !item) continue;
+		if (EQDATA[CHDATA.gears['x'+item].masterId].RNG > ship.RNG) ship.RNG = EQDATA[CHDATA.gears['x'+item].masterId].RNG;
+	}
 }
 
 //------------------------
