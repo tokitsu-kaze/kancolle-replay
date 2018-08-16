@@ -351,7 +351,7 @@ function addMapNode(letter,type) {
 			nodeG.pivot.set(10,10);
 		} else {
 			nodeG = PIXI.Sprite.fromImage('assets/maps/nodeRaid.png');
-			nodeG.pivot.set(29,16);
+			nodeG.pivot.set(22,18);
 		}
 	} else if (!node.boss) {
 		var img;
@@ -411,7 +411,7 @@ function mapMoveShip(ship,x,y) {
 var FORMSELECTED;
 function mapBattleNode(ship,letter) {
 	if (!mapnodes[letter]) addMapNode(letter);
-	if ((MAPDATA[WORLD].maps[MAPNUM].nodes[letter].aironly || MAPDATA[WORLD].maps[MAPNUM].nodes[letter].raid) && WORLD > 27) addMapNode(letter);
+	if ((MAPDATA[WORLD].maps[MAPNUM].nodes[letter].aironly || MAPDATA[WORLD].maps[MAPNUM].nodes[letter].raid) && (WORLD > 27 || WORLD == 20)) addMapNode(letter);
 
 	var radarstop = false, radartimer = 270;
 	updates.push([function() {
@@ -869,7 +869,7 @@ function chLoadMap(mapnum) {
 		if (MAPDATA[WORLD].maps[mapnum].nodes[letter].type==3) addMapNode(letter,1);
 		else addMapNode(letter);
 	}
-	if (WORLD > 27) { //fill unvisited air nodes
+	if (WORLD > 27 || WORLD == 20) { //fill unvisited air nodes
 		for (var letter in MAPDATA[WORLD].maps[MAPNUM].nodes) {
 			var node = MAPDATA[WORLD].maps[MAPNUM].nodes[letter];
 			if ((node.aironly||node.raid) && CHDATA.event.maps[mapnum].visited.indexOf(letter) == -1) addMapNode(letter);
