@@ -1251,6 +1251,17 @@ function prepBattle(letter) {
 	FLEETS2[0] = new Fleet(1);
 	FLEETS2[0].loadShips(enemies);
 	FLEETS2[0].formation = ALLFORMATIONS[compd.f];
+	if (compd.ce) {
+		var enemiesC = [];
+		for (var i=0; i<compd.ce.length; i++) {
+			var sid = compd.ce[i];
+			var overrideStats = (MAPDATA[WORLD].overrideStats)? MAPDATA[WORLD].overrideStats[sid] : null;
+			enemiesC.push(createDefaultShip(sid,overrideStats));
+		}
+		FLEETS2[1] = new Fleet(1,FLEETS2[0]);
+		FLEETS2[1].loadShips(enemiesC);
+		FLEETS2[1].formation = ALLFORMATIONS[compd.f+'E'];
+	}
 	
 	if (mapdata.debuffAmount) {
 		var debuffCheck = MAPDATA[WORLD].maps[MAPNUM].debuffCheck;
@@ -1334,8 +1345,12 @@ function prepBattle(letter) {
 	}
 	
 	var res;
-	if (CHDATA.fleets.combined) res = simCombined(CHDATA.fleets.combined,FLEETS1[0],FLEETS1[1],FLEETS2[0],supportfleet,LBASwaves,doNB,NBonly,aironly,landbomb,false,BAPI,true);
-	else res = sim(FLEETS1[0],FLEETS2[0],supportfleet,LBASwaves,doNB,NBonly,aironly,landbomb,false,BAPI,true);
+	if (compd.ce) {
+		res = sim6vs12(FLEETS1[0],FLEETS2[0],supportfleet,LBASwaves,doNB,NBonly,aironly,landbomb,false,BAPI,true);
+	} else {
+		if (CHDATA.fleets.combined) res = simCombined(CHDATA.fleets.combined,FLEETS1[0],FLEETS1[1],FLEETS2[0],supportfleet,LBASwaves,doNB,NBonly,aironly,landbomb,false,BAPI,true);
+		else res = sim(FLEETS1[0],FLEETS2[0],supportfleet,LBASwaves,doNB,NBonly,aironly,landbomb,false,BAPI,true);
+	}
 	if (FLEETS2[0].ships[0].debuff) {
 		if (NBonly) BAPI.yasen.api_boss_damaged = 1;
 		else BAPI.data.api_boss_damaged = 1;

@@ -3890,7 +3890,7 @@ var MAPDATA = {
 						}
 					},
 					'Start2': {
-						type: 3,
+						type: 0,
 						x: 641,
 						y: 114,
 						route: 'M'
@@ -4110,11 +4110,209 @@ var MAPDATA = {
 				finalhp: { 2: 1 },
 				hpmode: 1,
 				lbas: 2,
-				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
+				startCheck: function(ships) {
+					if (ships.aCV) return 'Start1';
+					if (ships.CLT) return 'Start1';
+					if (ships.aBB >= 4) return 'Start1';
+					if (ships.CL <= 0) return 'Start1';
+					return 'Start2';
 				},
 				nodes: {
-				
+					'Start1': {
+						type: 0,
+						x: 120,
+						y: 92,
+						route: 'A'
+					},
+					'Start2': {
+						type: 0,
+						x: 148,
+						y: 260,
+						route: 'B'
+					},
+					'A': {
+						type: 1,
+						x: 221,
+						y: 144,
+						distance: 1,
+						compDiff: {
+							2: [1,2,3,4,5,6,7]
+						},
+						compDiffF: {
+							2: [8,9]
+						},
+						route: 'C'
+					},
+					'B': {
+						type: 1,
+						x: 284,
+						y: 283,
+						distance: 1,
+						subonly: true,
+						compDiff: {
+							2: [1,2,3,4,5]
+						},
+						compDiffF: {
+							2: [6,7]
+						},
+						routeC: function(ships) {
+							if (ships.DD <= 1) return 'C';
+							if (ships.aBB >= 3) return 'C';
+							return 'F';
+						}
+					},
+					'C': {
+						type: 1,
+						x: 313,
+						y: 197,
+						distance: 2,
+						compDiff: {
+							2: [1,2,3,4,5,6]
+						},
+						compDiffF: {
+							2: [7,8,9]
+						},
+						routeC: function(ships) {
+							if (ships.CLT >= 2) return 'E';
+							if (ships.aBB + ships.aCV + ships.CA + ships.CAV >= 5) return 'E';
+							if (ships.aBB + ships.aCV >= 4) return 'E';
+							if (ships.DD) return 'D';
+							return 'E';
+						}
+					},
+					'D': {
+						type: 1,
+						x: 383,
+						y: 143,
+						distance: 3,
+						compDiff: {
+							2: [1,2,3,4,5,6]
+						},
+						compDiffF: {
+							2: [7,8,9]
+						},
+						route: 'G'
+					},
+					'E': {
+						type: 1,
+						x: 405,
+						y: 248,
+						distance: 3,
+						subonly: true,
+						compDiff: {
+							2: [1,2,3,4,5,6,7]
+						},
+						compDiffF: {
+							2: [8,9]
+						},
+						routeC: function(ships) {
+							if (ships.DD && ships.CL) return 'H';
+							return 'I';
+						}
+					},
+					'F': {
+						type: 1,
+						x: 408,
+						y: 306,
+						distance: 2,
+						compDiff: {
+							2: [1,2,3,4]
+						},
+						compDiffF: {
+							2: [5,6,7]
+						},
+						route: 'I'
+					},
+					'G': {
+						type: 1,
+						x: 491,
+						y: 149,
+						distance: 4,
+						raid: true,
+						compDiff: {
+							2: [1,2]
+						},
+						compDiffF: {
+							2: [3]
+						},
+						routeLC: 3,
+						routeL: { 50: 'M', 49: 'K' }
+					},
+					'H': {
+						type: 1,
+						x: 507,
+						y: 239,
+						distance: 4,
+						raid: true,
+						compDiff: {
+							2: [1,2]
+						},
+						compDiffF: {
+							2: [3]
+						},
+						route: 'G'
+					},
+					'I': {
+						type: 1,
+						x: 526,
+						y: 324,
+						distance: 3,
+						compDiff: {
+							2: [1,2,3,4,5]
+						},
+						compDiffF: {
+							2: [6,7,8]
+						},
+						routeC: function(ships) {
+							if (ships.aCV) return 'H';
+							if (ships.CLT) return 'H';
+							if (ships.aBB >= 4) return 'H';
+							if (ships.CL <= 0) return 'H';
+							return 'J';
+						}
+					},
+					'J': {
+						type: 1,
+						x: 582,
+						y: 235,
+						distance: 4,
+						compDiff: {
+							2: [1,2,3,4,5,6]
+						},
+						compDiffF: {
+							2: [7,8,9]
+						},
+						routeLC: 3,
+						routeL: { 50: 'M', 49: 'K' }
+					},
+					'K': {
+						type: 3,
+						x: 534,
+						y: 75,
+						distance: 5,
+						end: true
+					},
+					'L': {
+						type: 3,
+						x: 663,
+						y: 244,
+						distance: 5,
+						end: true
+					},
+					'M': {
+						type: 1,
+						x: 632,
+						y: 122,
+						distance: 5,
+						compDiff: {
+							2: [1,2]
+						},
+						compDiffF: {
+							2: [3]
+						},
+						end: true,
+						boss: true
+					}
 				}
 			}
 		},

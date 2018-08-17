@@ -1208,7 +1208,7 @@ function chUpdateFleetInfo(fleetnum) {
 	}
 	$('#fleetspd'+fleetnum).text(spd);
 	
-	if (MAPDATA[CHDATA.event.world].transportCalc) {
+	if (MAPDATA[CHDATA.event.world].transportCalc && WORLD != 20) {
 		let tp = MAPDATA[CHDATA.event.world].transportCalc(ships);
 		$('#fleettransport'+fleetnum).text(tp);
 	} else {
