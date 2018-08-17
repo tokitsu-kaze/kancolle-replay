@@ -335,7 +335,7 @@ function chResetMapSpritePos() {
 
 function addMapNode(letter,type) {
 	var node = MAPDATA[WORLD].maps[MAPNUM].nodes[letter];
-	if (node.aironly && WORLD <= 27) return; //already drawn on Summer 2014 map
+	if (node.aironly && WORLD <= 27 && WORLD > 20) return; //already drawn on Summer 2014 map
 	var nodeG = null;
 	if (node.aironly) {
 		if (CHDATA.event.maps[MAPNUM].visited.indexOf(letter) == -1) {
@@ -354,15 +354,20 @@ function addMapNode(letter,type) {
 			nodeG.pivot.set(22,18);
 		}
 	} else if (!node.boss) {
-		var img;
-		switch (type||node.type) {
-			case 1: img = 'assets/maps/nodeR.png'; break;
-			case 2: img = 'assets/maps/nodeG.png'; break;
-			case 3: img = 'assets/maps/nodeB.png'; break;
-			case 4: img = 'assets/maps/nodeP.png'; break;
+		if (node.dropoff) {
+			nodeG = PIXI.Sprite.fromImage('assets/maps/nodeAnchor.png');
+			nodeG.pivot.set(25,25);
+		} else {
+			var img;
+			switch (type||node.type) {
+				case 1: img = 'assets/maps/nodeR.png'; break;
+				case 2: img = 'assets/maps/nodeG.png'; break;
+				case 3: img = 'assets/maps/nodeB.png'; break;
+				case 4: img = 'assets/maps/nodeP.png'; break;
+			}
+			nodeG = PIXI.Sprite.fromImage(img);
+			nodeG.pivot.set(10,10);
 		}
-		nodeG = PIXI.Sprite.fromImage(img);
-		nodeG.pivot.set(10,10);
 	} else {
 		nodeG = PIXI.Sprite.fromImage('assets/maps/nodeBoss.png');
 		nodeG.pivot.set(19,24);
@@ -889,6 +894,10 @@ function mapPhase(first) {
 
 	var curnode = MAPDATA[WORLD].maps[MAPNUM].nodes[curletter];
 	if (curnode.end) {
+		if (curnode.dropoff) {
+			CHDATA.event.maps[MAPNUM].hp -= MAPDATA[WORLD].transportCalc(chGetShips(),'S');
+			if (CHDATA.event.maps[MAPNUM].hp < 0) CHDATA.event.maps[MAPNUM].hp = 0;
+		}
 		eventqueue.push([endMap,[]]);
 		return;
 	}

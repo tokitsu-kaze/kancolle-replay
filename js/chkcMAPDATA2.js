@@ -9,6 +9,7 @@ var MAPDATA = {
 		bannerImgAlt: 'http://i.imgur.com/yiKOFFm.png',
 		allowLBAS: true,
 		unlockDefault: 32,
+		transportCalc: function() { return 1; },
 		maps: {
 			1: {
 				name: '1-1',
@@ -454,19 +455,165 @@ var MAPDATA = {
 				world: 1,
 				fleetTypes: [0],
 				bgmMap: 2001,
-				bgmDN: 29,
-				bgmNN: 2,
+				bgmDN: 37,
+				bgmNN: 37,
 				bgmDB: 12,
 				bgmNB: 12,
 				bossnode: 14,
 				maphp: { 2: { 1: 7 } },
 				finalhp: { 2: 1 },
-				hpmode: -1,
+				transport: 'N',
 				additionalChecks(ships,errors) {
-					errors.push('COMING SOON');
+					if (ships.BB + ships.FBB) errors.push('No (F)BB');
+					if (ships.CV + ships.CVB) errors.push('No CV(B)');
+					if (ships.CLT) errors.push('No CLT');
+					if (ships.SS + ships.SSV) errors.push('No SS(V)');
 				},
 				nodes: {
-				
+					'Start': {
+						type: 0,
+						x: 118,
+						y: 245,
+						routeC: function(ships) {
+							if (ships.CA + ships.CAV + ships.BBV + ships.CVL) return 'C';
+							if (ships.DD + ships.DE >= 4) return 'A';
+							return 'C';
+						}
+					},
+					'A': {
+						type: 3,
+						x: 221,
+						y: 286,
+						route: 'E'
+					},
+					'B': {
+						type: 1,
+						x: 238,
+						y: 248,
+						compDiff: {
+							2: [1,1,2,2,3,4,5]
+						},
+						route: 'N'
+					},
+					'C': {
+						type: 1,
+						x: 280,
+						y: 210,
+						subonly: true,
+						compDiff: {
+							2: [1,2,3,4,5,6]
+						},
+						route: 'H'
+					},
+					'D': {
+						type: 1,
+						x: 279,
+						y: 163,
+						aironly: true,
+						compDiff: {
+							2: [1,2,3,4,5,6]
+						},
+						route: 'N'
+					},
+					'E': {
+						type: 1,
+						x: 318,
+						y: 328,
+						subonly: true,
+						compDiff: {
+							2: [1,2,3,4,5,6]
+						},
+						route: 'G'
+					},
+					'F': {
+						type: 1,
+						x: 335,
+						y: 288,
+						aironly: true,
+						compDiff: {
+							2: [1,2,3,4,5,6,7,8]
+						},
+						route: 'B'
+					},
+					'G': {
+						type: 2,
+						x: 404,
+						y: 344,
+						resource: 2,
+						amount: [20],
+						routeC: function(ships) {
+							if (ships.CL == 1 && ships.DD + ships.DE == 5) return 'F';
+							return (Math.random() < .75)? 'F' : 'K'
+						}
+					},
+					'H': {
+						type: 3,
+						x: 432,
+						y: 210,
+						route: 'K'
+					},
+					'I': {
+						type: 1,
+						x: 432,
+						y: 167,
+						subonly: true,
+						compDiff: {
+							2: [1,2,3,4,5]
+						},
+						route: 'D'
+					},
+					'J': {
+						type: 1,
+						x: 505,
+						y: 101,
+						compDiff: {
+							2: [1,2,3,4,5,6]
+						},
+						route: 'D'
+					},
+					'K': {
+						type: 1,
+						x: 565,
+						y: 210,
+						compDiff: {
+							2: [1,2,3,4,5]
+						},
+						route: 'M'
+					},
+					'L': {
+						type: 1,
+						x: 564,
+						y: 167,
+						aironly: true,
+						compDiff: {
+							2: [1,2,3,4,5,6]
+						},
+						route: 'I'
+					},
+					'M': {
+						type: 2,
+						x: 677,
+						y: 190,
+						resource: 1,
+						amount: [40],
+						routeC: function(ships) {
+							if (ships.CVL + ships.BBV + ships.CA + ships.CAV >= 3 || ships.DD + ships.DE <= 2) {
+								this.showLoSPlane = null;
+								return 'L';
+							}
+							this.showLoSPlane = 'J';
+							return checkELoS33(getELoS33(1,3),{ 30: 'J', 29.99: 'L' });
+						}
+					},
+					'N': {
+						type: 2,
+						x: 121,
+						y: 194,
+						resource: 1,
+						amount: [300,500,700,1000],
+						dropoff: true,
+						end: true
+					}
 				}
 			},
 			7: {

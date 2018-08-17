@@ -719,7 +719,7 @@ function chDoStartChecks() {
 	
 	chDoStartChecksFleet(1,errors);
 	
-	var counts = {DD:0,CL:0,CLT:0,CA:0,CAV:0,BB:0,FBB:0,BBV:0,AV:0,SS:0,SSV:0,CVL:0,CV:0,CVB:0,LHA:0,AS:0,AR:0,AO:0,CT:0,total:0,ids:[]};
+	var counts = {DD:0,CL:0,CLT:0,CA:0,CAV:0,BB:0,FBB:0,BBV:0,AV:0,SS:0,SSV:0,CVL:0,CV:0,CVB:0,LHA:0,AS:0,AR:0,AO:0,CT:0,DE:0,total:0,ids:[]};
 	var flag = null
 	for (var i=0; i<CHDATA.fleets[1].length; i++) {
 		if (!CHDATA.fleets[1][i]) continue;
@@ -729,7 +729,7 @@ function chDoStartChecks() {
 		counts.total++;
 	}
 	if (CHDATA.fleets.combined) {
-		var countsE = {DD:0,CL:0,CLT:0,CA:0,CAV:0,BB:0,FBB:0,BBV:0,AV:0,SS:0,SSV:0,CVL:0,CV:0,CVB:0,LHA:0,AS:0,AR:0,AO:0,CT:0,total:0,ids:[]};
+		var countsE = {DD:0,CL:0,CLT:0,CA:0,CAV:0,BB:0,FBB:0,BBV:0,AV:0,SS:0,SSV:0,CVL:0,CV:0,CVB:0,LHA:0,AS:0,AR:0,AO:0,CT:0,DE:0,total:0,ids:[]};
 		var flagE = null;
 		for (var i=0; i<CHDATA.fleets[2].length; i++) {
 			if (!CHDATA.fleets[2][i]) continue;
@@ -995,7 +995,7 @@ function chLoadLBAS(num) {
 
 function chLoadFleet(sids,fleetnum) {
 	var simships = [];
-	var counts = {DD:0,CL:0,CLT:0,CA:0,CAV:0,BB:0,FBB:0,BBV:0,AV:0,SS:0,SSV:0,CVL:0,CV:0,CVB:0,LHA:0,AS:0,AR:0,AO:0,CT:0,total:0,ids:[],aBB:0,aCV:0,speed:10};
+	var counts = {DD:0,CL:0,CLT:0,CA:0,CAV:0,BB:0,FBB:0,BBV:0,AV:0,SS:0,SSV:0,CVL:0,CV:0,CVB:0,LHA:0,AS:0,AR:0,AO:0,CT:0,DE:0,total:0,ids:[],aBB:0,aCV:0,speed:10};
 	for (var i=0; i<sids.length; i++) {
 		if (sids[i] <= 0) continue;
 		var ship = CHDATA.ships[sids[i]];
