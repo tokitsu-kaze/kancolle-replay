@@ -454,7 +454,7 @@ var MAPDATA = {
 				nameT: 'Naval Base Adjacent Sea Route',
 				world: 1,
 				fleetTypes: [0],
-				bgmMap: 2001,
+				bgmMap: 116,
 				bgmDN: 37,
 				bgmNN: 37,
 				bgmDB: 12,
