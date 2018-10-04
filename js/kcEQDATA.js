@@ -204,7 +204,7 @@ EQTDATA[SONARS] = {
 	btype: B_SONAR,
 	improve: {Pshell:.75,Pasw:1,ACCasw:1.3,EVtorp:1.5},
 	canequip: ['DD','CL','CT','CLT','SS','SSV','DE'],
-	canequipS: [352, 372, 380, 450, 491, 500, 529, 546],
+	canequipS: [352, 372, 380, 450, 491, 500, 529, 546, 534, 381, 536],
 };
 EQTDATA[SONARL] = {
 	name: 'Sonar',
@@ -212,7 +212,7 @@ EQTDATA[SONARL] = {
 	btype: B_SONAR,
 	canequip: ['CA','CAV','FBB','BB','BBV','CVL','CV','CVB','AS','AV','LHA'],
 	canequipS: [500],
-	cannotequipS: [380, 521, 526]
+	cannotequipS: [380, 521, 526, 534, 381]
 };
 EQTDATA[DEPTHCHARGE] = {
 	name: 'Depth Charge',
@@ -220,7 +220,7 @@ EQTDATA[DEPTHCHARGE] = {
 	btype: B_DEPTHCHARGE,
 	improve: {Pshell:.75,Pasw:1,ACCasw:1.3},
 	canequip: ['DD','CL','CT','CLT','AV','DE'],
-	canequipS: [380, 500, 529],
+	canequipS: [380, 500, 529, 534, 381, 536],
 	cannotequipS: [372, 491]
 };
 EQTDATA[FIGHTER] = {
@@ -266,7 +266,7 @@ EQTDATA[SEAPLANEBOMBER] = {
 	image: 10,
 	btype: B_RECON,
 	canequip: ['CAV','BBV','SSV','AV','AO'],
-	canequipS: [305, 306, 307, 314, 358, 361, 446, 447, 488, 496, 547],
+	canequipS: [305, 306, 307, 314, 358, 361, 446, 447, 488, 496, 547, 574, 579],
 	isPlane: true,
 	isfighter: true,
 	isdivebomber: true,
@@ -276,7 +276,7 @@ EQTDATA[CARRIERSCOUT] = {
 	image: 9,
 	canequip: ['CVL','CV','CVB','LandBase'],
 	canequipS: [553],
-	cannotequipS: [380, 521, 526],
+	cannotequipS: [380, 521, 526, 534, 381],
 	isPlane: true,
 	canContact: true,
 };
@@ -292,8 +292,8 @@ EQTDATA[AUTOGYRO] = {
 	name: 'Anti-Sub Plane',
 	image: 21,
 	canequip: ['CAV','BBV','CVL','AS','AO','AR','LHA'],
-	canequipS: [372, 477, 478, 491, 546, 547],
-	cannotequipS: [380, 521, 526],
+	canequipS: [372, 477, 478, 491, 546, 547, 574],
+	cannotequipS: [380, 521, 526, 534, 381],
 	isPlane: true,
 };
 EQTDATA[ASWPLANE] = {
@@ -302,7 +302,7 @@ EQTDATA[ASWPLANE] = {
 	canequip: ['CVL','LHA'],
 	canequipS: [199, 418, 468],
 	canequipS: [553],
-	cannotequipS: [521, 526],
+	cannotequipS: [521, 526, 534],
 	isPlane: true,
 };
 EQTDATA[RADARS] = {
@@ -319,7 +319,7 @@ EQTDATA[RADARL] = {
 	improve: {LOS:1.4},
 	canequip: ['CL','CT','CLT','CA','CAV','FBB','BB','BBV','CVL','CV','CVB','AV'],
 	canequipS: [352,470],
-	cannotequipS: [477, 478, 521]
+	cannotequipS: [477, 478, 521, 574]
 };
 EQTDATA[RADARXL] = {
 	name: 'Radar (L)',
@@ -343,7 +343,7 @@ EQTDATA[BULGEM] = {
 	image: 23,
 	improve: {AR:.7},
 	canequip: ['CT','CA','CAV','CVL','AS','AV','AR'],
-	canequipS: [146, 147, 216, 217, 305, 306, 307, 314, 500, 542, 543, 547, 566, 567, 568],
+	canequipS: [146, 147, 216, 217, 305, 306, 307, 314, 500, 542, 543, 547, 566, 567, 568, 579],
 };
 EQTDATA[BULGEL] = {
 	name: 'Torpedo Bulge',
@@ -372,7 +372,7 @@ EQTDATA[SEARCHLIGHTL] = {
 	image: 24,
 	improve: {Pshell:1,Pnb:1,ACCshell:1,ACCnb:1.3},
 	canequip: ['FBB','BB','BBV'],
-	canequipS: [372, 477, 491, 496]
+	canequipS: [372, 477, 491, 496, 579]
 };
 EQTDATA[STARSHELL] = {
 	name: 'Night Equip',
@@ -384,7 +384,7 @@ EQTDATA[PICKET] = {
 	name: 'Night Equip',
 	image: 32,
 	canequip: ['DD','CL','CT','CLT','CA','CAV','FBB','BB','BBV','AS','AV','DE'],
-	canequipS: [500]
+	canequipS: [500, 381, 536]
 };
 EQTDATA[WG42] = {
 	name: 'Misc',
@@ -415,7 +415,7 @@ EQTDATA[SCAMP] = {
 	name: 'Misc',
 	image: 29,
 	canequip: ['CAV','BBV','CVL','CV','CVB','AO'],
-	canequipS: [372, 450, 488, 491, 496, 547],
+	canequipS: [372, 450, 488, 491, 496, 547, 574, 579],
 };
 EQTDATA[FLYINGBOAT] = {
 	name: 'Recon Seaplane',
@@ -3741,6 +3741,110 @@ var EQDATA = {
 		ACC: 1,
 		RNG: 1,
 	},
+	297: {
+		name: '12.7cm Twin Gun Mount Model A',
+		nameJP: '12.7cm連装砲A型',
+		added: '2018-08-17',
+		type: MAINGUNS,
+		FP: 2,
+		AA: 1,
+		RNG: 1,
+	},
+	298: {
+		name: '16inch Mk.I Triple Gun Mount',
+		nameJP: '16inch Mk.I三連装砲',
+		added: '2018-07-30',
+		type: MAINGUNL,
+		FP: 21,
+		AR: 1,
+		ACC: 2,
+		RNG: 3,
+	},
+	299: {
+		name: '16inch Mk.I Triple Gun Mount + AFCT Kai',
+		nameJP: '16inch Mk.I三連装砲+AFCT改',
+		added: '2018-07-30',
+		type: MAINGUNL,
+		FP: 22,
+		AR: 1,
+		ACC: 4,
+		RNG: 3,
+	},
+	300: {
+		name: '16inch Mk.I Triple Gun Mount Kai + FCR Type 284',
+		nameJP: '16inch Mk.I三連装砲改+FCR type284',
+		added: '2018-07-30',
+		type: MAINGUNL,
+		FP: 23,
+		AA: 7,
+		AR: 1,
+		ACC: 6,
+		EV: 2,
+		RNG: 3,
+	},
+	301: {
+		name: '20-tube 7inch UP Rocket Launchers',
+		nameJP: '20連装7inch UP Rocket Launchers',
+		added: '2018-07-30',
+		type: AAGUN,
+		AA: 7,
+		EV: 2,
+	},
+	302: {
+		name: 'Type 97 Torpedo Bomber (931 Air Group / Skilled)',
+		nameJP: '九七式艦攻(九三一空/熟練)',
+		added: '2018-09-13',
+		type: TORPBOMBER,
+		TP: 8,
+		ACC: 2,
+		EV: 1,
+		ASW: 9,
+		LOS: 3,
+	},
+	303: {
+		name: 'Bofors 15.2cm Twin Gun Mount Model 1930',
+		nameJP: 'Bofors 15.2cm連装砲 Model 1930',
+		added: '2018-09-13',
+		type: MAINGUNM,
+		FP: 5,
+		AA: 4,
+		ACC: 3,
+		EV: 1,
+		RNG: 2,
+	},
+	304: {
+		name: 'S9 Osprey',
+		nameJP: 'S9 Osprey',
+		added: '2018-09-13',
+		type: SEAPLANE,
+		AA: 1,
+		ACC: 2,
+		ASW: 2,
+		LOS: 4,
+	},
+	305: {
+		name: 'Ju 87C Kai Ni (w/ KMX)',
+		nameJP: 'Ju87C改二(KMX搭載機)',
+		added: '2018-09-13',
+		type: DIVEBOMBER,
+		DIVEBOMB: 9,
+		ACC: 2,
+		EV: 1,
+		ASW: 9,
+		LOS: 2,
+	},
+	306: {
+		name: 'Ju 87C Kai Ni (w/ KMX / Skilled)',
+		nameJP: 'Ju87C改二(KMX搭載機/熟練)',
+		added: '2018-09-13',
+		type: DIVEBOMBER,
+		DIVEBOMB: 10,
+		ACC: 3,
+		EV: 1,
+		ASW: 10,
+		LOS: 2,
+		RNG: 3,
+	},
 	501: {
 		name: '5inch Single Cannon',
 		nameJP: '5inch単装砲',
@@ -4376,7 +4480,8 @@ var EQDATA = {
 	570: {
 		name: 'High-speed Abyssal Torpedo mod. 2',
 		nameJP: '高速深海魚雷 mod.2',
-		type: MIDGETSUB,
+		type: TORPEDO, //is actually midget sub, but doesn't allow opening torp
+		btype: 0,
 		TP: 13,
 		ACC: 3,
 		RNG: 1,
@@ -4579,6 +4684,34 @@ var EQDATA = {
 		AA: 4,
 		AR: 5,
 		ACC: 20,
+		RNG: 4,
+	},
+	586: {
+		name: 'Abyssal Patrolling Attack Hawk Kai Ni',
+		nameJP: '深海攻撃哨戒鷹改二',
+		added: '2018-09-08',
+		b_image: 15,
+		type: TORPBOMBER,
+		FP: 9,
+		DIVEBOMB: 27,
+		AA: 10,
+		AR: 3,
+		ACC: 13,
+		EV: 5,
+		ASW: 29,
+		LOS: 5,
+		RNG: 4,
+	},
+	587: {
+		name: 'Abyssal 16inch Triple Gun Mount Kai Ni',
+		nameJP: '深海16inch三連装砲改二',
+		added: '2018-09-12',
+		type: MAINGUNL,
+		FP: 28,
+		AA: 5,
+		AR: 6,
+		ACC: 24,
+		EV: 3,
 		RNG: 4,
 	},
 };

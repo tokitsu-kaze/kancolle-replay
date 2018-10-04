@@ -63,7 +63,7 @@ function chMenuShowFiles() {
 	}
 	nums.sort(function(a,b) { return a.data.event.createtime - b.data.event.createtime; });
 	for (var k=0; k<nums.length; k++) {
-		var num = nums[k].num, key = 'ch_basic'+nums[k];
+		var num = nums[k].num;
 		var data = nums[k].data;
 		var mdata = MAPDATA[data.event.world];
 		var tr = $('#chfile'+num);
@@ -89,7 +89,8 @@ function chMenuShowFiles() {
 					} else if (data.event.maps[mapnum].part == part) {
 						var nowhpP = data.event.maps[mapnum].hp;
 						var maxhpP = getMapHP(data.event.world,mapnum,data.event.maps[mapnum].diff,part);
-						nowhp += nowhpP/maxhpP;
+						if (maxhpP) nowhp += nowhpP/maxhpP;
+						else nowhp++;
 					}
 				}
 			} else {
@@ -97,8 +98,19 @@ function chMenuShowFiles() {
 				maxhp = getMapHP(data.event.world,mapnum,data.event.maps[mapnum].diff) || 0;
 			}
 			if (!maxhp) continue;
+			if (num == '23') console.log(progress + ' ' + maxhp + ' ' + nowhp + ' ' + total);
 			progress += (maxhp-nowhp)/maxhp/total;
-			if (nowhp <= 0) medals[mapnum-1] = data.event.maps[mapnum].diff;
+			if (nowhp <= 0) {
+				var type;
+				if (data.event.world == 20) type = 2;
+				else if (data.config.diffmode == 2) type = data.event.maps[mapnum].diff;
+				else {
+					if (data.player.level >= 80) type = 3;
+					else if (data.player.level >= 35) type = 2;
+					else type = 1;
+				}
+				medals[mapnum-1] = type;
+			}
 		}
 		var divMedal = $('<div style="height:50px"></div>');
 		var divBar = $('<div style="width:420px;height:20px;float:left"></div>');
@@ -264,6 +276,7 @@ function chAddReward(data) {
 				CHDATA.gears[eqid] = newequip;
 				break;
 			}
+			$('#equipselecttable').append('<tr id="'+eqid+'" value="'+eqid+'"></tr>');
 		}
 	}
 }
@@ -279,11 +292,13 @@ function chShowReward(data,tracker) {
 		if (tracker < numShips) {
 			$('#rewardship').attr('src','assets/icons/'+SHIPDATA[data.ships[tracker]].image);
 		} else {
-			//right now this is "just for fun"
 			var ind = tracker-numShips;
 			if (data.items[ind] == 56) { //shinden kai use image
 				$('#rewardship').css('margin-top','70px');
 				$('#rewardship').attr('src','assets/maps/22/Shinden_Kai_056_Card.png');
+			} else if (data.items[ind] == 209) {
+				$('#rewardship').css('margin-top','70px');
+				$('#rewardship').attr('src','assets/maps/37/Saiun_(Disassembled_for_Transport)_209_Card.png');
 			} else if (data.items[ind] == 'apology') {
 				$('#rewardship').css('margin-top','40px');
 				$('#rewardship').attr('src','assets/maps/Apology_scroll.png');

@@ -30,6 +30,8 @@ var SOUNDNAMES = {
 	'storm': { path: 'assets/sounds/2_res.sounds.SE_sally_storm.mp3',voldef: .5 },
 	'scout': { path: 'assets/sounds/19_res.sounds.map_kouku_teisatsu.mp3',voldef: .5 },
 	'jet': { path: 'assets/sounds/182_res.sounds.battle.SE_battle_jet.mp3', voldef: .5 },
+	'siren': { path: 'assets/sounds/75_res.sounds.siren.mp3', voldef: .5 },
+	'done': { path: 'assets/sounds/41_res.sounds.SE_correct_answer3.mp3', voldef: .5 },
 }
 SoundManager.prototype = {
 	play: function(name,vol,loop) {
@@ -57,6 +59,7 @@ SoundManager.prototype = {
 	},
 	fadeBGM: function(dur) {
 		if (!this._bgm) return;
+		if (this.BGMnum == 0) return;
 		if (!dur) dur = 2000;
 		this._bgm.fade(this._bgm.volume(),0,dur);
 		this.BGMnum = 0;
@@ -190,6 +193,9 @@ var BGMLIST = {
 	2034: {url:'assets/music/907c.ogg'},
 	2134: {url:'assets/music/908i.ogg'},
 	2035: {url:'assets/music/909q.ogg'},
+	2036: {url:'assets/music/910a.ogg'},
+	2136: {url:'assets/music/911d.ogg'},
+	2037: {url:'assets/music/912i.ogg'},
 	2038: {url:'assets/music/913p.ogg'},
 	3001: {url:'assets/music/Sound_se_18.ogg'},
 	3002: {url:'assets/music/Sound_se_63.ogg'},
