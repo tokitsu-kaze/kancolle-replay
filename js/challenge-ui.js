@@ -1239,6 +1239,7 @@ function chUpdateFleetInfo(fleetnum) {
 	if (MAPDATA[CHDATA.event.world].transportCalc && WORLD != 20) {
 		let tp = MAPDATA[CHDATA.event.world].transportCalc(ships);
 		$('#fleettransport'+fleetnum).text(tp);
+		$('#fleettransport'+fleetnum).parent().show();
 	} else {
 		$('#fleettransport'+fleetnum).parent().hide();
 	}
