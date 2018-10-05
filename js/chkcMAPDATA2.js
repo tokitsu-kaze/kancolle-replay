@@ -18350,11 +18350,14 @@ function getMapHP(worldnum,mapnum,diff,part) {
 }
 function isShipInList(ships,basemid) {
 	var ship = SHIPDATA[basemid];
+	var done = [];
 	while(ship) {
 		if (ships.indexOf(basemid)!=-1) return true;
 		if (!ship.next) break;
 		basemid = ship.next;
 		ship = SHIPDATA[ship.next];
+		if (done.indexOf(basemid) != -1) break;
+		done.push(basemid);
 	}
 	return false;
 }
