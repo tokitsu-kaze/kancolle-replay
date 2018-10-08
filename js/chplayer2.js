@@ -911,9 +911,15 @@ function mapPhase(first) {
 	var curnode = MAPDATA[WORLD].maps[MAPNUM].nodes[curletter];
 	if (curnode.end) {
 		if (curnode.dropoff) {
-			var transportCalc = MAPDATA[WORLD].maps[MAPNUM].transportCalc || MAPDATA[WORLD].transportCalc;
-			CHDATA.event.maps[MAPNUM].hp -= transportCalc(chGetShips(true),'S');
-			if (CHDATA.event.maps[MAPNUM].hp < 0) CHDATA.event.maps[MAPNUM].hp = 0;
+			if (curnode.debuffGive) {
+				if (!CHDATA.event.maps[MAPNUM].debuff) CHDATA.event.maps[MAPNUM].debuff = {};
+				curnode.debuffGive();
+			}
+			if (!MAPDATA[WORLD].maps[MAPNUM].currentBoss || MAPDATA[WORLD].maps[MAPNUM].currentBoss == curletter) {
+				var transportCalc = MAPDATA[WORLD].maps[MAPNUM].transportCalc || MAPDATA[WORLD].transportCalc;
+				CHDATA.event.maps[MAPNUM].hp -= transportCalc(chGetShips(true),'S');
+				if (CHDATA.event.maps[MAPNUM].hp < 0) CHDATA.event.maps[MAPNUM].hp = 0;
+			}
 		}
 		eventqueue.push([endMap,[]]);
 		return;

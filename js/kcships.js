@@ -208,7 +208,7 @@ Ship.prototype.loadEquips = function(equips,levels,profs,addstats) {
 		if (eq.type == SEARCHLIGHTL) this.hasSearchlight = 2;
 		if (eq.isnightscout) this.hasNightScout = true;
 		if (eq.type == PICKET) this.hasLookout = true;
-		if (eq.type == DIVEBOMBER) this.hasDivebomber = true;
+		if (eq.type == DIVEBOMBER || eq.type == JETBOMBER) this.hasDivebomber = true;
 		if (eq.type == FCF) this.hasFCF = true;
 		if (eq.type == SUBRADAR) this.hasSubRadar = true;
 		if (eq.specialCutIn) this.numSpecialTorp = this.numSpecialTorp+1 || 1;
@@ -260,6 +260,8 @@ Ship.prototype.loadEquips = function(equips,levels,profs,addstats) {
 		else if(eq.type == TYPE3SHELL) installeqs.T3++;
 		else if(eq.type == SEAPLANEBOMBER) installeqs.SB++;
 		else if(eq.type == SEAPLANEFIGHTER) installeqs.SB++;
+		if (eq.mid == 230) installeqs.TDH11 = 1;
+		if (eq.mid == 193) installeqs.TDH = 1;
 		
 		if (eq.LOS) this.LOSeq += eq.LOS;
 		
@@ -332,6 +334,13 @@ Ship.prototype.loadEquips = function(equips,levels,profs,addstats) {
 	else if (installeqs.DH1) this.isoMult*=1.8*installbonus1;
 	if (installeqs.DH3) this.isoMult*=2.4*installbonus3;
 	if (installeqs.T3) this.isoMult*=1.75;
+	
+	this.northernMult = 1;
+	if (this.numWG >= 2) this.northernMult*=2.1;
+	else if (this.numWG == 1) this.northernMult*=1.4;
+	if (installeqs.TDH) this.northernMult*=1.8;
+	if (installeqs.TDH11) this.northernMult*=2.2;
+	if (installeqs.T3) this.northernMult*=1.75;
 	
 	this.supplyPostMult = 1;
 	if (this.numWG >= 2) this.supplyPostMult*=1.625;
@@ -488,6 +497,10 @@ Ship.prototype.shellPower = function(target,base) {
 				if (this.numWG) bonus += WGpower(this.numWG);
 				if (this.isoMult) return this.FP*this.isoMult + shellbonus + bonus;
 				break;
+			case 5: //northernmost
+				if (this.numWG) bonus += WGpower(this.numWG);
+				if (this.northernMult) return this.FP*this.northernMult + shellbonus + bonus;
+				break;
 			default: //regular soft
 				if (this.numWG) bonus += WGpower(this.numWG);
 				if (this.hasT3Shell) return this.FP*2.5 + shellbonus + bonus;
@@ -512,6 +525,10 @@ Ship.prototype.NBPower = function(target) {
 			case 4:
 				if (this.numWG) bonus += WGpower(this.numWG);
 				if (this.isoMult) return this.FP*this.isoMult + bonus;
+				break;
+			case 5: //northernmost
+				if (this.numWG) bonus += WGpower(this.numWG);
+				if (this.northernMult) return this.FP*this.northernMult + this.TP + bonus;
 				break;
 			default:
 				if (this.numWG) bonus += WGpower(this.numWG);
