@@ -1,6 +1,6 @@
 var MAPDATA = {
 	20: {
-		name: 'Classic',
+		name: 'Phase 1 Classic',
 		date: '2018-08-15',
 		diffMode: 1,
 		allowDiffs: [2],
@@ -16374,14 +16374,10 @@ var MAPDATA = {
 				},
 				debuffCheck: function(debuff) {
 					if (!debuff) return false;
-					let debuffCount = 0;
-					for (const counter in debuff){
-						debuffCount++;
-					}
-					for (const counter2 in CHDATA.event.maps[2].debuff){
-						debuffCount++;
-					}
-					return debuffCount >= 9 && CHDATA.event.maps[2].debuff.AB >= 3;
+					let debuffE2 = CHDATA.event.maps[2].debuff;
+					let dE2 = debuffE2.A && debuffE2.G && debuffE2.K && debuffE2.L && debuffE2.AB >= 3;
+					let dE3 = debuff.C && debuff.D && debuff.H && debuff.J && debuff.K;
+					return dE2 && dE3;
 				},
 				nodes: {
 					'Start1': {

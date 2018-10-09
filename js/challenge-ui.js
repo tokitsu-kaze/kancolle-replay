@@ -320,8 +320,9 @@ function chDialogShowItems(shipmid,types) {
 		if (include && EQTDATA[equip.type].canequip.indexOf(shiptype) == -1 && (!EQTDATA[equip.type].canequipS||EQTDATA[equip.type].canequipS.indexOf(shipmid) == -1)) include = false;
 		if (include && DIALOGITEMSEL == CHITEMSMAX+1) {
 			let found = false;
+			let dateC = (MAPDATA[WORLD].date > CHDATA.config.mechanicsdate)? MAPDATA[WORLD].date : CHDATA.config.mechanicsdate;
 			for (let date in EXPANSIONSLOTDATA) {
-				if (date > CHDATA.config.mechanicsdate) continue;
+				if (date > dateC) continue;
 				if (EXPANSIONSLOTDATA[date].types && EXPANSIONSLOTDATA[date].types.indexOf(equip.type) != -1) { found = true; break; }
 				if (EXPANSIONSLOTDATA[date].special && EXPANSIONSLOTDATA[date].special.indexOf(eqid) != -1) { found = true; break; }
 				if (EXPANSIONSLOTDATA[date].specialS && EXPANSIONSLOTDATA[date].specialS[eqid] && EXPANSIONSLOTDATA[date].specialS[eqid].indexOf(shipmid) != -1) { found = true; break; }
