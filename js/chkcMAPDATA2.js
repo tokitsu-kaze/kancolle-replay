@@ -17557,7 +17557,7 @@ var MAPDATA = {
 						distance: 5,
 						subonly: true,
 						compDiff: {
-							3: ['Hard 1','Hard 2','Hard 3','Hard 4','Hard 5'],
+							3: ['Hard 1','Hard 2','Hard 3'],
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
@@ -17980,7 +17980,7 @@ var MAPDATA = {
 							2: ['Medium 1','Medium 2','Medium 3'],
 							1: ['Easy 1','Easy 2','Easy 3'],
 						},
-						route: 'B'
+						route: 'D'
 					},
 					'C': {
 						type: 1,
@@ -18237,7 +18237,7 @@ var MAPDATA = {
 						type: 1,
 						x: 174,
 						y: 224,
-						distance: 7,
+						distance: 6,
 						boss: true,
 						setupSpecial: function() {
 							for (let ship of FLEETS1[0].ships.concat(FLEETS1[1].ships)) {

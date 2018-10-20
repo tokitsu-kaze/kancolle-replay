@@ -1559,12 +1559,16 @@ function endMap() {
 			if (reward) { chAddReward(reward); chShowReward(reward); }
 		}
 		
-		if (MAPDATA[WORLD].maps[MAPNUM].debuffCheck && !CHDATA.event.maps[MAPNUM].debuffed) {
-			if (!CHDATA.event.maps[MAPNUM].debuff) CHDATA.event.maps[MAPNUM].debuff = {};
-			if (MAPDATA[WORLD].maps[MAPNUM].debuffCheck(CHDATA.event.maps[MAPNUM].debuff)) {
-				CHDATA.event.maps[MAPNUM].debuffed = true;
-				SM.play('done');
-				alert('DEBUFF');
+		for (var mapnum in MAPDATA[WORLD].maps) {
+			if (mapnum < MAPNUM) continue;
+			if (mapnum > CHDATA.event.unlocked) continue;
+			if (MAPDATA[WORLD].maps[mapnum].debuffCheck && !CHDATA.event.maps[mapnum].debuffed) {
+				if (!CHDATA.event.maps[mapnum].debuff) CHDATA.event.maps[mapnum].debuff = {};
+				if (MAPDATA[WORLD].maps[mapnum].debuffCheck(CHDATA.event.maps[mapnum].debuff)) {
+					CHDATA.event.maps[mapnum].debuffed = true;
+					SM.play('done');
+					alert('DEBUFF');
+				}
 			}
 		}
 		

@@ -170,7 +170,7 @@ var BGMLIST = {
 	91: {url:'assets/music/1_res.sounds.battle.BGM_91.mp3'},
 	92: {url:'assets/music/1_res.sounds.battle.BGM_92.mp3'},
 	93: {url:'assets/music/1_res.sounds.battle.BGM_93.mp3'},
-	95: {url:'assets/music/Sound_b_bgm_95.ogg'},
+	95: {url:'assets/music/Sound_b_bgm_95.ogg',voldef:.5},
 	96: {url:'assets/music/Sound_b_bgm_96.ogg'},
 	97: {url:'assets/music/Sound_b_bgm_97.ogg'},
 	98: {url:'assets/music/Sound_b_bgm_98.ogg'},
