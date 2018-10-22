@@ -115,7 +115,6 @@
 				<span>Boss: </span><input type="number" style="width:50px" min="1" max="999" value="64" onchange="setConst('supportShellB',this.value)" />
 				<br><br>
 				<span>Override Base Shell Power for Enemy Combined Fleet:</span><br>
-				<span style="color:red">Values default to 5 (normal value in standard 6vs6 battles)</span><br>
 				<table>
 				<tr>
 					<td>Main:</td>
@@ -128,12 +127,7 @@
 					<td>Enemy:<td><td><input id="advshellEE" type="number" min="-999" max="999" style="width:50px" onchange="setConst('shellEcEE',this.value)" /></td>
 				</tr>
 				</table>
-				<span>Preset 12vs6 values: </span>
-				<input type="button" value="CTF" onclick="clickedAdvDefault('shell',2,10,10,5)" />
-				<input type="button" value="STF" onclick="clickedAdvDefault('shell',10,5,-5,-5)" />
-				<input type="button" value="TTF" onclick="clickedAdvDefault('shell',-5,10,10,5)" />
-				<input type="button" value="Clear" onclick="clickedAdvDefault('shell',null,null,null,null)" />
-				<br><br>
+				<br>
 				<span>Override Base Accuracy for Enemy Combined Fleet:</span><br>
 				<span style="color:red">Values default to 90 (normal value in standard 6vs6 battles)</span><br>
 				<table>

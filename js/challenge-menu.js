@@ -191,6 +191,7 @@ function chMenuDefaultSettings() {
 	$('#menusdiff').val(MAPDATA[EVENTNUM].diffMode);
 	
 	$('#menuslock').prop('checked',false);
+	$('#menusraidreq').prop('checked',false);
 }
 
 function chMenuExtractSettings() {
@@ -200,6 +201,7 @@ function chMenuExtractSettings() {
 	CHDATA.config.mechanicsdate = $('#menusmechanics').val();
 	CHDATA.config.diffmode = parseInt($('#menusdiff').val());
 	CHDATA.config.disablelock = $('#menuslock').prop('checked');
+	CHDATA.config.disableRaidReq = $('#menusraidreq').prop('checked');
 }
 
 function chMenuDone() {
@@ -222,16 +224,59 @@ function chMenuDone() {
 	chSave();
 }
 
-function chAddReward(data) {
-	if (data.ships) {;
+function chRestrictReward(data) {
+	let result = {ships:[],items:[]};
+	if (data.ships) {
+		for (let ship of data.ships) {
+			let found = false;
+			for (let sid in CHDATA.ships) {
+				if (!CHDATA.ships[sid].disabled && CHDATA.ships[sid].masterId == ship) {
+					found = true; break;
+				}
+			}
+			if (!found) result.ships.push(ship);
+		}
+	}
+	if (data.items) {
+		for (let item of data.items) {
+			let found = false;
+			for (let eqid in CHDATA.gears) {
+				if (!CHDATA.gears[eqid].disabled && CHDATA.gears[eqid].masterId == item) {
+					found = true; break;
+				}
+			}
+			if (!found) result.items.push(item);
+		}
+	}
+	if (!result.ships.length) delete result.ships;
+	if (!result.items.length) delete result.items;
+	return result;
+}
+
+function chAddReward(data,forceNew) {
+	if (data.ships) {
 		for (var i=0; i<data.ships.length; i++) {
+			if (!forceNew) {
+				let shipExisting = null;
+				for (let sid in CHDATA.ships) {
+					let shipC = CHDATA.ships[sid];
+					if (!shipC.disabled) continue;
+					if (shipC.masterId == data.ships[i] && (!shipExisting || shipC.LVL > shipExisting.LVL)) {
+						shipExisting = shipC;
+					}
+				}
+				if (shipExisting) {
+					delete shipExisting.disabled;
+					continue;
+				}
+			}
 			var mid = data.ships[i];
 			if (!SHIPDATA[mid]) continue;
 			for (var j=0; j<100; j++) {
 				var sid = 'x'+(90000+j);
 				if (CHDATA.ships[sid]) continue;
 				var sdata = SHIPDATA[mid];
-				var lvl = 20;
+				var lvl = (mid > 2000)? 20 : 1;
 				var newship = {
 					HP: [sdata.HP,sdata.HP],
 					LVL: lvl,
@@ -259,8 +304,20 @@ function chAddReward(data) {
 		chFillDialogShip(1);
 	}
 	if (data.items) {
-		//right now this is "just for fun"
 		for (var i=0; i<data.items.length; i++) {
+			if (!forceNew) {
+				let gearExisting = null;
+				for (let eqid in CHDATA.gears) {
+					if (CHDATA.gears[eqid].disabled && CHDATA.gears[eqid].masterId == data.items[i]) {
+						gearExisting = CHDATA.gears[eqid];
+						break;
+					}
+				}
+				if (gearExisting) {
+					delete gearExisting.disabled;
+					continue;
+				}
+			}
 			var mid = data.items[i];
 			if (!EQDATA[mid]) continue;
 			for (var j=0; j<100; j++) {

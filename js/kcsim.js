@@ -216,13 +216,18 @@ function shell(ship,target,APIhou) {
 	
 	//PT Imp bonus
 	if (target.isPT) {
-		var sguns = 0;
-		for (var i=0; i<ship.equips.length; i++) {
-			if ([MAINGUNS,MAINGUNSAA,SECGUN,AAGUN].indexOf(ship.equips[i].type) != -1) sguns++;
+		if (BREAKPTIMPS || NERFPTIMPS) {
+			var sguns = 0;
+			for (var i=0; i<ship.equips.length; i++) {
+				if ([MAINGUNS,MAINGUNSAA,SECGUN,AAGUN].indexOf(ship.equips[i].type) != -1) sguns++;
+			}
+			if (sguns >= 2 && !(BREAKPTIMPS && ship.type == 'DD')) { accMod *= 1.5; postMod *= 1.2; } //acc is guess
+			
+			if (!NERFPTIMPS) accMod2 *= .5;
+		} else {
+			postMod *= (ship.ptDmgMod||1) * .6;
+			accMod2 *= (ship.ptAccMod||1) * .5;
 		}
-		if (sguns >= 2 && !(BREAKPTIMPS && ship.type == 'DD')) { accMod *= 1.5; postMod *= 1.2; } //acc is guess
-		
-		if (!NERFPTIMPS) accMod2 *= .5;
 	}
 	
 	var accflat = (ship.ACC)? ship.ACC : 0;
@@ -346,13 +351,18 @@ function NBattack(ship,target,NBonly,NBequips,APIyasen) {
 	//PT Imp bonus
 	var accMod2 = 1;
 	if (target.isPT) {
-		var sguns = 0;
-		for (var i=0; i<ship.equips.length; i++) {
-			if ([MAINGUNS,MAINGUNSAA,SECGUN,AAGUN].indexOf(ship.equips[i].type) != -1) sguns++;
+		if (BREAKPTIMPS || NERFPTIMPS) {
+			var sguns = 0;
+			for (var i=0; i<ship.equips.length; i++) {
+				if ([MAINGUNS,MAINGUNSAA,SECGUN,AAGUN].indexOf(ship.equips[i].type) != -1) sguns++;
+			}
+			if (sguns >= 2 && !(BREAKPTIMPS && ship.type == 'DD')) { accMod *= 1.5; postMod *= 1.2; } //acc is guess
+			
+			if (!NERFPTIMPS) accMod2 *= .5;
+		} else {
+			postMod *= (ship.ptDmgMod||1) * .6;
+			accMod2 *= (ship.ptAccMod||1) * .5;
 		}
-		if (sguns >= 2 && !(BREAKPTIMPS && ship.type == 'DD')) { accMod *= 1.5; postMod *= 1.2; } //acc is guess
-		
-		if (!NERFPTIMPS) accMod2 *= .5;
 	}
 	
 	var acc = hitRate(ship,accBase,accFlat,accMod);
@@ -695,8 +705,9 @@ function torpedoPhase(alive1,subsalive1,alive2,subsalive2,opening,APIrai,combine
 	for (var i=0; i<shots.length; i++) {  //do the shots
 		var ship = shots[i][0]; var target = shots[i][1];
 		
-		var power = (ship.isescort)? ship.TP : (ship.TP+5);
+		var power = (combinedAll)? ship.TP+15 : (ship.isescort||target.isescort)? ship.TP : (ship.TP+5);
 		power *= ship.fleet.formation.torpmod*ENGAGEMENT*damageMods[ship.id];
+		if (target.isPT && !NERFPTIMPS) power *= .6;
 		if (power > 150) power = 150 + Math.sqrt(power-150);
 		
 		var accflat = (ship.ACC)? ship.ACC : 0;
@@ -736,6 +747,7 @@ function torpedoPhase(alive1,subsalive1,alive2,subsalive2,opening,APIrai,combine
 function airstrike(ship,target,slot,contactMod,issupport) {
 	if (!contactMod) contactMod = 1;
 	var acc = (issupport)? .85 : .95;
+	if (target.isPT && !NERFPTIMPS) acc *= .5;
 	var res = rollHit(accuracyAndCrit(ship,target,acc,target.fleet.formation.AAmod,0,.2,true),ship.critdmgbonus);
 	var equip = ship.equips[slot];
 	var dmg = 0, realdmg = 0;
@@ -748,6 +760,7 @@ function airstrike(ship,target,slot,contactMod,issupport) {
 		var preMod = (equip.isdivebomber)? 1 : ((Math.random() < .5)? .8 : 1.5);
 		if (equip.isjet) preMod *= 1/Math.sqrt(2);
 		var postMod = 1;
+		if (target.isPT && !NERFPTIMPS) postMod *= .6;
 		if (equip.isdivebomber) postMod *= target.divebombWeak || 1;
 		dmg = damage(ship,target,base+Math.sqrt(ship.planecount[slot])*planebase,preMod,res*contactMod*postMod,150);
 		realdmg = takeDamage(target,dmg);
@@ -1298,6 +1311,7 @@ function airstrikeLBAS(lbas,target,slot,contactMod) {
 	if (!contactMod) contactMod = 1;
 	var equip = lbas.equips[slot];
 	var acc = .95;
+	if (target.isPT && !NERFPTIMPS) acc *= .5;
 	var critdmgbonus = 1, critratebonus = 0, ACCplane = 0;
 	if (equip.type != LANDBOMBER) {
 		ACCplane = Math.sqrt(equip.exp*.1);
@@ -1326,6 +1340,7 @@ function airstrikeLBAS(lbas,target,slot,contactMod) {
 		var dmgbase = 25+planebase*Math.sqrt(1.8*lbas.planecount[slot]);
 		var preMod = (equip.type == LANDBOMBER)? .8 : 1;
 		var postMod = (equip.type == LANDBOMBER)? 1.8 : 1;
+		if (target.isPT && !NERFPTIMPS) postMod *= .6;
 		// if (target.isInstall) { //https://cdn.discordapp.com/attachments/178613137430282240/284476587783618560/isohime.PNG
 			// if (equip.isdivebomber) postMod *= 2;
 			// else postMod *= 1.18;

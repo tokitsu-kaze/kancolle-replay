@@ -349,6 +349,20 @@ Ship.prototype.loadEquips = function(equips,levels,profs,addstats) {
 	else if (installeqs.DH2 == 1) this.supplyPostMult*=1.3;
 	if (installeqs.DH3) this.supplyPostMult*=1.7;
 	
+	this.ptDmgMod = 1;
+	this.ptAccMod = 1;
+	let numGuns = (this.equiptypes[MAINGUNS] || 0) + (this.equiptypes[MAINGUNSAA] || 0) + (this.equiptypes[SECGUN] || 0) + (this.equiptypes[AAGUN] || 0);
+	if (numGuns >= 2) this.ptDmgMod *= 2;
+	if (this.type == 'DD' && this.equiptypesB[B_MAINGUN]) this.ptAccMod *= 1.5;
+	if (this.equiptypesB[SECGUN] && ['CL','CLT','CT','CA','CAV','FBB'].indexOf(this.type) != -1) this.ptAccMod *= 1.4;
+	let numSGuns = (this.equiptypes[MAINGUNS] || 0) + (this.equiptypes[MAINGUNSAA] || 0);
+	if (numSGuns >= 2) this.ptAccMod *= 1.2;
+	else if (numSGuns == 1) this.ptAccMod *= 1.1;
+	if (this.equiptypes[PICKET]) this.ptAccMod *= 2;
+	if (this.equiptypes[AAGUN] >= 2) this.ptAccMod *= 2;
+	else if (this.equiptypes[AAGUN] == 1) this.ptAccMod *= 1.5;
+	if (this.equiptypes[SEAPLANEBOMBER]) this.ptAccMod *= 2;
+	
 	if (this.repairs) this.repairsOrig = this.repairs.slice();
 }
 
@@ -482,7 +496,7 @@ function WGpower(num) {
 Ship.prototype.shellPower = function(target,base) {
 	var bonus = (this.improves.Pshell)? Math.floor(this.improves.Pshell) : 0;
 	//var shellbonus = (this.fleet && this.fleet.formation.shellbonus!==undefined)? this.fleet.formation.shellbonus : 5;
-	var shellbonus = (base != null)? base : 5;
+	var shellbonus = (base != null)? base+5 : 5;
 	if (target && target.isInstall) {
 		switch (target.installtype) {
 			case 2: //artillery imp
@@ -823,13 +837,13 @@ CV.prototype.canStillShell = function () {
 	return (this.HP > this.maxHP*.5 && this.canShell());
 }
 CV.prototype.CVshelltype = true;
-CV.prototype.shellPower = function(target) {
+CV.prototype.shellPower = function(target,base) {
 	var dp = 0, tp = 0;
 	for (var i=0; i<this.equips.length; i++) {
 		if(this.equips[i].DIVEBOMB) dp += this.equips[i].DIVEBOMB;
 		if(this.equips[i].TP) tp += this.equips[i].TP;
 	}
-	var bonus = (this.fleet && this.fleet.formation.shellbonus!==undefined)? this.fleet.formation.shellbonus : 5;
+	var bonus = (base||0) + 5;
 	if (target && target.isInstall) tp = 0;
 	var improvebonus = (this.improves.Pshell)? Math.floor(this.improves.Pshell) : 0;
 	return 50 + bonus + 1.5*(this.FP + improvebonus + tp + Math.floor(1.3*dp));

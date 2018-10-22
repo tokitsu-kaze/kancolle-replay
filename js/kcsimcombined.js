@@ -300,6 +300,7 @@ function simCombined(type,F1,F1C,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombi
 		if (C) BAPI.data.api_hougeki2 = {api_at_list:[-1],api_at_type:[-1],api_damage:[-1],api_df_list:[-1],api_cl_list:[-1]};
 		F1.basepowshell = F1.formation.shellbonus; F1.baseaccshell = F1.formation.accbase;
 		F2.basepowshell = F1.formation.shellbonusE; F2.baseaccshell = F1.formation.accbase;
+		if (type == 3) F2.baseaccshell = 65;
 		if (type==2) {
 			F2.baseaccshell = 65; //guess
 			if (doShell2) shellOrder(false,(C)? BAPI.data.api_hougeki2 : undefined);
@@ -318,6 +319,7 @@ function simCombined(type,F1,F1C,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombi
 		} else if (doShell2) {
 			F1.basepowshell = F1.formation.shellbonus; F1.baseaccshell = F1.formation.accbase;
 			F2.basepowshell = F1.formation.shellbonusE; F2.baseaccshell = F1.formation.accbase;
+			if (type == 3) F2.baseaccshell = 65;
 			shellOrder(false,(C)? BAPI.data.api_hougeki3 : undefined);
 		}
 	}
@@ -802,7 +804,7 @@ function sim6vs12(F1,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing,noammo,BA
 	//shelling 1
 	if (C) BAPI.data.api_hougeki1 = null;
 	if (!NBonly && !aironly && alive1.length+subsalive1.length > 0 && alive2C.length+subsalive2C.length > 0) {
-		F1.basepowshell = SIMCONSTS.shellEcEF; F2C.basepowshell = SIMCONSTS.shellEcEE;
+		F1.basepowshell = SIMCONSTS.shellEcEF || 5; F2C.basepowshell = SIMCONSTS.shellEcEE || -5;
 		F1.baseaccshell = SIMCONSTS.accEcEF; F2C.baseaccshell = SIMCONSTS.accEcEE;
 		var order1 = [], order2 = [];
 		orderByRange(ships1,order1,hasInstall2C);
@@ -822,7 +824,7 @@ function sim6vs12(F1,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing,noammo,BA
 	
 	//shelling 2
 	if (!NBonly && !aironly && alive1.length+subsalive1.length > 0 && alive2.length+subsalive2.length > 0) {
-		F1.basepowshell = SIMCONSTS.shellEcMF; F2.basepowshell = SIMCONSTS.shellEcME;
+		F1.basepowshell = SIMCONSTS.shellEcMF || 5; F2.basepowshell = SIMCONSTS.shellEcME || 10;
 		F1.baseaccshell = SIMCONSTS.accEcMF; F2.baseaccshell = SIMCONSTS.accEcME;
 		
 		var order1 = [], order2 = [];
@@ -835,7 +837,7 @@ function sim6vs12(F1,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing,noammo,BA
 	
 	//shelling 3
 	if (doShell2 && !NBonly && !aironly && alive1.length+subsalive1.length > 0 && (alive2.length+subsalive2.length > 0 || alive2C.length+subsalive2C.length > 0)) {
-		F1.basepowshell = SIMCONSTS.shellEcMF; F2.basepowshell = SIMCONSTS.shellEcME;
+		F1.basepowshell = SIMCONSTS.shellEcMF || 5; F2.basepowshell = SIMCONSTS.shellEcME || 10;
 		F1.baseaccshell = SIMCONSTS.accEcMF; F2.baseaccshell = SIMCONSTS.accEcME;
 		
 		var order1 = [], order2 = [];
@@ -1253,7 +1255,7 @@ function sim12vs12(type,F1,F1C,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing
 		if (C) BAPI.data.api_hougeki1 = {api_at_eflag:[-1],api_at_list:[-1],api_at_type:[-1],api_damage:[-1],api_df_list:[-1],api_cl_list:[-1]};
 		// F1.basepowshell = F1.formation.shellbonus;
 		// F2.basepowshell = F1.formation.shellbonus;
-		F1.basepowshell = SIMCONSTS.shellEcMF; F2.basepowshell = SIMCONSTS.shellEcME;
+		F1.basepowshell = SIMCONSTS.shellEcMF || ((type==3)? -5 : 2); F2.basepowshell = SIMCONSTS.shellEcME || 10;
 		F1.baseaccshell = SIMCONSTS.accEcMF; F2.baseaccshell = SIMCONSTS.accEcME;
 		if (type==2) {
 			//F2.baseaccshell = 65; //guess
@@ -1275,13 +1277,13 @@ function sim12vs12(type,F1,F1C,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing
 		if (type==2) {
 			// F1.basepowshell = F1.formation.shellbonus;
 			// F2.basepowshell = F1.formation.shellbonus;
-			F1.basepowshell = SIMCONSTS.shellEcMF; F2.basepowshell = SIMCONSTS.shellEcME;
+			F1.basepowshell = SIMCONSTS.shellEcMF || ((type==3)? -5 : 2); F2.basepowshell = SIMCONSTS.shellEcME || 10;
 			F1.baseaccshell = SIMCONSTS.accEcMF; F2.baseaccshell = SIMCONSTS.accEcME;
 			if (doShell2) shellOrder(d1A, d2A, (C)? BAPI.data.api_hougeki2 : undefined);
 		} else {
 			// F1C.basepowshell = F1C.formation.shellbonus;
 			// F2.basepowshell = F1C.formation.shellbonus;
-			F1C.basepowshell = SIMCONSTS.shellEcEF; F2C.basepowshell = SIMCONSTS.shellEcEE;
+			F1C.basepowshell = SIMCONSTS.shellEcEF || -5; F2C.basepowshell = SIMCONSTS.shellEcEE || -5;
 			F1C.baseaccshell = SIMCONSTS.accEcEF; F2C.baseaccshell = SIMCONSTS.accEcEE;
 			shellRange(d1E, d2E, (C)? BAPI.data.api_hougeki2 : undefined);
 		}
@@ -1309,13 +1311,13 @@ function sim12vs12(type,F1,F1C,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing
 		if (type==2) {
 			// F1C.basepowshell = F1C.formation.shellbonus;
 			// F2.basepowshell = F1C.formation.shellbonus;
-			F1C.basepowshell = SIMCONSTS.shellEcEF; F2C.basepowshell = SIMCONSTS.shellEcEE;
+			F1C.basepowshell = SIMCONSTS.shellEcEF || -5; F2C.basepowshell = SIMCONSTS.shellEcEE || -5;
 			F1C.baseaccshell = SIMCONSTS.accEcEF; F2C.baseaccshell = SIMCONSTS.accEcEE;
 			shellRange(d1E, d2E, (C)? BAPI.data.api_hougeki3 : undefined);
 		} else if (doShell2) {
 			// F1.basepowshell = F1.formation.shellbonus;
 			// F2.basepowshell = F1.formation.shellbonus;
-			F1.basepowshell = SIMCONSTS.shellEcMF; F2.basepowshell = SIMCONSTS.shellEcME;
+			F1.basepowshell = SIMCONSTS.shellEcMF || ((type==3)? -5 : 2); F2.basepowshell = SIMCONSTS.shellEcME || 10;
 			F1.baseaccshell = SIMCONSTS.accEcMF; F2.baseaccshell = SIMCONSTS.accEcME;
 			shellOrder(d1A, d2A, (C)? BAPI.data.api_hougeki3 : undefined);
 		}

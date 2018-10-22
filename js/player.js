@@ -640,6 +640,7 @@ function processAPI(root) {
 				sh.mask = mask;
 				sh.graphic.addChild(mask);
 				sh.escorte = true;
+				sh.id += 10;
 				sh.graphic.y += 480;
 			}
 		}

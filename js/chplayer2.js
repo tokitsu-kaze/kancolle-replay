@@ -1556,7 +1556,12 @@ function endMap() {
 		$('#noclick').hide();
 		if (cleared) {
 			var reward = MAPDATA[WORLD].maps[MAPNUM].reward;
-			if (reward) { chAddReward(reward); chShowReward(reward); }
+			if (reward) {
+				if (reward[3]) reward = reward[CHDATA.event.maps[MAPNUM].diff];
+				if (reward.firstOnly) reward = chRestrictReward(reward);
+				chAddReward(reward);
+				chShowReward(reward);
+			}
 		}
 		
 		for (var mapnum in MAPDATA[WORLD].maps) {
