@@ -112,6 +112,7 @@ function chMenuShowFiles() {
 				medals[mapnum-1] = type;
 			}
 		}
+		if (medals.length >= Object.keys(mdata.maps).length && progress >= .9999) progress = 1; //fix JS float rounding
 		var divMedal = $('<div style="height:50px"></div>');
 		var divBar = $('<div style="width:420px;height:20px;float:left"></div>');
 		var height = (medals.length > 10)? 23 : 50;

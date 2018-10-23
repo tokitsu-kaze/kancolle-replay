@@ -95,6 +95,12 @@ table.t2 img.t2portrait {
 	width: 160px;
 	height: 40px;
 }
+table.t2 img.t2lock {
+	position: absolute;
+	margin-left: -130px;
+	margin-top: -3px;
+	pointer-events: none;
+}
 table.t2 div.t2hpouter {
 	border: 1px solid black;
 	background-color: white;
@@ -189,6 +195,19 @@ div.t2head {
 	border-radius: 12px;
 	background-color: #88ff88;
 	font-size: 16px;
+}
+tr.t2unequiprow div {
+	height: 15px;
+	width: 15px;
+	margin-left: 5px;
+	margin-top: 2px;
+	color: #1AACAF;
+	font-size: 14px;
+	margin-top: -7px;
+	cursor: pointer;
+}
+tr.t2unequiprow div:hover {
+	color: #7FE2DB;
 }
 tr.t2supplyrow {
 	border: 1px solid transparent;

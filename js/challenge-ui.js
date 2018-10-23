@@ -65,7 +65,7 @@ function chCreateFleetTable(root,num,name,noheader) {
 	for (var i=1; i<=6; i++) {
 		var table = $('<table class="t2" id="fleet'+num+i+'"></table>');
 		table.append($('<tr class="t2show"><td colspan="4"><div style="text-align:center"><div class="t2name" id="fleetname'+num+i+'" onclick="chDialogShip('+num+','+i+')">Slot '+num+'</div></div></td></tr>'));
-		table.append($('<tr class="t2show"><td colspan="4"><img src="assets/icons/Kblank.png" class="t2portrait" id="fleetimg'+num+i+'"/><img id="fleetlock'+num+i+'" src="" style="position:absolute;margin-left:-130px;margin-top:-3px"/></td></tr>'));
+		table.append($('<tr class="t2show"><td colspan="4"><img src="assets/icons/Kblank.png" class="t2portrait" id="fleetimg'+num+i+'"/><img id="fleetlock'+num+i+'" src="" class="t2lock"/></td></tr>'));
 		var tr = $('<tr></tr>');
 		tr.append($('<td><span>Lv. </span><span class="t2lvlnum" id="fleetlvl'+num+i+'"></span></td>'));
 		tr.append($('<td><div class="t2morale" id="fleetmorale'+num+i+'" onclick="chClickMorale('+num+','+i+')"><span></span></div></td>'));
@@ -93,17 +93,23 @@ function chCreateFleetTable(root,num,name,noheader) {
 			var dclass = (j == CHITEMSMAX+1)? 't2equipex t2equip' : 't2equip';
 			var dstyle = (j <= 4)? '' : ' style="display:none"';
 			var div = $('<div id="fleeteq'+num+j+i+'" class="'+dclass+'"'+dstyle+'></div>');
-			div.append($('<img id="fleeteqi'+num+j+i+'"/>'));
+			div.append($('<img src="assets/items/empty.png" id="fleeteqi'+num+j+i+'"/>'));
 			div.append($('<span class="t2slotnum" id="fleeteqs'+num+j+i+'"></span>'));
 			div.append($('<span class="t2imprnum" id="fleeteqimpr'+num+j+i+'"></span>'));
 			div.append($('<span id="fleeteqn'+num+j+i+'"></span>'));
 			td.append(div); tr.append(td); table.append(tr);
 		}
+		tr = $('<tr class="t2unequiprow"></tr>');
+		tr.append($('<div title="Unequip All" onclick="chUnequipAllShip('+num+', '+i+')">&#x1F5D9;</div>'));
+		table.append(tr);
 		tr = $('<tr class="t2supplyrow" onclick="chResupplyOne('+num+','+i+')" onmouseover="if ($(this).css(\'visibility\')!=\'hidden\') {chPreviewResupply('+num+','+i+');chShowHoverBox(\'hbResupply\',this)}" onmouseout="chHideHoverBox(\'hbResupply\')"></tr>');
 		tr.append($('<td colspan="2"><img src="assets/stats/fuel.png"/><div class="t2resouter"></div><div id="fuelbar'+num+i+'" class="t2resinner" style="background-color:#00CC00"></div></td>'));
 		tr.append($('<td colspan="2"><img src="assets/stats/ammo.png"/><div class="t2resouter"></div><div id="ammobar'+num+i+'" class="t2resinner" style="background-color:#999900"></div></td>'));
 		table.append(tr);
 		divWrap.append(table);
+		
+		chAddDragShip(num,i);
+		for (let j=1; j<=CHITEMSMAX; j++) chAddDragEquip(num,i,j);
 	}
 }
 function chCreateFleetTableLBAS(root,num) {
@@ -133,6 +139,8 @@ function chCreateFleetTableLBAS(root,num) {
 		tr.append($('<td colspan="4"><img src="assets/stats/baux.png"/></td>'));
 		table.append(tr);
 		divWrap.append(table);
+		
+		for (let j=1; j<=CHITEMSMAX; j++) chAddDragEquip(num,i,j);
 	}
 }
 chCreateFleetTable('#mainfleetspace',1,'Main Fleet');
@@ -140,6 +148,60 @@ chCreateFleetTable('#escortfleetspace',2,'Escort Fleet',true);
 chCreateFleetTable('#supportfleetspace1',3,'Normal Support');
 chCreateFleetTable('#supportfleetspace2',4,'Boss Support');
 chCreateFleetTableLBAS('#lbasspace',5,'Land Base');
+
+function chAddDragShip(fleetnum,slot) {
+	let imgPortrait = $('#fleetimg'+fleetnum+slot);
+	imgPortrait.on('dragstart',function(event) {
+		DIALOGFLEETSEL = fleetnum;
+		DIALOGSLOTSEL = slot;
+		DIALOGITEMSEL = null;
+	});
+	imgPortrait.on('dragover',function(event) {
+		if (DIALOGFLEETSEL == fleetnum && DIALOGSLOTSEL != slot && DIALOGITEMSEL == null) {
+			event.originalEvent.preventDefault();
+		}
+	});
+	imgPortrait.on('drop',function(event) {
+		event.originalEvent.preventDefault();
+		let sid = CHDATA.fleets[DIALOGFLEETSEL][DIALOGSLOTSEL-1];
+		if (sid) chTableSetShip(sid,fleetnum,slot);
+	});
+	imgPortrait.on('dragend',function(event) {
+		DIALOGFLEETSEL = DIALOGSLOTSEL = null;
+	});
+}
+function chAddDragEquip(fleetnum,shipslot,eqslot) {
+	let imgEq = $('#fleeteqi'+fleetnum+eqslot+shipslot);
+	imgEq.on('dragstart',function(event) {
+		DIALOGFLEETSEL = fleetnum;
+		DIALOGSLOTSEL = shipslot;
+		DIALOGITEMSEL = eqslot;
+	});
+	imgEq.on('dragover',function(event) {
+		if (DIALOGFLEETSEL == fleetnum && DIALOGSLOTSEL == shipslot && DIALOGITEMSEL != eqslot) {
+			let sid = CHDATA.fleets[DIALOGFLEETSEL][DIALOGSLOTSEL-1];
+			if (eqslot > SHIPDATA[CHDATA.ships[sid].masterId].SLOTS.length) return;
+			if (DIALOGITEMSEL > SHIPDATA[CHDATA.ships[sid].masterId].SLOTS.length) return;
+			event.originalEvent.preventDefault();
+		}
+	});
+	imgEq.on('drop',function(event) {
+		event.originalEvent.preventDefault();
+		let sid = CHDATA.fleets[DIALOGFLEETSEL][DIALOGSLOTSEL-1];
+		if (sid) {
+			let eqid1 = CHDATA.ships[sid].items[DIALOGITEMSEL-1];
+			let eqid2 = CHDATA.ships[sid].items[eqslot-1];
+			chTableSetEquip(eqid1,DIALOGFLEETSEL,DIALOGSLOTSEL,eqslot);
+			chShipEquipItem(sid,eqid1,eqslot-1);
+			chTableSetEquip(eqid2,DIALOGFLEETSEL,DIALOGSLOTSEL,DIALOGITEMSEL);
+			chShipEquipItem(sid,eqid2,DIALOGITEMSEL-1);
+			chTableSetShip(sid, DIALOGFLEETSEL, DIALOGSLOTSEL);
+		}
+	});
+	imgEq.on('dragend',function(event) {
+		DIALOGFLEETSEL = DIALOGSLOTSEL = DIALOGITEMSEL = null;
+	});
+}
 
 $('#tabsupportN').attr('value',1);
 $('#tabsupportB').attr('value',1);
@@ -1076,6 +1138,7 @@ function chTableSetShip(sid,fleet,slot,noswap) {
 	$('#fleet'+fleet+slot+' td.t2hpcell').show();
 	$('#fleetname'+fleet+slot).text(shipd.name);
 	$('#fleetimg'+fleet+slot).attr('src','assets/icons/'+shipd.image);
+	if (fleet != 5) $('#fleetimg'+fleet+slot).css('cursor','move');
 	$('#fleetlvl'+fleet+slot).text(ship.LVL);
 	chFleetSetMorale(fleet,slot,ship.morale);
 	$('#fleetfp'+fleet+slot).text(ship.FP);
@@ -1159,6 +1222,7 @@ function chTableRemoveShip(fleet,slot) {
 		$(this).css('visibility','hidden');
 	});
 	$('#fleet'+fleet+slot+' td.t2hpcell').hide();
+	$('#fleetimg'+fleet+slot).css('cursor','');
 	
 	CHDATA.fleets[fleet][slot-1] = null;
 	chUpdateFleetInfo(fleet);
@@ -1178,17 +1242,17 @@ function chTablePushUp(fleet) {
 
 function chTableSetEquip(itemid,fleet,shipslot,itemslot) {
 	if (itemid == -1) {
-		$('#fleeteqi'+fleet+itemslot+shipslot).hide();
-		$('#fleeteqi'+fleet+itemslot+shipslot).attr('src',null);
+		$('#fleeteqi'+fleet+itemslot+shipslot).css('cursor','');
+		$('#fleeteqi'+fleet+itemslot+shipslot).attr('src','assets/items/empty.png');
 		$('#fleeteqn'+fleet+itemslot+shipslot).text('');
 		$('#fleeteqs'+fleet+itemslot+shipslot).text('');
 		$('#fleeteqimpr'+fleet+itemslot+shipslot).text('');
 		$('#fleeteq'+fleet+itemslot+shipslot).css('background-image','');
 	} else {
-		$('#fleeteqi'+fleet+itemslot+shipslot).show();
 		var item = CHDATA.gears['x'+itemid];
 		var itemd = EQDATA[item.masterId];
 		$('#fleeteqi'+fleet+itemslot+shipslot).attr('src','assets/items/'+EQTDATA[itemd.type].image+'.png');
+		$('#fleeteqi'+fleet+itemslot+shipslot).css('cursor','move');
 		$('#fleeteqn'+fleet+itemslot+shipslot).text(itemd.name);
 		$('#fleeteqs'+fleet+itemslot+shipslot).text(CHDATA.ships[CHDATA.fleets[fleet][shipslot-1]].planes[itemslot-1]);
 		if (CHDATA.config.mechanics.improvement && item.stars>0) $('#fleeteqimpr'+fleet+itemslot+shipslot).text('+'+item.stars);
@@ -1740,6 +1804,15 @@ function chClickMorale(fleetnum,shipnum) {
 	CHDATA.event.resources.fuel += fuel;
 	CHDATA.event.resources.ammo += ammo;
 	chUIUpdateResources();
+}
+
+function chUnequipAllShip(fleet, shipslot){
+	for (var i=0; i<CHITEMSMAX+1; i++) {
+		chTableSetEquip(-1, fleet, shipslot, i);
+		var shipid = CHDATA.fleets[fleet][shipslot-1];
+		chShipEquipItem(shipid,-1,i);
+	}
+	chTableSetShip(shipid, fleet, shipslot);
 }
 
 function chBlockFleetUI() {
