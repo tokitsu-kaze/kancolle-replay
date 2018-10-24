@@ -1188,12 +1188,12 @@ function supportPhase(shipsS,alive2,subsalive2,suptype,BAPI,isboss) {
 				torpDmg = (FIXTORPEDOSUPPORT)? ship.TP : 0;  //is this the bug in the browser version?
 				for (var j=0; j<ship.equips.length; j++) if (ship.equips[j].TP) torpDmg -= ship.equips[j].TP; //is this correct?
 				torpDmg += 8;
-				accCrit = accuracyAndCrit(ship,target,hitRate(ship,54,ship.ACC+torpDmg*.35,ship.moraleMod()),target.fleet.formation.torpev,0,1.2);
+				accCrit = accuracyAndCrit(ship,target,hitRate(ship,54,ship.ACC+torpDmg*.35,ship.moraleMod(true)),target.fleet.formation.torpev,0,1.2);
 			} else {
 				var baseacc;
 				if (isboss) baseacc = (SIMCONSTS.supportShellB != null)? SIMCONSTS.supportShellB : 64;
 				else baseacc = (SIMCONSTS.supportShellN != null)? SIMCONSTS.supportShellN : 64;
-				accCrit = accuracyAndCrit(ship,target,hitRate(ship,baseacc,ship.ACC,ship.moraleMod(true)),target.fleet.formation.shellev,0,1);
+				accCrit = accuracyAndCrit(ship,target,hitRate(ship,baseacc,ship.ACC,ship.moraleMod()),target.fleet.formation.shellev,0,1);
 			}
 			var res = rollHit(accCrit);
 			var dmg = 0, realdmg = 0;
