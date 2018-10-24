@@ -21904,7 +21904,7 @@ var MAPDATA = {
 							}
 							for (let lbas of LBAS) lbas.bonusSpecial = [{ mod: 1.3 }];
 							for (let ship of FLEETS2[0].ships.concat(FLEETS2[1].ships)) {
-								ship.EV *= .25;
+								ship.EV *= .35;
 							}
 						},
 						compDiff: {
@@ -21961,7 +21961,7 @@ var MAPDATA = {
 						setupSpecial: function() {
 							if (!CHDATA.event.maps[7].debuffed) return;
 							for (let ship of FLEETS2[0].ships.concat(FLEETS2[1].ships)) {
-								ship.EV *= .25;
+								ship.EV *= .35;
 							}
 						},
 						compDiff: {

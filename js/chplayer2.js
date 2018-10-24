@@ -852,7 +852,7 @@ function chPlayerStart() {
 	stage.addChildAt(mapship,mapshipindex);
 	mapship.position.set(node.x+MAPOFFX,node.y+MAPOFFY);
 	var bossnum = (typeof MAPDATA[WORLD].maps[MAPNUM].bossnode === 'object')? MAPDATA[WORLD].maps[MAPNUM].bossnode[0] : MAPDATA[WORLD].maps[MAPNUM].bossnode;
-	var letterboss = String.fromCharCode(64+bossnum);
+	var letterboss = (typeof bossnum == 'string')? bossnum : String.fromCharCode(64+bossnum);
 	var xboss = MAPDATA[WORLD].maps[MAPNUM].nodes[letterboss].x;
 	mapship.scale.set(((xboss < node.x)? -1 : 1),1);
 	chLoadMap(MAPNUM);

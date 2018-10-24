@@ -136,6 +136,7 @@ var MECHANICS = {
 	fixFleetAA: true,
 	CVCI: true,
 	destroyerNBCI: true,
+	LBASBuff: false,
 };
 var NERFPTIMPS = false;
 var BREAKPTIMPS = false;
@@ -1279,12 +1280,24 @@ function LBASPhase(lbas,alive2,subsalive2,isjetphase,APIkouku) {
 			}
 		}
 		
-		if (alive2.length) {
-			var target = choiceWProtect(alive2);
+		var targets = (MECHANICS.LBASBuff && eq.ASW >= 7)? subsalive2 : alive2;
+		if (targets.length) {
+			if (targets[0].fleet.combinedWith) {
+				var targetsM = [], targetsE = [];
+				for (var j=0; j<targets.length; j++) {
+					if (targets[j].isescort) targetsE.push(targets[j]);
+					else targetsM.push(targets[j]);
+				}
+				if (!targetsE.length) targets = targetsM;
+				else if (!targetsM.length) targets = targetsE;
+				else targets = (Math.random() < .5)? targetsM : targetsE;
+			}
+			var target = choiceWProtect(targets);
 			var dmg = airstrikeLBAS(lbas,target,i,contactMod);
 			if (C) {
 				var showtorpedo = lbas.equips[i].istorpbomber;
 				if (lbas.equips[i].type == LANDBOMBER && target.isInstall) showtorpedo = false;
+				if (target.isSub) showtorpedo = false;
 				if (target.isescort) {
 					APIkouku.api_stage3_combined[(target.side)?'api_edam':'api_fdam'][target.num] += dmg;
 					APIkouku.api_stage3_combined[(target.side)?'api_ecl_flag':'api_fcl_flag'][target.num] = 0;
@@ -1313,7 +1326,7 @@ function airstrikeLBAS(lbas,target,slot,contactMod) {
 	var acc = .95;
 	if (target.isPT && !NERFPTIMPS) acc *= .5;
 	var critdmgbonus = 1, critratebonus = 0, ACCplane = 0;
-	if (equip.type != LANDBOMBER) {
+	if (equip.type != LANDBOMBER || MECHANICS.LBASBuff) {
 		ACCplane = Math.sqrt(equip.exp*.1);
 		var critval;
 		switch(equip.rank) {
@@ -1328,6 +1341,9 @@ function airstrikeLBAS(lbas,target,slot,contactMod) {
 		critdmgbonus = (Math.sqrt(equip.exp*1.2)+critval)/((slot==0)?100:200);
 		critratebonus = critval*.75;
 	}
+	if (MECHANICS.LBASBuff) {
+		ACCplane += 12*Math.sqrt(equip.ACC || 0);
+	}
 	lbas.critratebonus = critratebonus; lbas.ACCplane = ACCplane;
 	var res = rollHit(accuracyAndCrit(lbas,target,acc,target.fleet.formation.AAmod,0,.2,true),critdmgbonus);
 	lbas.critratebonus = 0; lbas.ACCplane = 0;
@@ -1335,6 +1351,7 @@ function airstrikeLBAS(lbas,target,slot,contactMod) {
 	var planebase;
 	if (equip.type == LANDBOMBER) planebase = (target.isInstall)? equip.DIVEBOMB : equip.TP;
 	else planebase = (equip.isdivebomber)? equip.DIVEBOMB : (target.isInstall)? 0 : equip.TP;
+	if (target.isSub) planebase = equip.ASW;
 	planebase |= 0;
 	if (res) {
 		var dmgbase = 25+planebase*Math.sqrt(1.8*lbas.planecount[slot]);
@@ -1451,7 +1468,7 @@ function sim(F1,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing,noammo,BAPI,no
 		if (jetLBAS.equips.length) {
 			compareAP(jetLBAS,F2,true);
 			LBASPhase(jetLBAS,alive2,subsalive2,true,(C)?BAPI.data.api_air_base_injection:undefined);
-			removeSunk(alive2);
+			removeSunk(alive2); removeSunk(subsalive2);
 			if (C) {
 				BAPI.data.api_air_base_injection.api_stage1.api_disp_seiku = {4:1,3:2,2:0,1:3,0:4}[jetLBAS.AS+2];
 			}
@@ -1490,7 +1507,7 @@ function sim(F1,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing,noammo,BAPI,no
 				compareAP(LBASwaves[i],F2);
 				var LBAPI = {api_plane_from:[[-1],[-1]],api_stage1:null,api_stage2:null,api_stage3:null};
 				LBASPhase(LBASwaves[i],alive2,subsalive2,false,(C)?LBAPI:undefined);
-				removeSunk(alive2);
+				removeSunk(alive2); removeSunk(subsalive2);
 				if (C) {
 					LBAPI.api_stage1.api_disp_seiku = {4:1,3:2,2:0,1:3,0:4}[LBASwaves[i].AS+2];
 					BAPI.data.api_air_base_attack.push(LBAPI);
