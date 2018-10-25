@@ -201,11 +201,11 @@ function simCombined(type,F1,F1C,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombi
 	}
 	
 	//support phase
-	if (Fsupport && !NBonly && !aironly && alive1.length+subsalive1.length > 0 && alive2.length+subsalive2.length > 0) {
+	if (Fsupport && (!NBonly || (MECHANICS.LBASBuff && Fsupport.supportType != 1)) && !aironly && alive1.length+subsalive1.length > 0 && alive2.length+subsalive2.length > 0) {
 		var chance = Fsupport.supportChance(Fsupport.supportBoss);
 		if (Math.random() < chance) {
 			supportPhase(Fsupport.ships,alive2,subsalive2,Fsupport.supportType,BAPI,Fsupport.supportBoss,Fsupport.supportBoss);
-			removeSunk(alive2);
+			removeSunk(alive2); removeSunk(subsalive2);
 		}
 	}
 	
@@ -362,6 +362,12 @@ function simCombined(type,F1,F1C,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombi
 			BAPI.yasen.api_hougeki = {api_at_list:[-1],api_damage:[-1],api_df_list:[-1],api_sp_list:[-1],api_cl_list:[-1],api_n_mother_list:[-1]};
 			BAPI.yasen.api_flare_pos = [-1,-1];
 			BAPI.yasen.api_touch_plane = [-1,-1];
+			if (NBonly && BAPI.data.api_support_flag) {
+				BAPI.yasen.api_n_support_flag = BAPI.data.api_support_flag;
+				BAPI.yasen.api_n_support_info = BAPI.data.api_support_info;
+				delete BAPI.data.api_support_flag;
+				delete BAPI.data.api_support_info;
+			}
 		}
 		nightPhase(order1,order2,alive1C,subsalive1C,alive2,subsalive2,NBonly,(C)? BAPI.yasen:undefined);
 	}
@@ -762,8 +768,8 @@ function sim6vs12(F1,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing,noammo,BA
 		var chance = Fsupport.supportChance(Fsupport.supportBoss);
 		if (Math.random() < chance) {
 			supportPhase(Fsupport.ships,alive2.concat(alive2C),subsalive2.concat(subsalive2C),Fsupport.supportType,BAPI,Fsupport.supportBoss);
-			removeSunk(alive2);
-			removeSunk(alive2C);
+			removeSunk(alive2); removeSunk(subsalive2);
+			removeSunk(alive2C); removeSunk(subsalive2C);
 		}
 	}
 	

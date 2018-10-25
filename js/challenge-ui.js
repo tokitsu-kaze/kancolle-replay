@@ -21,6 +21,7 @@ var MECHANICDATES = {
 	CVCI: '2017-09-12',
 	destroyerNBCI: '2017-10-25',
 	aswSoftCap: '2017-11-10',
+	LBASBuff: '2017-11-17',
 };
 
 SHIPDATA[5001] = {
@@ -1063,6 +1064,7 @@ function chLoadSupportFleetB() {
 
 function chGetSupportType(counts) {
 	if (counts.DD < 2) return 0;
+	if (CHDATA.config.mechanics.LBASBuff && counts.aCV >= 2) return 1;
 	if (counts.aCV >= 3) return 1;
 	if (counts.DD + counts.CL + counts.CLT >= 4) return 3;
 	return 2;

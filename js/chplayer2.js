@@ -2531,7 +2531,7 @@ function doSimEnemyRaid(numLB,compd) {
 function prepEnemyRaid() {
 	var numLB = MAPDATA[WORLD].maps[MAPNUM].lbas;
 	var enemyRaid = MAPDATA[WORLD].maps[MAPNUM].enemyRaid;
-	var enemies = getEnemyComp(enemyRaid.compName,enemyRaid,CHDATA.event.maps[MAPNUM].diff);
+	var enemies = getEnemyComp(enemyRaid.compName,enemyRaid,CHDATA.event.maps[MAPNUM].diff,(WORLD==20 && CHDATA.event.maps[31].hp == 1));
 	var CHAPI = doSimEnemyRaid(numLB,enemies);
 	
 	stage = STAGEBATTLE;

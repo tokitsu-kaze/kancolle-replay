@@ -4110,6 +4110,17 @@ var MAPDATA = {
 				finalhp: { 2: 1 },
 				hpmode: 1,
 				lbas: 2,
+				enemyRaid: {
+					maxNum: { 2: 1 },
+					chance: { 2: .25 },
+					compName: 'AB',
+					compDiff: {
+						2: ['1','2'],
+					},
+					compDiffF: {
+						2: ['3'],
+					},
+				},
 				startCheck: function(ships) {
 					if (ships.aCV) return 'Start1';
 					if (ships.CLT) return 'Start1';

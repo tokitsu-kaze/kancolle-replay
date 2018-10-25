@@ -1091,7 +1091,7 @@ function AADefenceBombersAndAirstrike(carriers,targets,defenders,APIkouku,issupp
 						else targetsM.push(targets[k]);
 					}
 					if (!targetsE.length) targetsR = targetsM;
-					else if (!targetsM.length) targetsR = targetsM;
+					else if (!targetsM.length) targetsR = targetsE;
 					else targetsR = (Math.random() < .5)? targetsM : targetsE;
 				}
 				var target = choiceWProtect(targetsR);
@@ -1163,19 +1163,28 @@ function supportPhase(shipsS,alive2,subsalive2,suptype,BAPI,isboss) {
 			BAPI.data.api_support_info.api_support_airatack.api_stage1 = {api_e_count:0,api_e_lostcount:0,api_f_count:0,api_f_lostcount:0};
 			BAPI.data.api_support_info.api_support_airatack.api_stage2 = {api_f_count:0,api_f_lostcount:0};
 			BAPI.data.api_support_info.api_support_airatack.api_stage3 = {api_ebak_flag:[-1,0,0,0,0,0,0],api_edam:[-1,0,0,0,0,0,0],api_erai_flag:[-1,0,0,0,0,0,0],api_ecl_flag:[-1,0,0,0,0,0,0]};
+			BAPI.data.api_support_info.api_support_airatack.api_stage3_combined = {api_ebak_flag:[-1,0,0,0,0,0,0],api_edam:[-1,0,0,0,0,0,0],api_erai_flag:[-1,0,0,0,0,0,0],api_ecl_flag:[-1,0,0,0,0,0,0]};
 		}
 	}
-	if (!alive2.length) return;
-	if (suptype==2||suptype==3) {
+	if (MECHANICS.LBASBuff && suptype == 1 && subsalive2.length) {
+		for (let ship of shipsS) {
+			if (ship.CVshelltype && ship.canASW()) {
+				suptype = 4;
+				break;
+			}
+		}
+	}
+	if (suptype != 4 && !alive2.length) return;
+	if (suptype != 1) {
 		var hou = (BAPI)? BAPI.data.api_support_info.api_support_hourai : undefined;
 		for (var i=0; i<shipsS.length; i++) {
 			var ship = shipsS[i];
-			var targets = alive2;
-			if (alive2[0].fleet.combinedWith) {
+			var targets = (suptype == 4)? subsalive2 : alive2;
+			if (targets[0].fleet.combinedWith) {
 				var targetsM = [], targetsE = [];
-				for (var j=0; j<alive2.length; j++) {
-					if (alive2[j].isescort) targetsE.push(alive2[j]);
-					else targetsM.push(alive2[j]);
+				for (var j=0; j<targets.length; j++) {
+					if (targets[j].isescort) targetsE.push(targets[j]);
+					else targetsM.push(targets[j]);
 				}
 				if (!targetsE.length) targets = targetsM;
 				else if (!targetsM.length) targets = targetsE;
@@ -1189,24 +1198,39 @@ function supportPhase(shipsS,alive2,subsalive2,suptype,BAPI,isboss) {
 				for (var j=0; j<ship.equips.length; j++) if (ship.equips[j].TP) torpDmg -= ship.equips[j].TP; //is this correct?
 				torpDmg += 8;
 				accCrit = accuracyAndCrit(ship,target,hitRate(ship,54,ship.ACC+torpDmg*.35,ship.moraleMod(true)),target.fleet.formation.torpev,0,1.2);
-			} else {
+			} else if (suptype == 2) {
 				var baseacc;
 				if (isboss) baseacc = (SIMCONSTS.supportShellB != null)? SIMCONSTS.supportShellB : 64;
 				else baseacc = (SIMCONSTS.supportShellN != null)? SIMCONSTS.supportShellN : 64;
 				accCrit = accuracyAndCrit(ship,target,hitRate(ship,baseacc,ship.ACC,ship.moraleMod()),target.fleet.formation.shellev,0,1);
+			} else {
+				if (!ship.CVshelltype || !ship.canASW()) continue;
+				var baseacc;
+				if (isboss) baseacc = (SIMCONSTS.supportShellB != null)? SIMCONSTS.supportShellB : 64;
+				else baseacc = (SIMCONSTS.supportShellN != null)? SIMCONSTS.supportShellN : 64;
+				accCrit = accuracyAndCrit(ship,target,hitRate(ship,baseacc,ship.ACC,ship.moraleMod()),target.fleet.formation.ASWev,0,1.3,true);
 			}
-			var res = rollHit(accCrit);
+			var res = rollHit(accCrit,((suptype==4)? ship.critdmgbonus : 1));
 			var dmg = 0, realdmg = 0;
 			if (res) {
 				var dmg;
 				if (suptype==3) dmg = damage(ship,target,torpDmg*.55,ENGAGEMENT,res,150);
-				else dmg = damage(ship,target,ship.shellPower(target)-1,ENGAGEMENT,res,150);
+				else if (suptype == 2) dmg = damage(ship,target,ship.shellPower(target)-1,ENGAGEMENT,res,150);
+				else dmg = damage(ship,target,ship.ASWPower(),1,res,150);
 				realdmg = takeDamage(target,dmg);
 			} else { realdmg = 0; }
 			if (C) {
 				console.log(ship.name+' support attacks '+target.name+' for '+dmg+' damage');
-				hou.api_cl_list[i+1] = (res>1)? 2 : (dmg)? 1 : 0;
-				hou.api_damage[target.apiID2] += realdmg;
+				if (suptype == 4) {
+					let stage3 = BAPI.data.api_support_info.api_support_airatack.api_stage3;
+					stage3.api_ebak_flag[target.apiID2] = stage3.api_ebak_flag[target.apiID2] || (dmg)? 1 : 0;
+					stage3.api_ecl_flag[target.apiID2] = stage3.api_ecl_flag[target.apiID2] || (res>1)? 1 : 0;
+					stage3.api_edam[target.apiID2] = stage3.api_edam[target.apiID2] + realdmg || realdmg;
+					delete BAPI.data.api_support_info.api_support_airatack.api_stage3_combined;
+				} else {
+					hou.api_cl_list[target.apiID2] = Math.max(hou.api_cl_list[target.apiID2],((res>1)? 2 : (dmg)? 1 : 0));
+					hou.api_damage[target.apiID2] += realdmg;
+				}
 			}
 		}
 		for (var i=0; i<alive2.length; i++) {
@@ -1219,6 +1243,16 @@ function supportPhase(shipsS,alive2,subsalive2,suptype,BAPI,isboss) {
 		AADefenceFighters(shipsS,false,(C)? BAPI.data.api_support_info.api_support_airatack : null);
 		AADefenceBombersAndAirstrike(shipsS,alive2,alive2.concat(subsalive2),(C)? BAPI.data.api_support_info.api_support_airatack : null,true,false,alive2[0].fleet.combinedWith);
 		alive2[0].fleet.AS = prevAS;
+		if (C && alive2[0].fleet.combinedWith) {
+			let airatack = BAPI.data.api_support_info.api_support_airatack;
+			for (let prop in airatack.api_stage3_combined) {
+				for (let i=0; i<airatack.api_stage3_combined[prop].length; i++) {
+					if (airatack.api_stage3_combined[prop][i] == -1) continue;
+					airatack.api_stage3[prop].push(airatack.api_stage3_combined[prop][i]);
+				}
+			}
+			delete airatack.api_stage3_combined;
+		}
 	}
 }
 
@@ -1556,11 +1590,11 @@ function sim(F1,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing,noammo,BAPI,no
 	}
 	
 	//support phase
-	if (Fsupport && !NBonly && !aironly && alive1.length+subsalive1.length > 0 && alive2.length+subsalive2.length > 0) {
+	if (Fsupport && (!NBonly || (MECHANICS.LBASBuff && Fsupport.supportType != 1)) && !aironly && alive1.length+subsalive1.length > 0 && alive2.length+subsalive2.length > 0) {
 		var chance = Fsupport.supportChance(Fsupport.supportBoss);
 		if (Math.random() < chance) {
 			supportPhase(Fsupport.ships,alive2,subsalive2,Fsupport.supportType,BAPI,Fsupport.supportBoss);
-			removeSunk(alive2);
+			removeSunk(alive2); removeSunk(subsalive2);
 		}	
 	}
 	
@@ -1653,6 +1687,12 @@ function sim(F1,F2,Fsupport,LBASwaves,doNB,NBonly,aironly,bombing,noammo,BAPI,no
 			BAPI.yasen.api_hougeki = {api_at_list:[-1],api_damage:[-1],api_df_list:[-1],api_sp_list:[-1],api_cl_list:[-1],api_n_mother_list:[-1]};
 			BAPI.yasen.api_flare_pos = [-1,-1];
 			BAPI.yasen.api_touch_plane = [-1,-1];
+			if (NBonly && BAPI.data.api_support_flag) {
+				BAPI.yasen.api_n_support_flag = BAPI.data.api_support_flag;
+				BAPI.yasen.api_n_support_info = BAPI.data.api_support_info;
+				delete BAPI.data.api_support_flag;
+				delete BAPI.data.api_support_info;
+			}
 		}
 		nightPhase(order1,order2,alive1,subsalive1,alive2,subsalive2,NBonly,(C)? BAPI.yasen:undefined);
 	}
