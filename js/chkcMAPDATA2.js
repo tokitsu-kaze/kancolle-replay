@@ -22053,6 +22053,7 @@ function transportCalcStandard(ships,rank) {
 	for (let ship of ships) {
 		if (!ship) continue;
 		const stype = SHIPDATA[ship.masterId].type;
+		if (ship.masterId === 487) tp += 8;
 		if (tpObj[stype]) tp += tpObj[stype];
 		for (let item of ship.items) {
 			if (item <= 0) continue;
