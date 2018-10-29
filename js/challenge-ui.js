@@ -193,6 +193,7 @@ function chAddDragEquip(fleetnum,shipslot,eqslot) {
 			let eqid1 = CHDATA.ships[sid].items[DIALOGITEMSEL-1];
 			let eqid2 = CHDATA.ships[sid].items[eqslot-1];
 			chTableSetEquip(eqid1,DIALOGFLEETSEL,DIALOGSLOTSEL,eqslot);
+			chShipEquipItem(sid,-1,DIALOGITEMSEL-1);
 			chShipEquipItem(sid,eqid1,eqslot-1);
 			chTableSetEquip(eqid2,DIALOGFLEETSEL,DIALOGSLOTSEL,DIALOGITEMSEL);
 			chShipEquipItem(sid,eqid2,DIALOGITEMSEL-1);
