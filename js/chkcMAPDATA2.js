@@ -21959,7 +21959,7 @@ var MAPDATA = {
 						setupSpecial: function() {
 							if (!CHDATA.event.maps[7].debuffed) return;
 							for (let ship of FLEETS2[0].ships) {
-								ship.EV *= .35;
+								ship.EV *= .5;
 							}
 						},
 						compDiff: {
